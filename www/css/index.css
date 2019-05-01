@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
+*{
+	font-family: 'Roboto', sans-serif;
+}
+
+ons-toolbar{
+	background-color: #2979FF !important;
+	
+}
+ons-toolbar > * {
+	color: white !important;
+}
+
+ons-toolbar > .left > ons-toolbar-button > * {
+	color: white !important;
+}
+
+#md-back-button-icon{
+	background-color: white !important;
+}
+
+svg{
+	fill: white;
+}
+
+.bg-color{
+	background-color: red !important;
+}
+
+.active-state{
+
+	background-color: #efefef !important;
+	color: #2979FF !important;
+	opacity: 1 !important;
+	
+
+}
+
+
+
+
+
+
+

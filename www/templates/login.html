@@ -1,0 +1,68 @@
+      <ons-page id="login">
+        <style type="text/css">
+          .text-input--material__label--active {
+            color: #2979FF;
+          }
+
+          .text-input--material:focus {
+            color: white;
+          }
+          .text-input.text-input--material{
+            color: white !important;
+          }
+        </style>
+
+        <ons-toolbar modifier="noshadow" style="background-color: #454A58 !important">
+          <div class="left" >
+            <ons-back-button >Back</ons-back-button>
+          </div>
+          <div class="center">
+            Log In
+          </div>
+        </ons-toolbar>
+
+        <div class="background" style="background-color: #454A58"></div>
+        <ons-row style=" margin-top: 8%; color: white !important">
+          <ons-col width="100%">
+            <p style="color: white; font-size: 35px; font-weight: 700; padding-left: 5%;">Log In</p>
+          </ons-col>
+
+
+          
+          <ons-col width="100%" style="text-align: center; margin-top: 20%; color: white !important;">
+            <i class="fa fa-user" style="padding-right: 2%"></i> <ons-input placeholder="Username" float id="username"></ons-input><br><br><br>
+            <i class="fa fa-lock" style="padding-right: 2%"></i> <ons-input placeholder="Password" float type="password" id="password"></ons-input><br><br>
+            <ons-button  style="width: 40%; border-radius: 20px;" onclick="login()">Log in</ons-button>
+            
+
+          </ons-col>
+
+        </ons-row>
+
+        <script type="text/javascript">
+          function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+           
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username:username, password:password},function(data){
+              if (data.length == 0) {
+                alert("Error: Username and/or Password");
+              }
+
+              else{
+                location.href = "index.html";
+                localStorage.setItem("username", data[0].U_username);
+                localStorage.setItem("password", data[0].U_Password);
+                localStorage.setItem("Fname", data[0].U_fname);
+                localStorage.setItem("Lname", data[0].U_Lname);
+
+              }
+            });
+          }
+        </script>
+
+
+        
+
+      </ons-page>
+

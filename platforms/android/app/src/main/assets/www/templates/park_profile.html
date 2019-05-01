@@ -1,0 +1,258 @@
+      <ons-page id="park">
+        <style type="text/css">
+          .hiddenC{
+            display: none;
+          }
+
+          .displayC {
+            display: block;
+          }
+
+        </style>
+        <ons-toolbar>
+          <div class="left" >
+            <ons-back-button onclick="localStorage.removeItem('getLat'); localStorage.removeItem('getLng'); localStorage.removeItem('getId');">Back</ons-back-button>
+          </div>
+          <div class="center">
+            Park Profile
+          </div>
+
+
+
+        </ons-toolbar>
+
+        <div class="background" style="background-color: white"></div>
+
+        <!-- style="background-image: url('img/parking_1.jpg'); background-size: 100% 100%" -->
+
+        <ons-carousel  swipeable auto-scroll auto-scroll itemCount id="carousel" style="height: 40%; width: 100%" >
+          <ons-carousel-item style="background-color: #3498db;">
+            <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+              BLUE
+            </div>
+          </ons-carousel-item>
+          <ons-carousel-item style="background-color: #2ecc71;">
+            <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+              GREEN
+            </div>
+          </ons-carousel-item>
+          <ons-carousel-item style="background-color: #e74c3c;">
+            <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+              RED
+            </div>
+          </ons-carousel-item>
+        </ons-carousel>
+
+        <ons-row>
+          <ons-row style="padding-top: 5%; padding-left: 5%; padding-right: 5%; ">
+            <ons-col   width="60%">
+              <p style="text-align: left; font-size: 20px; font-weight: 500;" id="p_ParkingName">
+                Parking Space Space
+              </p>
+            </ons-col>     
+            <ons-col width="40%" style="padding-top: 2%; text-align: center;">
+
+              <button class="button button--material" style="width: 100%" onclick="googleNavigate()"><i class="fa fa-location-arrow"></i> Navigate</button>
+            </ons-col>     
+
+          </ons-row>
+
+
+          <ons-col  style=" margin-top: -4%;padding-left: 5%; padding-right: 5%;" width="100%">
+            <ons-row>
+              <ons-col width="25%">
+                <p style="text-align: left; font-size: 12px; color: orange" id="p_Rating">
+
+                </p>
+              </ons-col>
+              <ons-col width="65%">
+                <p style="text-align: left; font-size: 12px; color: black; opacity: 0.8">
+                  201 reviews
+                </p>
+              </ons-col>
+            </ons-row>
+          </ons-col>
+
+          <ons-col width="100%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
+            <p style="font-size: 18px; font-weight: 500" id="p_ParkingAddress">4-C Apitong Ext Old Cabalan Olongapo City</p>
+          </ons-col>
+
+          <ons-col width="50%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
+            <p style="margin-bottom: -2%">Available Parking Space</p>
+            <p style="font-weight: 700" id="p_Total">103/120</p>
+          </ons-col>
+
+          <ons-col width="50%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
+            <p style="margin-bottom: -2%">Availability</p>
+            <p style="font-weight: 700" id="p_Time">10AM - 9PM</p>
+          </ons-col>
+        </ons-row>
+
+
+
+
+
+        <!-- comments -->
+        <ons-row>
+          <ons-col width="100%" >
+            <ons-list-item id="textarea" class="">
+
+              <textarea class="textarea" rows="3" placeholder="Add a Comment" style="width: 98%;" id="textComment"></textarea>
+              <button class="button button--material--flat" onclick="insertComment()">Submit</button>
+            </ons-list-item>
+            <ons-list-header>Comments</ons-list-header>
+            <div id="p_Comments"></div>
+
+
+          </ons-col>
+        </ons-row>
+
+        <ons-row>
+          <ons-col width="100%">
+
+          </ons-col>
+        </ons-row>
+
+        <ons-row style="background-color: #efefef; ">
+          <ons-col width="100%" style="text-align: center">
+            <button class="button button--material" style="width: 100%; border: solid 2px  #2979FF; border-radius: 0;" onclick="loadMore()">Load More</button>
+          </ons-col>
+        </ons-row>
+        <script type="text/javascript">
+          var Limit = 5;
+
+          function googleNavigate() {
+            ons.notification.toast('Loading...', { timeout: 3000 });
+
+
+            setTimeout(function(){ runNavigator(); }, 3000);
+
+          }
+
+
+          function runNavigator(){
+            launchnavigator.isAppAvailable(launchnavigator.APP.GOOGLE_MAPS, function(isAvailable){
+              var app;
+              var gLng = localStorage.getItem("getLng");
+              var gLat = localStorage.getItem("getLat");
+
+              if(isAvailable){
+
+                app = launchnavigator.APP.GOOGLE_MAPS;
+              }else{
+                alert("Error 002 - Google Maps");
+              }
+              launchnavigator.navigate([gLat, gLng], {
+                app: app
+              });
+            });
+
+          }
+
+          function checking(){
+            if (localStorage.getItem("username") === null) {
+              $( "#textarea" ).removeClass( "displayC" );
+              $( "#textarea" ).addClass( "hiddenC" );
+            }else{
+              $( "#textarea" ).removeClass( "hiddenC" );
+              $( "#textarea" ).addClass( "displayC" );
+            }
+          } 
+
+          checking();
+
+
+          function getContent(){
+            var localId = localStorage.getItem("getId")
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoSpecific.php",{D_Id : localId }, function(data){
+              console.log(data);
+              document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #27ae60">Open</span>';
+              document.getElementById("p_ParkingAddress").innerHTML = data[0].D_Description;
+              document.getElementById("p_Total").innerHTML = data[0].D_Inuse+'/'+data[0].D_Total;
+              document.getElementById("p_Time").innerHTML = data[0].D_Opening+' - '+data[0].D_Closing;
+
+              if (data[0].D_Rating == 1) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].D_Rating == 2) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].D_Rating == 3) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].D_Rating == 4) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].D_Rating == 5) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star">';
+              }
+            });
+          }
+
+
+          function getComments(limit){
+            console.log(limit)
+            var localId = localStorage.getItem("getId");
+            var comments = "";
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_getComments.php",{c_parkingId : localId, c_Limit: limit}, function(data){
+              if (data == "") {
+
+                comments += "<p style='text-align:center'>No Comments Available</p>";
+                console.log("Error");
+              }
+              else{
+                for(var i =0 ;i < data.length; i++){ 
+                  comments += '';
+                  comments += '<ul class="list list--material">';
+                  comments += '<li class="list-item list-item--material">';
+                  comments += '<div class="list-item__left list-item--material__left">';
+                  comments += '<img class="list-item__thumbnail list-item--material__thumbnail" src="https://placekitten.com/g/42/41" alt="Cute kitten">';
+                  comments += '</div>';
+                  comments += '<div class="list-item__center list-item--material__center">';
+                  comments += '<div class="list-item__title list-item--material__title">'+data[i].c_User+'</div>';
+                  comments += '<div class="list-item__subtitle list-item--material__subtitle">'+data[i].c_Comment+'</div>';
+                  comments += '</div></li></ul>'
+                }
+              }
+
+              document.getElementById("p_Comments").innerHTML = comments;
+            });
+          }
+
+
+          function insertComment(){
+            var localId = localStorage.getItem("getId");
+            var fname = localStorage.getItem("Fname");
+            var lname = localStorage.getItem("Lname");
+            var fullname = fname+" "+lname;
+            var textC = document.getElementById("textComment").value;
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC},function(data){
+              
+              setTimeout(function(){getComments(Limit);document.getElementById("textComment").value = ""; }, 4000);
+              ons.notification.toast('Comment Added', { timeout: 4000,});
+              
+
+            });
+            
+          }
+
+
+          function loadMore(){
+            Limit+=5;
+            ons.notification.toast('Loading...', { timeout: 2000 });
+            setTimeout(function(){ Limit +=5;getComments(Limit); }, 2000);
+
+            
+          }
+
+          getContent();
+          getComments(Limit); 
+          
+        </script>
+
+      </ons-page>
+

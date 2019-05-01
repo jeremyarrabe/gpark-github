@@ -1,0 +1,203 @@
+  <ons-page>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+      * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <ons-toolbar>
+      <div class="center">
+        Map
+      </div>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.open()">
+          <ons-icon icon="md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="right">
+        <ons-toolbar-button  onclick="myNavigator.pushPage('templates/notification.html')">
+          <ons-icon icon="fa-bell" style="color: white;"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <div id="map"></div>
+    <script type="text/javascript">
+      var map;
+      function initMap() {
+        var pinIcon = new google.maps.MarkerImage(
+         "img/loading-red-spot.gif",
+         null,
+         null,
+         null, 
+         new google.maps.Size(30, 30)
+         );  
+      //paid parking 
+      var parkIconPaid = new google.maps.MarkerImage(
+       "img/park-icon.png",
+       null, 
+       null,
+       null, 
+       new google.maps.Size(30, 30)
+       ); 
+
+      //free parking
+      var parkIconFree = new google.maps.MarkerImage(
+       "img/free-park.png",
+       null, 
+       null, 
+       null, 
+       new google.maps.Size(30, 30)
+       ); 
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: {lat: 14.832862, lng: 120.282062},
+        gestureHandling: 'greedy',
+        streetViewControl: false,
+        zoomControl: false,
+        disableDefaultUI: true,
+        styles: [
+        {
+          "featureType": "all",
+          "elementType": "all",
+          "stylers": [
+          {
+            "saturation": "32"
+          },
+          {
+            "lightness": "-3"
+          },
+          {
+            "visibility": "on"
+          },
+          {
+            "weight": "1.18"
+          }
+          ]
+        },
+        {
+          "featureType": "administrative",
+          "elementType": "labels",
+          "stylers": [
+          {
+            "visibility": "off"
+          }
+          ]
+        },
+        {
+          "featureType": "landscape",
+          "elementType": "labels",
+          "stylers": [
+          {
+            "visibility": "off"
+          }
+          ]
+        },
+        {
+          "featureType": "landscape.man_made",
+          "elementType": "all",
+          "stylers": [
+          {
+            "saturation": "-70"
+          },
+          {
+            "lightness": "14"
+          }
+          ]
+        },
+        {
+          "featureType": "poi",
+          "elementType": "labels",
+          "stylers": [
+          {
+            "visibility": "off"
+          }
+          ]
+        },
+        {
+          "featureType": "road",
+          "elementType": "labels",
+          "stylers": [
+          {
+            "visibility": "on"
+          }
+          ]
+        },
+        {
+          "featureType": "transit",
+          "elementType": "labels",
+          "stylers": [
+          {
+            "visibility": "off"
+          }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "all",
+          "stylers": [
+          {
+            "saturation": "100"
+          },
+          {
+            "lightness": "-14"
+          }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "labels",
+          "stylers": [
+          {
+            "visibility": "off"
+          },
+          {
+            "lightness": "12"
+          }
+          ]
+        }
+        ]
+      });
+
+
+
+
+      $.getJSON("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoLocation.php",function(data){
+        if (data[0].D_Type == "Free") {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(data[0].D_Lat,data[0].D_Lng),
+            map: map,
+            title: data[0].D_Id,
+            icon: parkIconFree,
+          });
+        }
+        if (data[0].D_Type == "Paid") {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(data[0].D_Lat,data[0].D_Lng),
+            map: map,
+            title: data[0].D_Id,
+            icon: parkIconPaid,
+          });
+        }
+      });
+
+
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(gpsLat, gpsLng),
+        map: map,
+        icon: pinIcon,
+      });
+
+
+
+
+    }
+  </script>
+
+</ons-page>

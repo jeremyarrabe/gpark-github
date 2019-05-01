@@ -1,0 +1,76 @@
+
+
+<ons-page id="profile">
+
+
+  <ons-toolbar>
+    <div class="center">
+      Account
+    </div>
+    <div class="left">
+      <ons-toolbar-button onclick="fn.open()">
+        <ons-icon icon="md-menu"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+
+  <div class="background" style="background-color: white !important"></div>
+
+  <ons-row style="text-align: center;">
+    <ons-col width="100%" >
+      <img src="img/icon-user.png" style="height: 200px; margin-bottom: -30px;">
+      <p style="font-size: 20px; font-weight: 700" id="main"></p>
+      
+    </ons-col>
+    <ons-col width="50%" style="padding: 0.8em">
+      <ons-input id="username" modifier="underbar" placeholder="Username" float value=""></ons-input>
+    </ons-col>
+
+    <ons-col width="50%" style="padding: 0.8em">
+      <ons-input id="fullname" modifier="underbar" placeholder="Name" float value=""></ons-input>
+    </ons-col>
+
+    <ons-col width="100%" style="padding: 0.8em">
+      <ons-input id="email" modifier="underbar" placeholder="Email" float value="" style="width: 100%;"></ons-input>
+    </ons-col>
+
+    <ons-col width="100%" style="padding: 0.8em">
+      <ons-button  style="width: 40%; border-radius: 20px;" >Update</ons-button>
+    </ons-col>
+  </ons-row>
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    function getUser() {
+      console.log("working");
+      var username = localStorage.getItem("username")
+      var password = localStorage.getItem("password")
+
+      $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username:username, password:password},function(data){
+        document.getElementById("username").value = data[0].U_username;
+        document.getElementById("fullname").value = data[0].U_fname+" "+data[0].U_Lname;
+        document.getElementById("email").value = data[0].U_Email;
+        document.getElementById("main").value = data[0].U_username;
+
+
+      });
+    }
+
+
+
+    getUser();
+  </script>
+
+</ons-page>
+
+
+
+
