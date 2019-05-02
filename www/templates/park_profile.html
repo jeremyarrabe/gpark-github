@@ -111,7 +111,7 @@
           <ons-col width="100%" style="color: #FFA500; text-align: center;" id="rating-col">
             <p style="font-weight: 500; color: black">Rate This Parking Space</p>
             <div id="noRating" class="">
-              <i class="fa fa-star-o" id="star-1"></i><i class="fa fa-star-o" id="star-2"></i><i class="fa fa-star-o" id="star-3"></i><i class="fa fa-star-o" id="star-4"></i><i class="fa fa-star-o" id="star-5"></i><p id="star_text1"></p><p id="star_total" hidden><p id="con-total" style="display: none;"></p>
+              <i class="fa fa-star-o" id="star-1"></i><i class="fa fa-star-o" id="star-2"></i><i class="fa fa-star-o" id="star-3"></i><i class="fa fa-star-o" id="star-4"></i><i class="fa fa-star-o" id="star-5"></i><p id="star_text1"></p><p id="star_total" ><p id="con-total" style="display: none;"></p>
             </div>
             <div id="hasRating" class="">
 
@@ -386,34 +386,38 @@
             var textC = document.getElementById("textComment").value;
 
 
+
             if (textC == "") {
               ons.notification.alert('Invalid Blank Comment');
             }
-            else{   
-              if (document.getElementById('star_total').innerHTML == 0) {
-                ons.notification.alert('Invalid Blank Rating');
-              }
-              else{
-                $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC},function(data){
-
-                  setTimeout(function(){getComments(Limit); getRatings();getContent();document.getElementById("textComment").value = ""; }, 4000);
-                  ons.notification.toast('Comment Added', { timeout: 4000,});
 
 
-                });
+            else{
 
-                var pId = localStorage.getItem("getId");
-                var userName = localStorage.getItem("username");
-                var Rating = document.getElementById("star_total").innerHTML;
-                $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:pId, r_Rating: Rating, r_Username: userName},function(data){
 
-                });
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC},function(data){
 
-              }  
+                setTimeout(function(){getComments(Limit); getRatings();getContent();document.getElementById("textComment").value = ""; }, 4000);
+                ons.notification.toast('Comment Added', { timeout: 4000,});
+
+
+              });
+
+              var pId = localStorage.getItem("getId");
+              var userName = localStorage.getItem("username");
+              var Rating = document.getElementById("star_total").innerHTML;
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:pId, r_Rating: Rating, r_Username: userName},function(data){
+
+              });
 
 
 
-            }
+
+            }  
+
+
+
+            
 
 
             
@@ -452,37 +456,37 @@
                 var rating = data[0].r_Rating;
 
                 if (rating == 0) {
-                 hasRating = '<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p></p>';
+                 hasRating = '<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p></p><p hidden id="hasRating">0</p>';
                  document.getElementById("hasRating").innerHTML = hasRating;
 
                }
 
                if (rating == 1 ) {
-                 hasRating = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Poor</p>';
+                 hasRating = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Poor</p><p hidden id="hasRating">1</p>';
                  document.getElementById("hasRating").innerHTML = hasRating;
 
                }
 
                if (rating ==2) {
-                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Okay</p>';
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Okay</p><p hidden id="hasRating">2</p>';
                 document.getElementById("hasRating").innerHTML = hasRating;
                 
               }
 
               if (rating ==3) {
-                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Average</p>';
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Average</p><p hidden id="hasRating">3</p>';
                 document.getElementById("hasRating").innerHTML = hasRating;
 
               }
 
               if (rating ==4) {
-                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Good</p>';
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Good</p><p hidden id="hasRating">4</p>';
                 document.getElementById("hasRating").innerHTML = hasRating;
 
               }
 
               if (rating ==5) {
-                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><a onclick="showConfirm()"> Edit</a><p>Excellent</p>';
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><a onclick="showConfirm()"> Edit</a><p>Excellent</p><p hidden id="hasRating">5</p>';
                 document.getElementById("hasRating").innerHTML = hasRating;
 
               }

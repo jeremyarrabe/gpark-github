@@ -19,6 +19,14 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <preference name="loadUrlTimeoutValue" value="700000" />
+        <preference name="SplashMaintainAspectRatio" value="true" />
+        <preference name="SplashShowOnlyFirstTime" value="true" />
+        <preference name="SplashScreenSpinnerColor" value="black" />
+
+            <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/>
+            <splash src="res/screen/android/splash-port-ldpi.png" density="port-ldpi"/>
+            <splash src="res/screen/android/splash-port-mdpi.png" density="port-mdpi"/>
+            <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

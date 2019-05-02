@@ -20,6 +20,9 @@
       "GOOGLE_API_KEY_FOR_ANDROID": "{AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754}",
       "OKHTTP_VERSION": "3.12.0",
       "PACKAGE_NAME": "com.jempark.turtlehack"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.jempark.turtlehack"
     }
   },
   "dependent_plugins": {
