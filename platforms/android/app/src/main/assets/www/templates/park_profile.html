@@ -6,6 +6,21 @@
 
           .displayC {
             display: block;
+
+
+          }
+
+          .hiddenR{
+            display: none;
+          }
+
+          .displayR{
+            display: block;
+          }
+
+          a{
+            text-decoration: none;
+            color: #2979FF;
           }
 
         </style>
@@ -65,9 +80,14 @@
 
                 </p>
               </ons-col>
-              <ons-col width="65%">
-                <p style="text-align: left; font-size: 12px; color: black; opacity: 0.8">
+              <ons-col width="25%">
+                <p style="text-align: left; font-size: 12px; color: black; opacity: 0.8" id="p_Reviews">
                   201 reviews
+                </p>
+              </ons-col>
+              <ons-col width="50%">
+                <p style="text-align: right;text-decoration:underline; font-size: 12px; color: black; opacity: 0.8" onclick="myNavigator.pushPage('templates/parkingPolicy.html')">
+                  View Parking Policy
                 </p>
               </ons-col>
             </ons-row>
@@ -75,16 +95,28 @@
 
           <ons-col width="100%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
             <p style="font-size: 18px; font-weight: 500" id="p_ParkingAddress">4-C Apitong Ext Old Cabalan Olongapo City</p>
+            <p style="font-size: 18px; font-weight: 700;" id="p_Price"><i class="fa fa-parking" style="color: #0F9D58"></i> &#8369;20 - &#8369;200</p>
           </ons-col>
+          
 
           <ons-col width="50%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
             <p style="margin-bottom: -2%">Available Parking Space</p>
-            <p style="font-weight: 700" id="p_Total">103/120</p>
+            <p style="font-weight: 700; " id="p_Total">103/120</p>
           </ons-col>
 
           <ons-col width="50%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
             <p style="margin-bottom: -2%">Availability</p>
             <p style="font-weight: 700" id="p_Time">10AM - 9PM</p>
+          </ons-col>
+          <ons-col width="100%" style="color: #FFA500; text-align: center;" id="rating-col">
+            <p style="font-weight: 500; color: black">Rate This Parking Space</p>
+            <div id="noRating" class="">
+              <i class="fa fa-star-o" id="star-1"></i><i class="fa fa-star-o" id="star-2"></i><i class="fa fa-star-o" id="star-3"></i><i class="fa fa-star-o" id="star-4"></i><i class="fa fa-star-o" id="star-5"></i><p id="star_text1"></p><p id="star_total" hidden><p id="con-total" style="display: none;"></p>
+            </div>
+            <div id="hasRating" class="">
+
+            </div>
+            
           </ons-col>
         </ons-row>
 
@@ -113,12 +145,143 @@
           </ons-col>
         </ons-row>
 
-        <ons-row style="background-color: #efefef; ">
+        <ons-row style="background-color: #efefef;">
           <ons-col width="100%" style="text-align: center">
             <button class="button button--material" style="width: 100%; border: solid 2px  #2979FF; border-radius: 0;" onclick="loadMore()">Load More</button>
           </ons-col>
         </ons-row>
         <script type="text/javascript">
+
+
+
+
+
+
+
+          /*var pusher = new Pusher('c2e347e17b4b3a98f491', {
+            cluster: 'ap1',
+            forceTLS: true
+          });
+
+          var channel = pusher.subscribe('my-channel');
+          channel.bind('my-event', function(data) {
+            console.log("Update Time");
+          });
+
+
+          function sendPusher(){
+            $.post()
+
+          }*/
+          document.getElementById('star_total').innerHTML = "0";
+
+
+          $("#star-1").click(function(){
+            $("#star-1").removeClass("fa-star-o");
+            $("#star-1").addClass("fa-star");
+
+            $("#star-2").removeClass("fa-star");
+            $("#star-2").addClass("fa-star-o");
+
+            $("#star-3").removeClass("fa-star");
+            $("#star-3").addClass("fa-star-o");
+
+            $("#star-4").removeClass("fa-star");
+            $("#star-4").addClass("fa-star-o");
+
+            $("#star-5").removeClass("fa-star");
+            $("#star-5").addClass("fa-star-o");
+
+            document.getElementById('star_total').innerHTML = "1";
+            document.getElementById('star_text1').innerHTML = "Poor";
+
+
+
+          });
+
+          $("#star-2").click(function(){
+            $("#star-1").removeClass("fa-star-o");
+            $("#star-1").addClass("fa-star");
+
+            $("#star-2").removeClass("fa-star-o");
+            $("#star-2").addClass("fa-star");
+
+            $("#star-3").removeClass("fa-star");
+            $("#star-3").addClass("fa-star-o");
+
+            $("#star-4").removeClass("fa-star");
+            $("#star-4").addClass("fa-star-o");
+
+            $("#star-5").removeClass("fa-star");
+            $("#star-5").addClass("fa-star-o");
+
+            document.getElementById('star_total').innerHTML = "2";
+            document.getElementById('star_text1').innerHTML = "Okay";
+          });
+
+          $("#star-3").click(function(){
+            $("#star-1").removeClass("fa-star-o");
+            $("#star-1").addClass("fa-star");
+
+            $("#star-2").removeClass("fa-star-o");
+            $("#star-2").addClass("fa-star");
+
+            $("#star-3").removeClass("fa-star-o");
+            $("#star-3").addClass("fa-star");
+
+            $("#star-4").removeClass("fa-star");
+            $("#star-4").addClass("fa-star-o");
+
+            $("#star-5").removeClass("fa-star");
+            $("#star-5").addClass("fa-star-o");
+
+            document.getElementById('star_total').innerHTML = "3";
+            document.getElementById('star_text1').innerHTML = "Average";
+          });
+          
+
+          $("#star-4").click(function(){
+            $("#star-1").removeClass("fa-star-o");
+            $("#star-1").addClass("fa-star");
+
+            $("#star-2").removeClass("fa-star-o");
+            $("#star-2").addClass("fa-star");
+
+            $("#star-3").removeClass("fa-star-o");
+            $("#star-3").addClass("fa-star");
+
+            $("#star-4").removeClass("fa-star-o");
+            $("#star-4").addClass("fa-star");
+
+            $("#star-5").removeClass("fa-star");
+            $("#star-5").addClass("fa-star-o");
+
+            document.getElementById('star_total').innerHTML = "4";
+            document.getElementById('star_text1').innerHTML = "Good";
+          });
+
+          $("#star-5").click(function(){
+            $("#star-1").removeClass("fa-star-o");
+            $("#star-1").addClass("fa-star");
+
+            $("#star-2").removeClass("fa-star-o");
+            $("#star-2").addClass("fa-star");
+
+            $("#star-3").removeClass("fa-star-o");
+            $("#star-3").addClass("fa-star");
+
+            $("#star-4").removeClass("fa-star-o");
+            $("#star-4").addClass("fa-star");
+
+            $("#star-5").removeClass("fa-star-o");
+            $("#star-5").addClass("fa-star");
+
+            document.getElementById('star_total').innerHTML = "5";
+            document.getElementById('star_text1').innerHTML = "Excellent";
+          });
+
+
+
           var Limit = 5;
 
           function googleNavigate() {
@@ -153,9 +316,15 @@
             if (localStorage.getItem("username") === null) {
               $( "#textarea" ).removeClass( "displayC" );
               $( "#textarea" ).addClass( "hiddenC" );
+
+              $( "#rating-col" ).removeClass( "displayR" );
+              $( "#rating-col" ).addClass( "hiddenR" );
             }else{
               $( "#textarea" ).removeClass( "hiddenC" );
               $( "#textarea" ).addClass( "displayC" );
+
+              $( "#rating-col" ).removeClass( "hiddenR" );
+              $( "#rating-col" ).addClass( "displayR" );
             }
           } 
 
@@ -169,27 +338,12 @@
               document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #27ae60">Open</span>';
               document.getElementById("p_ParkingAddress").innerHTML = data[0].D_Description;
               document.getElementById("p_Total").innerHTML = data[0].D_Inuse+'/'+data[0].D_Total;
-              document.getElementById("p_Time").innerHTML = data[0].D_Opening+' - '+data[0].D_Closing;
+              document.getElementById("p_Time").innerHTML = data[0].D_Opening+'AM - '+data[0].D_Closing+'PM';
 
-              if (data[0].D_Rating == 1) {
-                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
-              }
 
-              if (data[0].D_Rating == 2) {
-                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
-              }
+              
 
-              if (data[0].D_Rating == 3) {
-                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
-              }
-
-              if (data[0].D_Rating == 4) {
-                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star-o"></i>';
-              }
-
-              if (data[0].D_Rating == 5) {
-                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star">';
-              }
+              
             });
           }
 
@@ -230,13 +384,38 @@
             var lname = localStorage.getItem("Lname");
             var fullname = fname+" "+lname;
             var textC = document.getElementById("textComment").value;
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC},function(data){
-              
-              setTimeout(function(){getComments(Limit);document.getElementById("textComment").value = ""; }, 4000);
-              ons.notification.toast('Comment Added', { timeout: 4000,});
-              
 
-            });
+
+            if (textC == "") {
+              ons.notification.alert('Invalid Blank Comment');
+            }
+            else{   
+              if (document.getElementById('star_total').innerHTML == 0) {
+                ons.notification.alert('Invalid Blank Rating');
+              }
+              else{
+                $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC},function(data){
+
+                  setTimeout(function(){getComments(Limit); getRatings();getContent();document.getElementById("textComment").value = ""; }, 4000);
+                  ons.notification.toast('Comment Added', { timeout: 4000,});
+
+
+                });
+
+                var pId = localStorage.getItem("getId");
+                var userName = localStorage.getItem("username");
+                var Rating = document.getElementById("star_total").innerHTML;
+                $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:pId, r_Rating: Rating, r_Username: userName},function(data){
+
+                });
+
+              }  
+
+
+
+            }
+
+
             
           }
 
@@ -249,6 +428,249 @@
             
           }
 
+
+          function getRatings(){
+            var userName = localStorage.getItem("username");
+            var pId = localStorage.getItem("getId");
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectUserRating.php",{r_Username:userName, d_Id: pId }, function(data){
+              console.log(data);
+              if (data.length <= 0) {
+                $( "#hasRating" ).removeClass( "displayR" );
+                $( "#hasRating" ).addClass( "hiddenR" );
+                $( "#noRating" ).removeClass( "hiddenR" );
+                $( "#noRating" ).addClass( "displayR" );
+                console.log("0");
+              }
+              else{
+                console.log("1");
+                $( "#noRating" ).removeClass( "displayR" );
+                $( "#noRating" ).addClass( "hiddenR" );
+
+                $( "#hasRating" ).removeClass( "hiddenR" );
+                $( "#hasRating" ).addClass( "displayR" );
+                var hasRating = "";
+                var rating = data[0].r_Rating;
+
+                if (rating == 0) {
+                 hasRating = '<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p></p>';
+                 document.getElementById("hasRating").innerHTML = hasRating;
+
+               }
+
+               if (rating == 1 ) {
+                 hasRating = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Poor</p>';
+                 document.getElementById("hasRating").innerHTML = hasRating;
+
+               }
+
+               if (rating ==2) {
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Okay</p>';
+                document.getElementById("hasRating").innerHTML = hasRating;
+                
+              }
+
+              if (rating ==3) {
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Average</p>';
+                document.getElementById("hasRating").innerHTML = hasRating;
+
+              }
+
+              if (rating ==4) {
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><a onclick="showConfirm()"> Edit</a><p>Good</p>';
+                document.getElementById("hasRating").innerHTML = hasRating;
+
+              }
+
+              if (rating ==5) {
+                hasRating = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><a onclick="showConfirm()"> Edit</a><p>Excellent</p>';
+                document.getElementById("hasRating").innerHTML = hasRating;
+
+              }
+
+
+
+
+            }
+          });
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_countRating.php",{d_Id:pId }, function(data){
+              console.log(data);
+              if (data[0].reviews == '0') {
+                document.getElementById("p_Reviews").innerHTML = "No Ratings Yet";
+              }
+              else{
+                document.getElementById("p_Reviews").innerHTML = data[0].reviews+" reviews";
+              }
+
+              if (data[0].rating >= 0 && data[0].rating < 1) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].rating >= 1 && data[0].rating < 2) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].rating >= 2 && data[0].rating < 3) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].rating >= 3 && data[0].rating < 4) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+              }
+
+              if (data[0].rating >= 4 && data[0].rating < 5) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star-o"></i>';
+              } 
+
+              if (data[0].rating >= 5) {
+                document.getElementById("p_Rating").innerHTML = '<i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star"><i class="fa fa-star">';
+              }
+              
+            });
+          }
+
+
+
+
+          function showConfirm(){
+            ons
+            .notification.confirm({title:"Edit Rating",message: '<div style="color:#FFA500"><i class="fa fa-star-o" onclick="star(1)" id="con-1"></i><i class="fa fa-star-o" onclick="star(2)" id="con-2"></i><i class="fa fa-star-o" id="con-3" onclick="star(3)"></i><i class="fa fa-star-o" id="con-4" onclick="star(4)"></i><i class="fa fa-star-o" id="con-5" onclick="star(5)"></i><span id="con-rating"></span></p></div>'})
+            .then(function(index){
+              if (index == 1) {
+               updateRating();
+             }
+             else{
+              console.log(0);
+            }
+
+          });
+          }
+
+          function updateRating(){
+            var username = localStorage.getItem("username");
+            var pId = localStorage.getItem("getId");
+            var rating = document.getElementById('con-total').innerHTML;
+            console.log(rating);
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_userRating.php",{r_Rating: rating, r_Username: username, d_Id: pId},function(data){
+              console.log("updated");
+              getRatings();
+              getContent();
+            });
+          }
+
+          function star(index){
+            if (index == 1) {
+
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star");
+              $("#con-2").addClass("fa-star-o");
+
+              $("#con-3").removeClass("fa-star");
+              $("#con-3").addClass("fa-star-o");
+
+              $("#con-4").removeClass("fa-star");
+              $("#con-4").addClass("fa-star-o");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Poor";
+              document.getElementById('con-total').innerHTML = "1";
+
+            }
+
+            if (index == 2) {
+
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star");
+              $("#con-3").addClass("fa-star-o");
+
+              $("#con-4").removeClass("fa-star");
+              $("#con-4").addClass("fa-star-o");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Okay";
+              document.getElementById('con-total').innerHTML = "2";
+            }
+
+            if (index == 3) {
+
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star-o");
+              $("#con-3").addClass("fa-star");
+
+              $("#con-4").removeClass("fa-star");
+              $("#con-4").addClass("fa-star-o");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Average";
+              document.getElementById('con-total').innerHTML = "3";
+            }
+
+            if (index == 4) {
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star-o");
+              $("#con-3").addClass("fa-star");
+
+              $("#con-4").removeClass("fa-star-o");
+              $("#con-4").addClass("fa-star");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Good";
+              document.getElementById('con-total').innerHTML = "4";
+            }
+
+            if (index == 5) {
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star-o");
+              $("#con-3").addClass("fa-star");
+
+              $("#con-4").removeClass("fa-star-o");
+              $("#con-4").addClass("fa-star");
+
+              $("#con-5").removeClass("fa-star-o");
+              $("#con-5").addClass("fa-star");
+
+              document.getElementById('con-rating').innerHTML = " - Excellent";
+              document.getElementById('con-total').innerHTML = "5";
+            }
+
+          }
+
+
+
+
+
+
+          getRatings();
           getContent();
           getComments(Limit); 
           

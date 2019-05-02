@@ -1,43 +1,122 @@
 
 
 <ons-page id="profile">
+<!--   <style type="text/css">
+    ons-toolbar{
+  background-color: transparent !important;
+  
+}
+</style> -->
 
 
-  <ons-toolbar>
-    <div class="center">
-      Account
+<ons-toolbar modifier="noshadow transparent">
+  <div class="center">
+
+  </div>
+  <div class="left">
+    <ons-toolbar-button onclick="fn.open()">
+      <ons-icon icon="md-menu"></ons-icon>
+    </ons-toolbar-button>
+  </div>
+</ons-toolbar>
+
+
+
+
+<ons-row>
+  <ons-col width="100%" style="background-color: transparent; height: 250px; background-size: 100% 100%;background-repeat: no-repeat; background-image: url('img/idol.jpg');">
+
+  </ons-col>
+
+  <ons-col width="100%" style="margin-top: -20%;">
+    <div style="height: 200px; padding: 0.5em">
+      <div class="card card--material" style="padding-left: 2em; padding-right: 2em">
+        <div class="card__title card--material__title" style="font-weight: lighter; font-size: 25px;">
+          <ons-row>
+            <ons-col width="80%">
+              Jeremy Arrabe
+            </ons-col>
+            <ons-col width="20%">
+              <ons-button modifier="quiet" onclick="myNavigator.pushPage('templates/userprofile/editInfo.html')"><i class="fa fa-edit"></i></ons-button>
+            </ons-col>
+            <ons-col width="100%">
+              <div style="border: 1px solid; width: 10%; border-color: #DB4437"></div>
+              <p style="padding: 0px;padding-top: 2%; margin: 0px; font-size: 15px;">@jeremeheh</p>
+            </ons-col>
+          </ons-row>
+        </div>
+        <div class="card__content card--material__content" style="padding-top: 3%">
+          <ons-row>
+
+            <ons-col width="10%">
+              <p><i class="fa fa-user"></i></p>
+            </ons-col>
+            <ons-col width="85%">
+              <p id="fullname">Jeremy Arrabe</p>
+            </ons-col>
+
+            <ons-col width="10%">
+              <p><i class="fa fa-mobile-alt"></i></p>
+            </ons-col>
+            <ons-col width="85%">
+              <p id="contactNum">09396311446</p>
+            </ons-col> 
+
+            <ons-col width="10%">
+              <p><i class="fa fa-home"></i></p>
+            </ons-col>
+            <ons-col width="85%">
+              <p id="address">4C Apitong Ext Old Cabalan Olongapo City Zambales</p>
+            </ons-col>  
+
+            <ons-col width="10%">
+              <p><i class="fa fa-paper-plane"></i></p>
+            </ons-col>
+            <ons-col width="85%">
+              <p id="email">jeremyxarrabe@gmail.com</p>
+            </ons-col>
+
+            <ons-col width="10%">
+              <p><i class="fa fa-file-signature"></i></p>
+            </ons-col>
+            <ons-col width="85%">
+              <p id="date">Joined: 12 March 2018</p>
+            </ons-col>
+
+
+
+          </ons-row>
+        </div>
+      </div>
     </div>
-    <div class="left">
-      <ons-toolbar-button onclick="fn.open()">
-        <ons-icon icon="md-menu"></ons-icon>
-      </ons-toolbar-button>
+  </ons-col>
+
+</ons-row>
+
+<ons-row style="padding-top:50%;">
+
+  <ons-col width="100%">
+    <div style=" padding: 0.5em;">
+      <div class="card card--material" style="padding-left: 2em; padding-right: 2em">
+        <div class="card__title card--material__title" style="font-weight: lighter; font-size: 25px;">
+          <ons-row>
+            <ons-col width="80%">
+              Password
+            </ons-col>
+            <ons-col width="20%">
+              <ons-button modifier="quiet" onclick="myNavigator.pushPage('templates/userprofile/editPassword.html')"><i class="fa fa-edit"></i></ons-button>
+            </ons-col>
+            <ons-col width="100%">
+              <div style="border: 1px solid; width: 10%; border-color: #DB4437"></div>
+
+            </ons-col>
+          </ons-row>
+        </div>
+        <div class="card__content card--material__content">Last Changed : March 2, 2019</div>
+      </div>
     </div>
-  </ons-toolbar>
-
-  <div class="background" style="background-color: white !important"></div>
-
-  <ons-row style="text-align: center;">
-    <ons-col width="100%" >
-      <img src="img/icon-user.png" style="height: 200px; margin-bottom: -30px;">
-      <p style="font-size: 20px; font-weight: 700" id="main"></p>
-      
-    </ons-col>
-    <ons-col width="50%" style="padding: 0.8em">
-      <ons-input id="username" modifier="underbar" placeholder="Username" float value=""></ons-input>
-    </ons-col>
-
-    <ons-col width="50%" style="padding: 0.8em">
-      <ons-input id="fullname" modifier="underbar" placeholder="Name" float value=""></ons-input>
-    </ons-col>
-
-    <ons-col width="100%" style="padding: 0.8em">
-      <ons-input id="email" modifier="underbar" placeholder="Email" float value="" style="width: 100%;"></ons-input>
-    </ons-col>
-
-    <ons-col width="100%" style="padding: 0.8em">
-      <ons-button  style="width: 40%; border-radius: 20px;" >Update</ons-button>
-    </ons-col>
-  </ons-row>
+  </ons-col>
+</ons-row>
 
 
 
@@ -47,27 +126,22 @@
 
 
 
+<script type="text/javascript">
+  function getUser(){
+    var username = localStorage.getItem("username");
+    var password = localStorage.getItem("password");
+    $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username: username, password: password},function(data){
+      console.log(data);
+      document.getElementById("fullname").innerHTML = data[0].U_fname+" "+data[0].U_Lname;
+      document.getElementById("contactNum").innerHTML = data[0].U_Contact;
+      document.getElementById("address").innerHTML = data[0].U_Address;
+      document.getElementById("email").innerHTML = data[0].U_Email;
+      document.getElementById("date").innerHTML = data[0].U_Date;
 
-  <script type="text/javascript">
-    function getUser() {
-      console.log("working");
-      var username = localStorage.getItem("username")
-      var password = localStorage.getItem("password")
-
-      $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username:username, password:password},function(data){
-        document.getElementById("username").value = data[0].U_username;
-        document.getElementById("fullname").value = data[0].U_fname+" "+data[0].U_Lname;
-        document.getElementById("email").value = data[0].U_Email;
-        document.getElementById("main").value = data[0].U_username;
-
-
-      });
-    }
-
-
-
-    getUser();
-  </script>
+    });
+  }
+getUser();
+</script>
 
 </ons-page>
 
