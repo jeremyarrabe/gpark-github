@@ -44,17 +44,20 @@
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
            
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username:username, password:password},function(data){
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser2.php",{username:username, password:password},function(data){
               if (data.length == 0) {
                 alert("Error: Username and/or Password");
+                console.log(data);
               }
 
               else{
-                location.href = "index.html";
+                
                 localStorage.setItem("username", data[0].U_username);
                 localStorage.setItem("password", data[0].U_Password);
                 localStorage.setItem("Fname", data[0].U_fname);
                 localStorage.setItem("Lname", data[0].U_Lname);
+                localStorage.setItem("userId", data[0].U_Id);
+                location.href = "index.html";
 
               }
             });

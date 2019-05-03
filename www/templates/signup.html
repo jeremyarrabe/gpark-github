@@ -1,0 +1,105 @@
+      <ons-page id="login">
+        <style type="text/css">
+          .text-input--material__label--active {
+            color: #2979FF;
+          }
+
+          .text-input--material:focus {
+            color: white;
+          }
+          .text-input.text-input--material{
+            color: white !important;
+          }
+        </style>
+
+        <ons-toolbar modifier="noshadow" style="background-color: #454A58 !important">
+          <div class="left" >
+            <ons-back-button >Back</ons-back-button>
+          </div>
+          <div class="center">
+            Log In
+          </div>
+        </ons-toolbar>
+
+        <div class="background" style="background-color: #454A58"></div>
+
+
+        <ons-row style="text-align: center; padding-top: 2%; padding-left: 0.8em; padding-right:  0.8em">
+          <ons-col width="100%" style="padding-top: 15%; text-align: center;">
+            <input type="file" name="file" id="file" value="Choose Image" accept="image/*" style="border-radius: 20px; background-color: #2979FF; color: white">
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="newUsername" modifier="underbar" placeholder="Username" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="newPassword" modifier="underbar" placeholder="Password" type="password" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="rePassword" modifier="underbar" placeholder="Re Enter Password" type="password" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="50%" style="padding: 5%">
+            <ons-input id="newFname" modifier="underbar" placeholder="First Name" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="50%" style="padding: 5%">
+            <ons-input id="newLname" modifier="underbar" placeholder="Last Name" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="newAddress" modifier="underbar" placeholder="Address" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="newEmail" modifier="underbar" placeholder="Email" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="newContact" modifier="underbar" placeholder="Contact No" type="number" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%">
+            <ons-button  style="width: 40%; border-radius: 20px;"  onclick="signup()">Sign Up</ons-button>
+          </ons-col>
+
+        </ons-row>
+
+
+        <script type="text/javascript">
+          function signup() {
+            var username = document.getElementById("newUsername").value;
+            var password = document.getElementById("newPassword").value;
+            var repassword = document.getElementById("rePassword").value;
+            var fname = document.getElementById("newFname").value;
+            var lname = document.getElementById("newLname").value;
+            var address = document.getElementById("newAddress").value;
+            var email = document.getElementById("newEmail").value;
+            var contact =  document.getElementById("newContact").value;
+            var picture = document.getElementById("file").value;
+            console.log(picture)
+            if ((username == "") || (password == "") || (fname == "") || (lname == "") || (address == "") || (email == "") ||  (contact == "")    ) {
+              ons.notification.alert({title:"Required", message:"All Fields are Required"});
+            }
+
+            else if(password != repassword){
+              ons.notification.alert({title:"Error", message:"Password doesnt Match"});
+            }
+
+            else{
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:email, contact:contact},function(data){
+                console.log(data);
+                console.log("insert");
+                ons.notification.toast('Account Created!', {
+                  timeout: 3000
+                });
+                myNavigator.pushPage('templates/login.html');
+
+
+              });
+
+            }
+          }
+
+
+        </script>
+
+
+
+
+
+
+      </ons-page>
