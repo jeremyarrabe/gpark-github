@@ -27,8 +27,8 @@
         <div class="background" style="background-color: white"></div>
 
         <ons-row>
-          <ons-col width="100%" style="background-color: transparent; height: 250px; background-size: 100% 100%;background-repeat: no-repeat; background-image: url('img/idol.jpg');">
-
+          <ons-col width="100%">
+            <img src="img/idol.jpg" style="height: auto;width: 100%;">
           </ons-col>
           <ons-col width="100%" style="margin-top: -5%; text-align: center;">
             <ons-button>Change Profile Pic</ons-button>
@@ -37,7 +37,7 @@
 
         <ons-row style="text-align: center; padding-top: 2%; padding-left: 0.8em; padding-right:  0.8em">
           <ons-col width="100%" style="padding: 5%">
-            <ons-input id="username" modifier="underbar" placeholder="Username" float style="width: 100%"></ons-input>
+            <ons-input id="usernames" modifier="underbar" placeholder="Username" float style="width: 100%"></ons-input>
           </ons-col>
           <ons-col width="50%" style="padding: 5%">
             <ons-input id="firstname" modifier="underbar" placeholder="First Name" float style="width: 100%"></ons-input>
@@ -46,18 +46,58 @@
             <ons-input id="lastname" modifier="underbar" placeholder="Last Name" float style="width: 100%"></ons-input>
           </ons-col>
           <ons-col width="100%" style="padding: 5%">
-            <ons-input id="address" modifier="underbar" placeholder="Address" float style="width: 100%"></ons-input>
+            <ons-input id="addresses" modifier="underbar" placeholder="Address" float style="width: 100%"></ons-input>
           </ons-col>
           <ons-col width="100%" style="padding: 5%">
-            <ons-input id="email" modifier="underbar" placeholder="Email" float style="width: 100%"></ons-input>
+            <ons-input id="emails" modifier="underbar" placeholder="Email" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 5%">
+            <ons-input id="contact" modifier="underbar" placeholder="Contact" type="number" float style="width: 100%"></ons-input>
           </ons-col>
         </ons-row>
 
         <ons-row style="text-align: center;">
           <ons-col width="100%">
-            <ons-button style=" border-radius: 20px; background-color:  #0F9D58">Save Changes</ons-button>
+            <ons-button style=" border-radius: 20px; background-color:  #0F9D58" onclick="updateProfile()">Save Changes</ons-button>
           </ons-col>
         </ons-row>
+
+
+
+        <script type="text/javascript">
+          function get(){
+            var id = localStorage.getItem("userId");
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{id: id},function(data){
+              var username = data[0].U_username;
+              document.getElementById("firstname").value = data[0].U_fname;
+              document.getElementById("lastname").value = data[0].U_Lname;
+              document.getElementById("usernames").value = username;
+              document.getElementById("contact").value = data[0].U_Contact;
+              document.getElementById("addresses").value = data[0].U_Address;
+              document.getElementById("emails").value = data[0].U_Email;
+              
+              console.log(data);
+
+            });
+          }
+
+          function updateProfile(){
+            var firstname = document.getElementById("firstname").value;
+            var lastname = document.getElementById("lastname").value;
+            var username = document.getElementById("usernames").value;
+            var contact =  document.getElementById("contact").value;
+            var address = document.getElementById("addresses").value;
+            var email = document.getElementById("emails").value;
+            var id = localStorage.getItem("userId");
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:email, id: id }, function(data){
+              localStorage.setItem("username",username);
+              ons.notification.toast('Profile Updated', { timeout: 2000 })
+              get();
+            });
+          }
+          get();
+        </script>
 
 
 

@@ -24,16 +24,16 @@
 
 
 <ons-row>
-  <ons-col width="100%" style="background-color: transparent; height: 250px; background-size: 100% 100%;background-repeat: no-repeat; background-image: url('img/idol.jpg');">
-
+  <ons-col width="100%">
+    <img src="img/idol.jpg" style="height: auto;width: 100%;">
   </ons-col>
 
-  <ons-col width="100%" style="margin-top: -20%;">
+  <ons-col width="100%" style="margin-top: -15%;">
     <div style="height: 200px; padding: 0.5em">
       <div class="card card--material" style="padding-left: 2em; padding-right: 2em">
         <div class="card__title card--material__title" style="font-weight: lighter; font-size: 25px;">
           <ons-row>
-            <ons-col width="80%">
+            <ons-col width="80%" id="hName">
               Jeremy Arrabe
             </ons-col>
             <ons-col width="20%">
@@ -41,7 +41,7 @@
             </ons-col>
             <ons-col width="100%">
               <div style="border: 1px solid; width: 10%; border-color: #DB4437"></div>
-              <p style="padding: 0px;padding-top: 2%; margin: 0px; font-size: 15px;">@jeremeheh</p>
+              <p style="padding: 0px;padding-top: 2%; margin: 0px; font-size: 15px;" id="username">@jeremeheh</p>
             </ons-col>
           </ons-row>
         </div>
@@ -112,7 +112,7 @@
             </ons-col>
           </ons-row>
         </div>
-        <div class="card__content card--material__content">Last Changed : March 2, 2019</div>
+        <div class="card__content card--material__content" id="lastChange">Last Changed : March 2, 2019</div>
       </div>
     </div>
   </ons-col>
@@ -128,16 +128,19 @@
 
 <script type="text/javascript">
   function getUser(){
-    var username = localStorage.getItem("username");
-    var password = localStorage.getItem("password");
-    $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username: username, password: password},function(data){
+    var id = localStorage.getItem("userId");
+
+    $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{id: id},function(data){
       console.log(data);
-      document.getElementById("fullname").innerHTML = data[0].U_fname+" "+data[0].U_Lname;
+      var fullname = data[0].U_fname+" "+data[0].U_Lname;
+      document.getElementById("hName").innerHTML = fullname;
+      document.getElementById("fullname").innerHTML = fullname;
+      document.getElementById("username").innerHTML = "@"+data[0].U_username;
       document.getElementById("contactNum").innerHTML = data[0].U_Contact;
       document.getElementById("address").innerHTML = data[0].U_Address;
       document.getElementById("email").innerHTML = data[0].U_Email;
-      document.getElementById("date").innerHTML = data[0].U_Date;
-
+      document.getElementById("date").innerHTML = "May 3, 2019";
+      document.getElementById("lastChange").innerHTML = "Last Changed: "+data[0].U_passwordDate;
     });
   }
 getUser();

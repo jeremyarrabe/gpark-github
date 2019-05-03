@@ -6,13 +6,15 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+    <!-- <script src="https://js.pusher.com/4.4/pusher.min.js"></script> -->
 
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
     <link rel="stylesheet" type="text/css" href="css/onsen/onsenui.css">
     <link rel="stylesheet" type="text/css" href="css/onsen/onsen-css-components.min.css">
 
+    <link rel="stylesheet" href="css/croppie.css" />
+    <script src="js/croppie.js"></script>
 
     <title>Gpark</title>
   </head>
@@ -26,7 +28,7 @@
     </div>
 
     <ons-splitter>
-      <ons-splitter-side id="menu" side="left" width="300px" collapse animation="push">
+      <ons-splitter-side id="menu" side="left" width="300px" collapse >
         <ons-page>
           <div class="background" style="background-color: white"></div>
           <ons-list>
@@ -394,13 +396,15 @@
 
          }
          else{
-          var username = localStorage.getItem("username");
-          var password = localStorage.getItem("password");
+          var id = localStorage.getItem("userId");
 
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{id:id},function(data){
+            ons.notification.toast('Welcome '+data[0].U_username, {
+                  timeout: 2000,
 
-          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{username:username, password:password},function(data){
+            });
             document.getElementById("userFullname").innerHTML = data[0].U_fname+" "+data[0].U_Lname;
-            document.getElementById("userTag").innerHTML =  "@"+data[0].U_username;
+            document.getElementById("userTag").innerHTML = "@"+data[0].U_username;
           });
 
 
@@ -448,7 +452,7 @@
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
    <script type="text/javascript" src="js/index.js"></script>
    <script type="text/javascript" src="js/custom-script.js"></script>
-   <script type="text/javascript" src="js/moment.js"></script>
+
 
  </body>
  </html>
