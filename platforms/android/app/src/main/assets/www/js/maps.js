@@ -165,7 +165,7 @@
                 return function () {
                   var getLat = marker.getPosition().lat();
                   var getLng = marker.getPosition().lng();
-                  var getId = data[i].D_Id;
+                  var getId = data[i].D_pId;
                   var profile = "templates/park_profile.html";
                   infowindow.setContent("<button class='button button--material--flat' onclick='viewLocation("+getLat+","+getLng+","+getId+")'>View</button>");
                   infowindow.open(map, marker);
@@ -353,6 +353,9 @@
 
       google.maps.event.addListener(maps, 'click', function(event) {
         placeMarker(event.latLng);
+        localStorage.setItem("eventLat", event.latLng.lat());
+        localStorage.setItem("eventLng", event.latLng.lng());
+
       });
 
 

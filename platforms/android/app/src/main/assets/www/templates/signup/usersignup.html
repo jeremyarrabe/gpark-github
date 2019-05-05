@@ -13,11 +13,11 @@
 
           .material-select-input-inactive-color{
             color:black !important;
-            }
+          }
 
-            .text-input.text-input--material.text-input--underbar{
-              color:black !important;
-            }
+          .text-input.text-input--material.text-input--underbar{
+            color:black !important;
+          }
         </style>
 
         <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
@@ -39,7 +39,12 @@
 
 
 
-
+          <ons-col width="100%" style="padding: 3%">
+            <ons-list-header style="background-color: #F3F3F3">Profile Picture</ons-list-header>
+            <ons-list-item >
+              <input type="file" name="profilePic" id="profilePic" accept="image/*" style="width: 100%">
+            </ons-list-item>
+          </ons-col>
           <ons-col width="100%" style="padding: 3%">
             <ons-input id="newUsername" modifier="underbar" placeholder="Username" float style="width: 100%"></ons-input>
           </ons-col>
@@ -91,8 +96,7 @@
             var address = document.getElementById("newAddress").value;
             var email = document.getElementById("newEmail").value;
             var contact =  document.getElementById("newContact").value;
-            var picture = document.getElementById("file").value;
-            console.log(picture)
+
             if ((username == "") || (password == "") || (fname == "") || (lname == "") || (address == "") || (email == "") ||  (contact == "")    ) {
               ons.notification.alert({title:"Required", message:"All Fields are Required"});
             }
@@ -102,26 +106,46 @@
             }
 
             else{
-              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:email, contact:contact},function(data){
-                console.log(data);
-                console.log("insert");
-                ons.notification.toast('Account Created!', {
-                  timeout: 3000
-                });
-                myNavigator.pushPage('templates/login.html');
-
-
+              $(document).ready(function() {     
+              var file_data = $('#profilePic').prop('files')[0]; 
+              var form_data = new FormData();                  
+              form_data.append('file', file_data);
+              $.ajax({
+                url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+                type: "POST",
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(data){
+                  console.log(data);
+                }
               });
 
-            }
-          }
+
+            });
+            var file_data = $('#profilePic').prop('files')[0]; 
+            var profile = file_data.name;
+             $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:email, contact:contact, profile: profile},function(data){
+              console.log(data);
+              console.log("insert");
+              ons.notification.toast('Account Created!', {
+                timeout: 3000
+              });
+              myNavigator.pushPage('templates/login.html');
 
 
-        </script>
+            });
+
+           }
+         }
+
+
+       </script>
 
 
 
 
 
 
-      </ons-page>
+     </ons-page>

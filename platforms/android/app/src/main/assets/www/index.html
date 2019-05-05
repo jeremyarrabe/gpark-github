@@ -16,6 +16,17 @@
     <link rel="stylesheet" href="css/croppie.css" />
     <script src="js/croppie.js"></script>
 
+
+    <style type="text/css">
+      .hide-rate{
+        display: none;
+      }
+
+      .show-rate{
+        display: block;
+      }
+    </style>
+
     <title>Gpark</title>
   </head>
   <body>
@@ -153,23 +164,46 @@
                           <ons-col width="100%"  style="padding: 3%">
                             <ons-list-header style="background-color: #F3F3F3">Business Permit</ons-list-header>
                             <ons-list-item >
-                              <input type="file" id=""  style="width: 100%;"> 
+                              <input type="file" id="filePermit"  multiple="multiple" accept="image/*" style="width: 100%;"> 
                             </ons-list-item>
                           </ons-col>
 
                           <ons-col width="100%" style="padding: 3%">
                             <ons-list-header style="background-color: #F3F3F3">Parking Details</ons-list-header>
                             <ons-list-item >
-                              <ons-input id="newAddress" modifier="underbar" placeholder="Parking Name" float style="width: 100%"></ons-input>
-                              <ons-input id="newAddress" modifier="underbar" placeholder="Parking Address" float style="width: 100%; margin-top: 8%"></ons-input>
-                              <ons-input id="newAddress" modifier="underbar" placeholder="Contact Number" type="number"float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="pName" modifier="underbar" placeholder="Parking Name" float style="width: 100%"></ons-input>
+                              <ons-input id="pAddress" modifier="underbar" placeholder="Parking Address" float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="pContact" modifier="underbar" placeholder="Contact Number" type="number"float style="width: 100%; margin-top: 8%"></ons-input>
 
                             </ons-list-item>
                           </ons-col>
+
+                          <ons-col width="100%"  style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Parking Type</ons-list-header>
+                            <ons-list-item tappable  onclick="typeCheck('free')">
+                              <label class="left">
+                                <ons-radio name="color" input-id="free"></ons-radio>
+                              </label>
+                              <label for="free" class="center" >
+                                Free
+                              </label>
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="typeCheck('paid')">
+                              <label class="left">
+                                <ons-radio name="color" input-id="paid" ></ons-radio>
+                              </label>
+                              <label for="paid" class="center">
+                                Paid
+                              </label>
+                            </ons-list-item>
+                          </ons-col>
+
+
                           <ons-col width="100%"  style="padding: 3%">
                             <ons-list-header style="background-color: #F3F3F3">Parking Pictures (Max of 3 Pictures)</ons-list-header>
                             <ons-list-item >
-                              <input type="file" id="filePermit" multiple="multiple" style="width: 100%;"> 
+                              <input type="file" id="filePictures" multiple="multiple" accept="image/*" style="width: 100%;"> 
                             </ons-list-item>
                           </ons-col>
 
@@ -178,13 +212,13 @@
                             <ons-list-header style="background-color: #F3F3F3">Availability</ons-list-header>
                             <ons-list-item>
                               <ons-col width="45%" >
-                                <ons-input id="newAddress" modifier="underbar" placeholder="Opening Time" float style="width: 100%"  class="openingTime"></ons-input>
+                                <ons-input id="pOpen" modifier="underbar" placeholder="Opening Time" float style="width: 100%"  class="openingTime"></ons-input>
                               </ons-col>
                               <ons-col width="10%">
                                 <p>-</p>
                               </ons-col>
                               <ons-col width="45%" >
-                                <ons-input id="newAddress" modifier="underbar" placeholder="Closing Time" float style="width: 100%" class="closingTime"></ons-input>
+                                <ons-input id="pClose" modifier="underbar" placeholder="Closing Time" float style="width: 100%" class="closingTime"></ons-input>
                               </ons-col>
                             </ons-list-item>
                           </ons-col>
@@ -193,28 +227,30 @@
                             <ons-list-header style="background-color: #F3F3F3">Spaces</ons-list-header>
                             <ons-list-item>
                               <ons-col width="45%">
-                                <ons-input id="newAddress" modifier="underbar" placeholder="Max" float style="width: 100%"  type="number"></ons-input>
+                                <ons-input id="pSpaceMin" modifier="underbar" placeholder="Min" float style="width: 100%"  type="number"></ons-input>
                               </ons-col>
                               <ons-col width="10%">
                                 <p>-</p>
                               </ons-col>
                               <ons-col width="45%">
-                                <ons-input id="newAddress" modifier="underbar" placeholder="Min" float style="width: 100%" type="number"></ons-input>
+                                <ons-input id="pSpaceMax" modifier="underbar" placeholder="Max" float style="width: 100%" type="number"></ons-input>
                               </ons-col>
                             </ons-list-item>
                           </ons-col>
 
-                          <ons-col width="100%" style="padding: 3%">
-                            <ons-list-header style="background-color: #F3F3F3">Rate(s) in Peso</ons-list-header>
+
+
+                          <ons-col width="100%" style="padding: 3%" class="hide-rate" id="rate">
+                            <ons-list-header style="background-color: #F3F3F3">Rate in Peso</ons-list-header>
                             <ons-list-item>
                               <ons-col width="45%">
-                                <ons-input id="newAddress" modifier="underbar" placeholder="Min" float style="width: 100%"  type="number"></ons-input>
+                                <ons-input id="pRateMin" modifier="underbar" placeholder="Min" float style="width: 100%"  type="number"></ons-input>
                               </ons-col>
                               <ons-col width="10%">
                                 <p>-</p>
                               </ons-col>
                               <ons-col width="45%">
-                                <ons-input id="newAddress" modifier="underbar" placeholder="Max" float style="width: 100%" type="number"></ons-input>
+                                <ons-input id="pRateMax" modifier="underbar" placeholder="Max" float style="width: 100%" type="number"></ons-input>
                               </ons-col>
                             </ons-list-item>
                           </ons-col>
@@ -251,28 +287,69 @@
                           <div class="center" style="color: black !important">
                             Parking Policy
                           </div>
-                          <div class="right" style="color: black !important">
+                          <!-- <div class="right" style="color: black !important">
                             <ons-toolbar-button onclick="registerOwner()">
                              <i class="fa fa-check-circle"></i> 
                            </ons-toolbar-button>
-                         </div>
+                         </div> -->
                        </ons-toolbar>
 
                        <div class="background" style="background-color: #F3F3F3"></div>
 
                        <ons-row style="padding-top: 0px; padding-left: 0.8em; padding-right:  0.8em; text-align: center;">
-                        <ons-col width="100%" >
-                          <textarea class="textarea" id="0" rows="8" placeholder="Enter Policy" style="width: 100%;"></textarea>
-                        </ons-col>
+
 
                         <ons-col width="100%" id="addingMoreFields">
 
                         </ons-col>
 
                         <ons-col width="100%" style=" margin-top: 3%" >
-                          <ons-button style="width: 40%; border-radius: 20px; background-color:  #0F9D58" onclick="addMore()"><i class="fa fa-plus-circle"></i> Add More</ons-button>
-                          <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
-                        </ons-col>
+                          <ons-row style="text-align: center;">
+
+                            <ons-col width="100%">
+                              <ons-list-header style="background-color: #F3F3F3">Create Policy</ons-list-header>
+                              <ons-list style="background-color: #F3F3F3">
+                                <ons-list-item tappable>
+                                  <label class="left">
+                                    <ons-input id="noPolicy" >Enter Number of Policies</ons-input>
+                                  </label>
+                                  <label class="right">
+                                    <ons-button  onclick="generate()" id="generateBtn" >Generate</ons-button>
+                                  </label>
+                                </ons-list-item>
+                              </ons-list>
+                            </ons-col>
+
+                            <ons-col width="100%">
+                              <ons-list style="background-color: #F3F3F3">
+                                <ons-list-item>
+                                  OR
+                                </ons-list-item>
+                              </ons-list>
+                            </ons-col>
+
+                            <ons-col width="100%">
+                              <ons-list-header style="background-color: #F3F3F3">Upload Policy (.txt .docx)</ons-list-header>
+                              <ons-list style="background-color: #F3F3F3">
+                                <ons-list-item tappable >
+                                  <input type="file" id="filePolicy"  style="width: 100%;" onchange="enableButton()">   
+
+                                </ons-list>
+                              </ons-col>
+
+
+
+                              <ons-col width="100%">
+                                <ons-button style="width: 50%; border-radius: 20px;" disabled id="signup"><i class="fa fa-circle-notch" ></i> Sign Up</ons-button>
+
+                              </ons-col>
+
+
+                            </ons-row>
+
+
+
+                          </ons-col>
 
 
 
@@ -286,6 +363,31 @@
 
                       </ons-page>
 
+                    </template>
+
+                    <template id="viewPolicyTemplate.html">
+                      <ons-page id="viewPolicyTemplate">
+                        <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
+                          <div class="left" >
+                            <ons-back-button style="color: black">Back</ons-back-button>
+                          </div>
+                          <div class="center" style="color: black !important">
+                            Create Policy
+                          </div>
+                          <div class="right" style="color: black !important">
+                            <ons-toolbar-button onclick="registerOwner()">
+                              <i class="fa fa-check"></i>
+                            </ons-toolbar-button>
+                          </div>
+
+                        </ons-toolbar>
+                        <div class="background" style="background-color: #F3F3F3"></div>
+
+                        <ons-col width="100%" id="policies">
+
+                        </ons-col>
+
+                      </ons-page>
                     </template>
 
 
@@ -315,63 +417,127 @@
                         }, false);
                       </script>
                       <script>
+
+                        function enableButton(){
+                          $( "#signup" ).removeAttr("disabled");
+                          $( "#noPolicy" ).attr("disabled", "true");
+                          $( "#generateBtn" ).attr("disabled", "true");
+
+                        }
+
+                        function generate(){
+                          var max = document.getElementById("noPolicy").value;
+                          localStorage.setItem("generateMax", max);
+
+
+                          myNavigator.pushPage('viewPolicyTemplate.html')
+                        }
                         /*<ons-col width="100%" >
                             <textarea class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%;"></textarea>
                             </ons-col>*/
 
-                            function addMore(){
-
-
-                              var max = 10;
-                              var policy = " ";
-
-
-                              if (localStorage.getItem("i") < max) {
-                                var jem =parseInt(localStorage.getItem("i"));
-                                var total = jem++;
-                                console.log(total)
-                                localStorage.setItem("i", jem);
-                                policy += '<textarea id="'+jem+'" class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%; margin-top:3%"></textarea>';
-
+                            var pTypes = "";
+                            function typeCheck(type){
+                              if (type == "free") {
+                                $("#rate").removeClass('show-rate');
+                                $("#rate").addClass('hide-rate');
+                                pTypes = "Free";
                               }
-                          /*for( i < 5; i++){
-
-                            policy += '<textarea class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%; margin-top:3%"></textarea>';
-
-                          }*/
-
-                          document.getElementById("addingMoreFields").innerHTML += policy;
-                        }
-
-                        function registerOwner(){
-                           $(document).ready(function() {     
-                              
-                              var filecount = $('#filePermit')[0].files;
-                              console.log(filecount.length);
-                              for(var i = 0 ; i <= filecount.length; i++){
-                                var file_data = $('#filePermit').prop('files')[i]; 
-                                var form_data = new FormData();                  
-                                form_data.append('file', file_data);
-                                $.ajax({
-                                  url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
-                                  type: "POST",
-                                  data: form_data,
-                                  contentType: false,
-                                  cache: false,
-                                  processData:false,
-                                  success: function(data){
-                                    console.log(data);
-                                  }
-                                });
-                                console.log(i);
+                              if (type == "paid") {
+                                $("#rate").removeClass('hide-rate');
+                                $("#rate").addClass('show-rate');
+                                pTypes = "Paid"
                               }
 
-                              
+
+                            }
+
+
+                            function registerOwner(){
+                              var pName = document.getElementById("pName").value;
+                              var pAddress = document.getElementById("pAddress").value;
+                              var pContact = document.getElementById("pContact").value;
+                              var pOpen = document.getElementById("pOpen").value;
+                              var pClose = document.getElementById("pClose").value;
+                              var pSpaceMax = document.getElementById("pSpaceMax").value;
+                              var pSpaceMin = document.getElementById("pSpaceMin").value;
+                              var pRateMin = document.getElementById("pRateMin").value;
+                              var pRateMax = document.getElementById("pRateMax").value;
+                              var pType = pTypes;
+                              var pLat = localStorage.getItem("eventLat");
+                              var pLng = localStorage.getItem("eventLng");
+                              var pId = localStorage.getItem("parkingId");
+
+                              var checkPolicy =  parseInt(localStorage.getItem("generateMax"));
+
+                              for (var i = 1; i <= checkPolicy; i++) {
+                                var index = "policy"+i;
+
+                                var policy = document.getElementById(index).value;
+                                var po_pId = localStorage.getItem("parkingId");
+                                console.log(po_pId);
+                                $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addPolicy.php",{po_Content: policy, po_pId: po_pId},function(data){
+
+                                })
+
+
+                              }
+
+                          $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_insertOwner.php",{pName: pName, pAddress:pAddress, pContact:pContact, pOpen:pOpen, pClose:pClose, pSpaceMax:pSpaceMax , pSpaceMin:pSpaceMin, pRateMin:pRateMin, pRateMax:pRateMax, pLat: pLat, pLng: pLng, pLat:pLat, pLng:pLng, pType: pType, pId: pId },function(data){
+                            console.log("inserted");
+
+                          });
+
+
+
+                          $(document).ready(function() {     
+                            var filePermit = $('#filePermit')[0].files;
+                            var filePictures = $('#filePictures')[0].files;
+
+                            console.log(filePermit.length,filePictures.length);
+
+                            for(var i = 0 ; i <= filePermit.length; i++){
+                              var file_data = $('#filePermit').prop('files')[i]; 
+                              var form_data = new FormData();                  
+                              form_data.append('file', file_data);
+                              $.ajax({
+                                url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+                                type: "POST",
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData:false,
+                                success: function(data){
+                                  console.log(data);
+                                }
+                              });
+                              console.log(i);
+                            }
+
+                            for(var i = 0 ; i <= filePictures.length; i++){
+                              var file_data = $('#filePictures').prop('files')[i]; 
+                              var form_data = new FormData();                  
+                              form_data.append('file', file_data);
+                              $.ajax({
+                                url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+                                type: "POST",
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData:false,
+                                success: function(data){
+                                  console.log(data);
+                                }
+                              });
+                              console.log(i);
+                            }
+
+
                             
                           });
                         }
-                         
-                       
+
+
 
 
                       </script>
