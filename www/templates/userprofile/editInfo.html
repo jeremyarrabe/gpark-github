@@ -28,7 +28,7 @@
 
         <ons-row>
           <ons-col width="100%">
-            <img src="img/idol.jpg" style="height: auto;width: 100%;">
+            <img src=""  style="height: auto;width: 100%;" id="profilepic1">
           </ons-col>
           <ons-col width="100%" style="margin-top: -5%; text-align: center;">
             <ons-button>Change Profile Pic</ons-button>
@@ -76,6 +76,8 @@
               document.getElementById("contact").value = data[0].U_Contact;
               document.getElementById("addresses").value = data[0].U_Address;
               document.getElementById("emails").value = data[0].U_Email;
+              var profile2 = "https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].U_ProfilePic;
+             $("#profilepic1").attr("src",profile2);
               
               console.log(data);
 

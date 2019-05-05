@@ -332,13 +332,13 @@
 
 
           function getContent(){
-            var localId = localStorage.getItem("getId")
+            var localId = localStorage.getItem("getId");
             $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoSpecific.php",{D_Id : localId }, function(data){
               console.log(data);
               document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #27ae60">Open</span>';
               document.getElementById("p_ParkingAddress").innerHTML = data[0].D_Description;
               document.getElementById("p_Total").innerHTML = data[0].D_Inuse+'/'+data[0].D_Total;
-              document.getElementById("p_Time").innerHTML = data[0].D_Opening+'AM - '+data[0].D_Closing+'PM';
+              document.getElementById("p_Time").innerHTML = data[0].D_Opening+'-'+data[0].D_Closing;
 
 
               

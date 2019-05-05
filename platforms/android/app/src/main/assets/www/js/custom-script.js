@@ -102,9 +102,7 @@ document.addEventListener('init', function (event) {
     $("#nav-settings").removeClass("active-state");
   }
 
-  if(event.target.id == "login"){
-    var title = event.target.data && event.target.data.title ? event.target.data.title : '';
-    event.target.querySelector('ons-toolbar div.center').textContent = title;  }
+
 
     if(event.target.id == "profile"){
       var title = event.target.data && event.target.data.title ? event.target.data.title : '';
@@ -120,13 +118,18 @@ document.addEventListener('init', function (event) {
 
     }
 
+    if(event.target.id == "ownersignup"){
+
+       locationSelector();
+       localStorage.setItem("i", 0);
+
+    }
+
+
+
+
 
   });
-
-
-
-
-
 
 
 

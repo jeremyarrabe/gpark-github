@@ -9,7 +9,7 @@
 </style> -->
 
 
-<ons-toolbar modifier="noshadow transparent">
+<ons-toolbar >
   <div class="center">
 
   </div>
@@ -25,7 +25,7 @@
 
 <ons-row>
   <ons-col width="100%">
-    <img src="img/idol.jpg" style="height: auto;width: 100%;">
+    <img src="" style="height: auto;width: 100%;" id="profilepic">
   </ons-col>
 
   <ons-col width="100%" style="margin-top: -15%;">
@@ -40,7 +40,7 @@
               <ons-button modifier="quiet" onclick="myNavigator.pushPage('templates/userprofile/editInfo.html')"><i class="fa fa-edit"></i></ons-button>
             </ons-col>
             <ons-col width="100%">
-              <div style="border: 1px solid; width: 10%; border-color: #DB4437"></div>
+              <div style="border: 1px solid; width: 10%; border-color: #DB4437;background-color: #DB4437; "></div>
               <p style="padding: 0px;padding-top: 2%; margin: 0px; font-size: 15px;" id="username">@jeremeheh</p>
             </ons-col>
           </ons-row>
@@ -107,7 +107,7 @@
               <ons-button modifier="quiet" onclick="myNavigator.pushPage('templates/userprofile/editPassword.html')"><i class="fa fa-edit"></i></ons-button>
             </ons-col>
             <ons-col width="100%">
-              <div style="border: 1px solid; width: 10%; border-color: #DB4437"></div>
+              <div style="border: 1px solid; width: 10%; border-color: #DB4437;background-color: #DB4437;"></div>
 
             </ons-col>
           </ons-row>
@@ -141,6 +141,9 @@
       document.getElementById("email").innerHTML = data[0].U_Email;
       document.getElementById("date").innerHTML = "May 3, 2019";
       document.getElementById("lastChange").innerHTML = "Last Changed: "+data[0].U_passwordDate;
+      document.getElementById("profilepic").innerHTML = "May 3, 2019";
+      var profile = "https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].U_ProfilePic;
+      $("#profilepic").attr("src",profile);
     });
   }
 getUser();

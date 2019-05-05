@@ -1,0 +1,151 @@
+      <ons-page id="ownersignup">
+
+
+        <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
+          <div class="left" >
+            <ons-back-button style="color: black">Back</ons-back-button>
+          </div>
+          <div class="center" style="color: black !important">
+
+          </div>
+        </ons-toolbar>
+
+        <div class="background" style="background-color: #F3F3F3"></div>
+
+
+        <ons-row style="text-align: center; padding-top: 0px; padding-left: 0.8em; padding-right:  0.8em">
+          <ons-col width="100%">
+            <p style="color: black; font-size: 25px; font-weight: 700;text-align: left;padding-left: 5%;">Parking Owner Sign Up</p>
+          </ons-col>
+
+
+
+
+          <ons-col width="100%" style="padding: 3%">
+            <ons-list-header style="background-color: #F3F3F3">Parking Details</ons-list-header>
+            <ons-list-item >
+              <ons-input id="newAddress" modifier="underbar" placeholder="Parking Name" float style="width: 100%"></ons-input>
+              <ons-input id="newAddress" modifier="underbar" placeholder="Parking Address" float style="width: 100%; margin-top: 8%"></ons-input>
+            </ons-list-item>
+          </ons-col>
+
+          <ons-col width="100%" style="padding: 3%">
+            <ons-list-header style="background-color: #F3F3F3">Availability</ons-list-header>
+            <ons-list-item>
+              <ons-col width="50%" style="padding: 3%">
+                  <ons-input id="newAddress" modifier="underbar" placeholder="Opening Time" float style="width: 100%"  class="openingTime"></ons-input>
+              </ons-col>
+              <ons-col width="50%" style="padding: 3%">
+                  <ons-input id="newAddress" modifier="underbar" placeholder="Closing Time" float style="width: 100%" class="closingTime"></ons-input>
+              </ons-col>
+
+
+            </ons-list-item>
+          </ons-col>
+
+          <ons-col width="100%" style="padding: 3%">
+            <ons-list-header style="background-color: #F3F3F3">Parking Location</ons-list-header>
+            <ons-list-item >
+              <div id="mapSelect" style="height: 200px; width: 100%; background-color: red"></div>
+            </ons-list-item>
+          </ons-col>
+          
+
+
+
+
+          <ons-col width="100%" style="padding: 3%">
+            <ons-input id="newAddress" modifier="underbar" placeholder="Address" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 3%">
+            <ons-input id="newEmail" modifier="underbar" placeholder="Email" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%" style="padding: 3%">
+            <ons-input id="newContact" modifier="underbar" placeholder="Contact No" type="number" float style="width: 100%"></ons-input>
+          </ons-col>
+          <ons-col width="100%">
+            <ons-button  style="width: 40%; border-radius: 20px;"  onclick="signup()">Sign Up</ons-button>
+            <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
+          </ons-col>
+
+        </ons-row>
+
+
+
+
+
+
+
+
+
+
+      </ons-page>
+
+        <script type="text/javascript">
+
+
+
+
+          new Picker(document.querySelector('.openingTime'), {
+            format: 'HH:mm',
+
+            headers: true,
+            ampm: false,
+            text: {
+              title: 'Pick a time',
+            },
+          });
+
+          new Picker(document.querySelector('.closingTime'), {
+            format: 'HH:mm',
+
+            headers: true,
+            ampm: true,
+            text: {
+              title: 'Pick a time',
+            },
+          });
+
+
+          function signup() {
+
+
+
+
+
+
+            var username = document.getElementById("newUsername").value;
+            var password = document.getElementById("newPassword").value;
+            var repassword = document.getElementById("rePassword").value;
+            var fname = document.getElementById("newFname").value;
+            var lname = document.getElementById("newLname").value;
+            var address = document.getElementById("newAddress").value;
+            var email = document.getElementById("newEmail").value;
+            var contact =  document.getElementById("newContact").value;
+            var picture = document.getElementById("file").value;
+            console.log(picture)
+            if ((username == "") || (password == "") || (fname == "") || (lname == "") || (address == "") || (email == "") ||  (contact == "")    ) {
+              ons.notification.alert({title:"Required", message:"All Fields are Required"});
+            }
+
+            else if(password != repassword){
+              ons.notification.alert({title:"Error", message:"Password doesnt Match"});
+            }
+
+            else{
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:email, contact:contact},function(data){
+                console.log(data);
+                console.log("insert");
+                ons.notification.toast('Account Created!', {
+                  timeout: 3000
+                });
+                myNavigator.pushPage('templates/login.html');
+
+
+              });
+
+            }
+          }
+
+
+        </script>

@@ -125,6 +125,172 @@
 
 
 
+                    <template id="ownersignup.html">
+                      <ons-page id="ownersignup">
+
+
+                        <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
+                          <div class="left" >
+                            <ons-back-button style="color: black">Back</ons-back-button>
+                          </div>
+                          <div class="center" style="color: black !important">
+
+                          </div>
+                          <div class="right" style="color: black !important">
+                            <ons-toolbar-button onclick="myNavigator.pushPage('addPolicy.html')">
+                              <i class="fa fa-chevron-circle-right"></i>
+                            </ons-toolbar-button>
+                          </div>
+                        </ons-toolbar>
+
+                        <div class="background" style="background-color: #F3F3F3"></div>
+
+                        <ons-row style="text-align: center; padding-top: 0px; padding-left: 0.8em; padding-right:  0.8em">
+                          <ons-col width="100%">
+                            <p style="color: black; font-size: 25px; font-weight: 700;text-align: left;padding-left: 5%;">Parking Owner Sign Up</p>
+                          </ons-col>
+
+                          <ons-col width="100%"  style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Business Permit</ons-list-header>
+                            <ons-list-item >
+                              <input type="file" id=""  style="width: 100%;"> 
+                            </ons-list-item>
+                          </ons-col>
+
+                          <ons-col width="100%" style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Parking Details</ons-list-header>
+                            <ons-list-item >
+                              <ons-input id="newAddress" modifier="underbar" placeholder="Parking Name" float style="width: 100%"></ons-input>
+                              <ons-input id="newAddress" modifier="underbar" placeholder="Parking Address" float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="newAddress" modifier="underbar" placeholder="Contact Number" type="number"float style="width: 100%; margin-top: 8%"></ons-input>
+
+                            </ons-list-item>
+                          </ons-col>
+                          <ons-col width="100%"  style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Parking Pictures (Max of 3 Pictures)</ons-list-header>
+                            <ons-list-item >
+                              <input type="file" id="filePermit" multiple="multiple" style="width: 100%;"> 
+                            </ons-list-item>
+                          </ons-col>
+
+
+                          <ons-col width="100%" style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Availability</ons-list-header>
+                            <ons-list-item>
+                              <ons-col width="45%" >
+                                <ons-input id="newAddress" modifier="underbar" placeholder="Opening Time" float style="width: 100%"  class="openingTime"></ons-input>
+                              </ons-col>
+                              <ons-col width="10%">
+                                <p>-</p>
+                              </ons-col>
+                              <ons-col width="45%" >
+                                <ons-input id="newAddress" modifier="underbar" placeholder="Closing Time" float style="width: 100%" class="closingTime"></ons-input>
+                              </ons-col>
+                            </ons-list-item>
+                          </ons-col>
+
+                          <ons-col width="100%" style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Spaces</ons-list-header>
+                            <ons-list-item>
+                              <ons-col width="45%">
+                                <ons-input id="newAddress" modifier="underbar" placeholder="Max" float style="width: 100%"  type="number"></ons-input>
+                              </ons-col>
+                              <ons-col width="10%">
+                                <p>-</p>
+                              </ons-col>
+                              <ons-col width="45%">
+                                <ons-input id="newAddress" modifier="underbar" placeholder="Min" float style="width: 100%" type="number"></ons-input>
+                              </ons-col>
+                            </ons-list-item>
+                          </ons-col>
+
+                          <ons-col width="100%" style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Rate(s) in Peso</ons-list-header>
+                            <ons-list-item>
+                              <ons-col width="45%">
+                                <ons-input id="newAddress" modifier="underbar" placeholder="Min" float style="width: 100%"  type="number"></ons-input>
+                              </ons-col>
+                              <ons-col width="10%">
+                                <p>-</p>
+                              </ons-col>
+                              <ons-col width="45%">
+                                <ons-input id="newAddress" modifier="underbar" placeholder="Max" float style="width: 100%" type="number"></ons-input>
+                              </ons-col>
+                            </ons-list-item>
+                          </ons-col>
+
+
+
+                          <ons-col width="100%" style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Parking Location</ons-list-header>
+                            <ons-list-item >
+                              <div id="mapSelect" style="height: 50vh; width: 100%; background-color: red"></div>
+                            </ons-list-item>
+                          </ons-col>
+
+
+                          
+
+                          <!-- <ons-col width="100%">
+                            <ons-button  style="width: 40%; border-radius: 20px;"  onclick="myNavigator.pushPage('addPolicy.html')">Next</ons-button>
+                            
+                          </ons-col> -->
+                        </ons-row>
+
+                      </ons-page>
+                    </template>
+
+
+
+                    <template id="addPolicy.html">
+                      <ons-page id="addPolicy">
+                        <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
+                          <div class="left" >
+                            <ons-back-button style="color: black">Back</ons-back-button>
+                          </div>
+                          <div class="center" style="color: black !important">
+                            Parking Policy
+                          </div>
+                          <div class="right" style="color: black !important">
+                            <ons-toolbar-button onclick="registerOwner()">
+                             <i class="fa fa-check-circle"></i> 
+                           </ons-toolbar-button>
+                         </div>
+                       </ons-toolbar>
+
+                       <div class="background" style="background-color: #F3F3F3"></div>
+
+                       <ons-row style="padding-top: 0px; padding-left: 0.8em; padding-right:  0.8em; text-align: center;">
+                        <ons-col width="100%" >
+                          <textarea class="textarea" id="0" rows="8" placeholder="Enter Policy" style="width: 100%;"></textarea>
+                        </ons-col>
+
+                        <ons-col width="100%" id="addingMoreFields">
+
+                        </ons-col>
+
+                        <ons-col width="100%" style=" margin-top: 3%" >
+                          <ons-button style="width: 40%; border-radius: 20px; background-color:  #0F9D58" onclick="addMore()"><i class="fa fa-plus-circle"></i> Add More</ons-button>
+                          <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
+                        </ons-col>
+
+
+
+                          <!-- <ons-col width="100%">
+                            <ons-button  style="width: 40%; border-radius: 20px;"  onclick="myNavigator.pushPage('addPolicy.html')">Next</ons-button>
+                            <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
+                          </ons-col> -->
+                        </ons-row>
+
+
+
+                      </ons-page>
+
+                    </template>
+
+
+
+
 
 
 
@@ -132,327 +298,88 @@
 
 
                     <script type="text/javascript" src="cordova.js"></script>
-
-
                     <script type="text/javascript" src="js/onsen/onsenui.min.js"></script>
-
-                    <script type="text/javascript">
-                      $
-                    </script>
-
                     <script type="text/javascript">
 
-                      document.addEventListener('deviceready', function () {
+                     document.addEventListener('deviceready', function () {
+                      console.log("OneSignal");
+                          // Enable to debug issues.
+                          // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+                          var notificationOpenedCallback = function(jsonData) {
+                            console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+                          };
+                          window.plugins.OneSignal
+                          .startInit("d1a63136-9931-4264-82a4-293c0521c0dd")
+                          .handleNotificationOpened(notificationOpenedCallback)
+                          .endInit();
+                        }, false);
+                      </script>
+                      <script>
+                        /*<ons-col width="100%" >
+                            <textarea class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%;"></textarea>
+                            </ons-col>*/
 
-                        console.log("OneSignal");
-    // Enable to debug issues.
-    // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
-    var notificationOpenedCallback = function(jsonData) {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    };
-    window.plugins.OneSignal
-    .startInit("d1a63136-9931-4264-82a4-293c0521c0dd")
-    .handleNotificationOpened(notificationOpenedCallback)
-    .endInit();
-  }, false);
-</script>
-<script>
-
-
-  var map;
-  function initMap() {
-
-
-    var icon = {
-          url: "img/my_location_icon.png", // url
-          scaledSize: new google.maps.Size(15, 15), // scaled size
-          origin: new google.maps.Point(0,0), // origin
-          anchor: new google.maps.Point(0, 0) // anchor
-        };
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 14.832665, lng: 120.282720},
-          zoom: 13,
-          disableDefaultUI: true,
-          gestureHandling: 'greedy',
-          styles:[
-          {
-            "featureType": "all",
-            "elementType": "all",
-            "stylers": [
-            {
-              "saturation": "32"
-            },
-            {
-              "lightness": "-3"
-            },
-            {
-              "visibility": "on"
-            },
-            {
-              "weight": "1.18"
-            }
-            ]
-          },
-          {
-            "featureType": "administrative",
-            "elementType": "labels",
-            "stylers": [
-            {
-              "visibility": "off"
-            }
-            ]
-          },
-          {
-            "featureType": "landscape",
-            "elementType": "labels",
-            "stylers": [
-            {
-              "visibility": "off"
-            }
-            ]
-          },
-          {
-            "featureType": "landscape.man_made",
-            "elementType": "all",
-            "stylers": [
-            {
-              "saturation": "-70"
-            },
-            {
-              "lightness": "14"
-            }
-            ]
-          },
-          {
-            "featureType": "poi",
-            "elementType": "labels",
-            "stylers": [
-            {
-              "visibility": "off"
-            }
-            ]
-          },
-          {
-            "featureType": "road",
-            "elementType": "labels",
-            "stylers": [
-            {
-              "visibility": "on"
-            }
-            ]
-          },
-          {
-            "featureType": "transit",
-            "elementType": "labels",
-            "stylers": [
-            {
-              "visibility": "off"
-            }
-            ]
-          },
-          {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [
-            {
-              "saturation": "100"
-            },
-            {
-              "lightness": "-14"
-            }
-            ]
-          },
-          {
-            "featureType": "water",
-            "elementType": "labels",
-            "stylers": [
-            {
-              "visibility": "off"
-            },
-            {
-              "lightness": "12"
-            }
-            ]
-          }
-          ]
+                            function addMore(){
 
 
-        });
-        var infowindow = new google.maps.InfoWindow();        
-        setMarkers(map);
+                              var max = 10;
+                              var policy = " ";
 
 
-        function  setMarkers(map){
-          console.log("Working")
-          var freePark = {
-            url: "img/free-park.png", // url
-            scaledSize: new google.maps.Size(25, 25), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(0, 0) // anchor
+                              if (localStorage.getItem("i") < max) {
+                                var jem =parseInt(localStorage.getItem("i"));
+                                var total = jem++;
+                                console.log(total)
+                                localStorage.setItem("i", jem);
+                                policy += '<textarea id="'+jem+'" class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%; margin-top:3%"></textarea>';
 
-          };
+                              }
+                          /*for( i < 5; i++){
 
-          var paidPark = {
-            url: "img/paid-park.png", // url
-            scaledSize: new google.maps.Size(25, 25), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(0, 0) // anchor
+                            policy += '<textarea class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%; margin-top:3%"></textarea>';
 
-          };
-          
-          $.getJSON("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoLocation.php", function(data){
+                          }*/
 
+                          document.getElementById("addingMoreFields").innerHTML += policy;
+                        }
 
-            for (var i =0; i < data.length; i++) {
-              console.log(data[i].D_Type);
-              if (data[i].D_Type == "Free") {
-                var marker = new google.maps.Marker({
-                  position: new google.maps.LatLng(data[i].D_Lat,data[i].D_Lng),
-                  map: map,
-                  icon: freePark,
-                });
-              }
+                        function registerOwner(){
+                           $(document).ready(function() {     
+                              
+                              var filecount = $('#filePermit')[0].files;
+                              console.log(filecount.length);
+                              for(var i = 0 ; i <= filecount.length; i++){
+                                var file_data = $('#filePermit').prop('files')[i]; 
+                                var form_data = new FormData();                  
+                                form_data.append('file', file_data);
+                                $.ajax({
+                                  url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+                                  type: "POST",
+                                  data: form_data,
+                                  contentType: false,
+                                  cache: false,
+                                  processData:false,
+                                  success: function(data){
+                                    console.log(data);
+                                  }
+                                });
+                                console.log(i);
+                              }
 
-              if (data[i].D_Type == "Paid") {
-                var marker = new google.maps.Marker({
-                  position: new google.maps.LatLng(data[i].D_Lat,data[i].D_Lng),
-                  map: map,
-                  icon: paidPark,
-                });
-
-              }
-
-              google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                  var getLat = marker.getPosition().lat();
-                  var getLng = marker.getPosition().lng();
-                  var getId = data[i].D_Id;
-                  var profile = "templates/park_profile.html";
-                  infowindow.setContent("<button class='button button--material--flat' onclick='viewLocation("+getLat+","+getLng+","+getId+")'>View</button>");
-                  infowindow.open(map, marker);
-
-                  
-                  
-
-                  
-                  
-
-                }
-              })(marker, i)); 
-
-            }
-          });
-
-        }
+                              
+                            
+                          });
+                        }
+                         
+                       
 
 
+                      </script>
+                      <script type="text/javascript" src="js/maps.js"></script>
+                      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
+                      <script type="text/javascript" src="js/index.js"></script>
+                      <script type="text/javascript" src="js/custom-script.js"></script>
 
 
-
-          // Try HTML5 geolocation.
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-              var marker = new google.maps.Marker({
-                position: pos,
-                map: map,
-                icon: icon,
-
-              });
-
-              
-
-
-            }, function() {
-              handleLocationError(true, infoWindow, map.getCenter());
-            });
-          } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-          }
-        }
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-          alert("Error");
-        }
-
-
-        function viewLocation(lat,lng,id){
-
-          myNavigator.pushPage('templates/park_profile.html');
-          localStorage.setItem("getLat", lat);
-          localStorage.setItem("getLng", lng);
-          localStorage.setItem("getId", id);
-        }
-
-
-        function logChecker(){
-          if (localStorage.length == 0) {
-           document.getElementById("userFullname").innerHTML = "Welcome to Gpark";
-           document.getElementById("userTag").innerHTML = " ";
-
-         }
-         else{
-          var id = localStorage.getItem("userId");
-
-          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{id:id},function(data){
-            ons.notification.toast('Welcome '+data[0].U_username, {
-                  timeout: 2000,
-
-            });
-            document.getElementById("userFullname").innerHTML = data[0].U_fname+" "+data[0].U_Lname;
-            document.getElementById("userTag").innerHTML = "@"+data[0].U_username;
-          });
-
-
-          document.getElementById("left-log").innerHTML = '<i class="fa fa-sign-out-alt" style="padding-right: 2px; opacity: 0.8"></i>';
-           document.getElementById("center-log").innerHTML = 'Logout';
-
-          
-        }
-      }
-
-
-      function accountNav(){
-        if (localStorage.length == 0) {
-          fn.load('templates/account.html');
-
-        }
-        else{
-         fn.load('templates/profile.html');
-       }
-     }
-
-
-
-     function logOut(){
-      ons.notification.toast('Logging Out Please Wait...', { timeout: 3000,
-       });
-      localStorage.clear()
-
-      setTimeout(function(){ navigator.app.exitApp(); }, 3000);
-      
-      
-      
-     }
-
-     logChecker();
-
-
-
-
-
-
-
-
-   </script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
-   <script type="text/javascript" src="js/index.js"></script>
-   <script type="text/javascript" src="js/custom-script.js"></script>
-
-
- </body>
- </html>
+                    </body>
+                    </html>
