@@ -5,147 +5,274 @@
           }
 
           .text-input--material:focus {
-            color: white;
+            color: black;
           }
           .text-input.text-input--material{
-            color: white !important;
+            color: black !important;
           }
 
-          .material-select-input-inactive-color{
-            color:black !important;
+          svg{
+            fill: white !important;
           }
 
-          .text-input.text-input--material.text-input--underbar{
-            color:black !important;
+          .hiddenDiv{
+            display: none;
           }
+
+          .showDiv{
+            display: block;
+          }
+
+
         </style>
 
-        <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
+        <ons-toolbar modifier="noshadow" style="background-color: #EFF0ED !important">
           <div class="left" >
-            <ons-back-button style="color: black">Back</ons-back-button>
+            <ons-back-button >Back</ons-back-button>
           </div>
-          <div class="center" style="color: black !important">
-
+          <div class="center" >
           </div>
         </ons-toolbar>
 
-        <div class="background" style="background-color: #F3F3F3"></div>
+        <div class="background" style="background-color:#F3F3F3"></div>
 
 
-        <ons-row style="text-align: center; padding-top: 0px; padding-left: 0.8em; padding-right:  0.8em">
-          <ons-col width="100%">
-            <p style="color: black; font-size: 35px; font-weight: 700;text-align: left;padding-left: 5%;">User Sign Up</p>
+        <ons-row width="100%" style="text-align: center;  ">
+          <ons-col width="100%" style=" background-color:#2979FF;padding-bottom: 5%; background-image: url(img/city-background.jpg); background-size: 100% 100%">
+            <img src="img/blank_user.jpg" id="user-icon" style="height: 130px; width: 130px; border-radius: 100%; border: 3px  solid #2979FF">
           </ons-col>
-
-
-
-          <ons-col width="100%" style="padding: 3%">
-            <ons-list-header style="background-color: #F3F3F3">Profile Picture</ons-list-header>
-            <ons-list-item >
-              <input type="file" name="profilePic" id="profilePic" accept="image/*" style="width: 100%">
-            </ons-list-item>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newUsername" modifier="underbar" placeholder="Username" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newPassword" modifier="underbar" placeholder="Password" type="password" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="rePassword" modifier="underbar" placeholder="Re Enter Password" type="password" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newFname" modifier="underbar" placeholder="First Name" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newLname" modifier="underbar" placeholder="Last Name" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newAddress" modifier="underbar" placeholder="Address" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newEmail" modifier="underbar" placeholder="Email" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%" style="padding: 3%">
-            <ons-input id="newContact" modifier="underbar" placeholder="Contact No" type="number" float style="width: 100%"></ons-input>
-          </ons-col>
-          <ons-col width="100%">
-            <ons-button  style="width: 40%; border-radius: 20px;"  onclick="signup()">Sign Up</ons-button>
-            <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
-          </ons-col>
-
         </ons-row>
 
+        <ons-row style="text-align: center; padding-top: 0px; padding-left: 0.8em; padding-right:  0.8em">
+          <ons-col width="100%" style="margin-top: 4%;">
+            <ons-list-header style="background-color: #F3F3F3">Profile Picture</ons-list-header>
+            <ons-list-item >
+              <ons-button onclick="showModal()" id="showModal">Upload Profile Picture</ons-button>
+            </ons-list-item>
+          </ons-col>
 
-        <script type="text/javascript">
+          <ons-col width="100%">
+            <ons-list-header style="background-color: #F3F3F3">Account Details</ons-list-header>
+            <ons-list-item >
+              <ons-col width="100%" style="padding: 3%">
+                <i class="fa fa-user" style="margin-right: 3%; color: #2979FF"></i> 
+                <ons-input id="newUsername" modifier="underbar" placeholder="Username" float style="width: 90%"></ons-input>
+              </ons-col>
+            </ons-list-item>
+
+            <ons-list-item >
+              <ons-col width="100%" style="padding: 3%">
+                <i class="fa fa-lock" style="margin-right: 3%; color: #2979FF"></i> 
+                <ons-input id="newPassword" modifier="underbar" placeholder="Password" type="password" float style="width: 90%"></ons-input>
+              </ons-col>
+            </ons-list-item>
+
+            <ons-list-item>
+              <ons-col width="100%" style="padding: 3%">
+                <i class="fa fa-unlock" style="margin-right: 3%; color: #2979FF"></i>
+                <ons-input id="rePassword" modifier="underbar" placeholder="Re Enter Password" type="password" float style="width: 90%"></ons-input>
+              </ons-col>
+            </ons-list-item>
+
+            <ons-list-item>
+              <ons-col width="100%" style="padding: 3%">
+                <i class="fa fa-font" style="margin-right: 3%; color: #2979FF"></i>
+                <ons-input id="newFname" modifier="underbar" placeholder="First Name" type="text" float style="width: 90%"></ons-input>
+              </ons-col>
+            </ons-list-item>
+
+            <ons-list-item>
+              <ons-col width="100%" style="padding: 3%">
+                <i class="fa fa-font" style="margin-right: 3%; color: #2979FF"></i>
+                <ons-input id="newLname" modifier="underbar" placeholder="Last Name" float  type="text" style="width: 90%"></ons-input>
+              </ons-col>
+            </ons-list-item>
+
+            <ons-list-item>
+              <ons-col width="100%" style="padding: 3%">
+                <i class="fa fa-street-view" style="margin-right: 3%; color: #2979FF"></i>
+                <ons-input id="newAddress" modifier="underbar" placeholder="Address" float style="width: 90%"></ons-input>
+              </ons-col>
+            </ons-list-item>
+
+            <ons-list-item>
+              <ons-col width="100%" style="padding: 3%">
+               <i class="fa fa-id-badge" style="margin-right: 3%; color: #2979FF"></i> 
+               <ons-input id="newContact" modifier="underbar" placeholder="Contact No" type="number" float style="width: 90%"></ons-input>
+             </ons-col>
+           </ons-list-item>
+
+        </ons-col>
+
+        <ons-col width="100%">
+          <ons-button  style="width: 40%; border-radius: 20px;"  onclick="signup()">Sign Up</ons-button>
+          <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
+        </ons-col>
+
+      </ons-row>
 
 
 
-          function signup() {
 
 
+      <ons-modal direction="up">
+        <ons-card style="text-align: center;">
+          <ons-row>
+            <ons-col width="100%">
+              <ons-button onclick="$('#upload_image').click();showButtons()" id="upload_jem">Upload Image</ons-button> 
+              <ons-button style="background-color:#DB4437" onclick="modal.hide();localStorage.setItem('profile_set', 0);" id="hideModal"><i class="fa fa-close"></i></ons-button>
+              <input type="file" name="upload_image" id="upload_image" style="display: none">
+            </ons-col>
+            <ons-col width="100%" class="hiddenDiv" id="image_div">
+              <div id="uploaded_image"></div>
+              <div id="image_demo" style="width: 100%;"></div>
+
+            </ons-col>
+
+            <ons-col width="100%">
+              <ons-button id="crop_image" class="hiddenDiv">Crop</ons-button>
+            </ons-col>
+          </ons-row>
+
+        </ons-card>
+      </ons-modal>
 
 
+      <script type="text/javascript">
+        localStorage.setItem("profile_set", 0);
+
+        var profile_set = localStorage.getItem("profile_set");
+
+        function viewPic(){
+          var base64 = localStorage.getItem("pic64");
+          $("#user-icon").attr("src",base64);
+        }
 
 
-            var username = document.getElementById("newUsername").value;
-            var password = document.getElementById("newPassword").value;
-            var repassword = document.getElementById("rePassword").value;
-            var fname = document.getElementById("newFname").value;
-            var lname = document.getElementById("newLname").value;
-            var address = document.getElementById("newAddress").value;
-            var email = document.getElementById("newEmail").value;
-            var contact =  document.getElementById("newContact").value;
-
-            if ((username == "") || (password == "") || (fname == "") || (lname == "") || (address == "") || (email == "") ||  (contact == "")    ) {
-              ons.notification.alert({title:"Required", message:"All Fields are Required"});
-            }
-
-            else if(password != repassword){
-              ons.notification.alert({title:"Error", message:"Password doesnt Match"});
-            }
-
-            else{
-              $(document).ready(function() {     
-              var file_data = $('#profilePic').prop('files')[0]; 
-              var form_data = new FormData();                  
-              form_data.append('file', file_data);
-              $.ajax({
-                url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
-                type: "POST",
-                data: form_data,
-                contentType: false,
-                cache: false,
-                processData:false,
-                success: function(data){
-                  console.log(data);
-                }
-              });
+        function showButtons(){
+          $('#image_div').removeClass('hiddenDiv');
+          $('#image_div').addClass('showDiv');
+          $('#crop_image').removeClass('hiddenDiv');
+          $('#crop_image').addClass('showDiv'); 
+          $('#upload_jem').addClass('hiddenDiv'); 
+          $('#hideModal').addClass('hiddenDiv');
+        }
 
 
+        function hideButtons(){
+          $('#showModal').attr('disabled', 'disabled');
+
+        }
+
+        var modal = document.querySelector('ons-modal');
+
+        function showModal(){
+
+          modal.show();
+        }
+
+
+        $image_crop = $('#image_demo').croppie({
+          enableExif: true,
+          viewport: {
+            width: 200,
+            height: 200,
+            type: 'circle'
+          },
+          boundary:{
+            width:300,
+            height: 300
+          }
+        });
+
+        $("#upload_image").on('change', function(){
+          var reader = new FileReader();
+          reader.onload = function (event){
+            $image_crop.croppie('bind', {
+              url:event.target.result
+            }).then(function(){
+              console.log("A");
             });
-            var file_data = $('#profilePic').prop('files')[0]; 
-            var profile = file_data.name;
-             $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:email, contact:contact, profile: profile},function(data){
+          }
+
+          reader['readAsDataURL'](this.files[0]);
+        });
+
+        $('#crop_image').click(function(event){
+          $image_crop.croppie("result", {
+            type:'base64',
+            size:'viewport',
+            quality: 1
+          }).then(function(response){
+            var name = Math.random().toString(36).substr(2, 5);
+
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/profile_upload.php",{base64: response, name: name},function(data){
+              console.log("uploaded_image");
+            });
+            $image_crop.croppie('destroy');
+            console.log(name);
+            modal.hide();
+            localStorage.setItem("picName", name);
+            localStorage.setItem("pic64", response);
+            hideButtons();
+            viewPic();
+          })
+        });
+
+
+        function signup() {
+
+
+
+
+
+
+          var username = document.getElementById("newUsername").value;
+          var password = document.getElementById("newPassword").value;
+          var repassword = document.getElementById("rePassword").value;
+          var fname = document.getElementById("newFname").value;
+          var lname = document.getElementById("newLname").value;
+          var address = document.getElementById("newAddress").value;
+
+          var contact =  document.getElementById("newContact").value;
+
+          if ((username == "") || (password == "") || (fname == "") || (lname == "") || (address == "")  ||  (contact == "")    ) {
+            ons.notification.alert({title:"Required", message:"All Fields are Required"});
+          }
+
+          else if(password != repassword){
+            ons.notification.alert({title:"Error", message:"Password doesnt Match"});
+          }
+
+          else{
+            var profile = localStorage.getItem("picName");
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:"none", contact:contact, profile: profile+".jpg"},function(data){
               console.log(data);
               console.log("insert");
               ons.notification.toast('Account Created!', {
                 timeout: 3000
               });
+
+
+
+              localStorage.clear();
               myNavigator.pushPage('templates/login.html');
+
+
 
 
             });
 
-           }
-         }
+          }
+        }
 
 
-       </script>
-
-
-
+      </script>
 
 
 
-     </ons-page>
+
+
+
+    </ons-page>

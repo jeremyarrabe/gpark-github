@@ -9,9 +9,9 @@
 </style> -->
 
 
-<ons-toolbar >
+<ons-toolbar  style="background-color: #4BD9ED !important" modifier="noshadow">
   <div class="center">
-
+    Profile
   </div>
   <div class="left">
     <ons-toolbar-button onclick="fn.open()">
@@ -24,13 +24,15 @@
 
 
 <ons-row>
-  <ons-col width="100%">
-    <img src="" style="height: auto;width: 100%;" id="profilepic">
+  <ons-col width="100%" style="background-image: url(img/profile-bg.jpg); background-size: 100% 100%; text-align: center; height: 130px;">
+
   </ons-col>
 
   <ons-col width="100%" style="margin-top: -15%;">
     <div style="height: 200px; padding: 0.5em">
-      <div class="card card--material" style="padding-left: 2em; padding-right: 2em">
+      <div class="card card--material" style="padding-left: 2em; padding-right: 2em; ">
+        <div style="text-align: center; margin-top: -30%"><img src="" style="height: 130px;width: 130px; border-radius: 100%; border: 3px  solid white" id="profilepic"></div>
+            
         <div class="card__title card--material__title" style="font-weight: lighter; font-size: 25px;">
           <ons-row>
             <ons-col width="80%" id="hName">
@@ -93,7 +95,7 @@
 
 </ons-row>
 
-<ons-row style="padding-top:50%;">
+<ons-row style="padding-top:55%;">
 
   <ons-col width="100%">
     <div style=" padding: 0.5em;">

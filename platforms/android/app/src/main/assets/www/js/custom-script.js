@@ -105,7 +105,7 @@ document.addEventListener('init', function (event) {
 
 
   if(event.target.id == "profile"){
-    var title = event.target.data && event.target.data.title ? event.target.data.title : '';
+    var title = event.target.data && event.target.data.title ? event.target.data.title : 'Profile';
     event.target.querySelector('ons-toolbar div.center').textContent = title;  
     $("#nav-account").addClass("active-state");
 

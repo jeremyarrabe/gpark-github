@@ -9,12 +9,14 @@
     <!-- <script src="https://js.pusher.com/4.4/pusher.min.js"></script> -->
 
     <link rel="stylesheet" type="text/css" href="css/index.css">
-
+    
     <link rel="stylesheet" type="text/css" href="css/onsen/onsenui.css">
     <link rel="stylesheet" type="text/css" href="css/onsen/onsen-css-components.min.css">
 
     <link rel="stylesheet" href="css/croppie.css" />
-    <script src="js/croppie.js"></script>
+    <link rel="stylesheet" href="css/jemcrop.css" />
+
+    
 
 
     <style type="text/css">
@@ -108,7 +110,7 @@
                     </ons-splitter>
 
 
-
+                    <!-- MAPS -->
                     <template id="home.html">
                       <ons-page id="home">
                         <ons-toolbar>
@@ -135,7 +137,7 @@
                     </template>
 
 
-
+                    <!-- OWNER -->
                     <template id="ownersignup.html">
                       <ons-page id="ownersignup">
 
@@ -277,7 +279,7 @@
                     </template>
 
 
-
+                    <!-- Policy -->
                     <template id="addPolicy.html">
                       <ons-page id="addPolicy">
                         <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
@@ -365,6 +367,7 @@
 
                     </template>
 
+                    <!-- POLICYTEMPLATE -->
                     <template id="viewPolicyTemplate.html">
                       <ons-page id="viewPolicyTemplate">
                         <ons-toolbar modifier="noshadow" style="background-color: #F3F3F3 !important">
@@ -453,6 +456,8 @@
                             }
 
 
+
+
                             function registerOwner(){
                               var pName = document.getElementById("pName").value;
                               var pAddress = document.getElementById("pAddress").value;
@@ -468,7 +473,15 @@
                               var pLng = localStorage.getItem("eventLng");
                               var pId = localStorage.getItem("parkingId");
 
+
+
+                                
+                               
+ 
                               var checkPolicy =  parseInt(localStorage.getItem("generateMax"));
+
+                              console.log(filePermit)
+
 
                               for (var i = 1; i <= checkPolicy; i++) {
                                 var index = "policy"+i;
@@ -483,69 +496,72 @@
 
                               }
 
-                          $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_insertOwner.php",{pName: pName, pAddress:pAddress, pContact:pContact, pOpen:pOpen, pClose:pClose, pSpaceMax:pSpaceMax , pSpaceMin:pSpaceMin, pRateMin:pRateMin, pRateMax:pRateMax, pLat: pLat, pLng: pLng, pLat:pLat, pLng:pLng, pType: pType, pId: pId },function(data){
-                            console.log("inserted");
+                              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_insertOwner.php",{pName: pName, pAddress:pAddress, pContact:pContact, pOpen:pOpen, pClose:pClose, pSpaceMax:pSpaceMax , pSpaceMin:pSpaceMin, pRateMin:pRateMin, pRateMax:pRateMax, pLat: pLat, pLng: pLng, pLat:pLat, pLng:pLng, pType: pType, pId: pId },function(data){
+                                console.log("inserted");
 
-                          });
-
-
-
-                          $(document).ready(function() {     
-                            var filePermit = $('#filePermit')[0].files;
-                            var filePictures = $('#filePictures')[0].files;
-
-                            console.log(filePermit.length,filePictures.length);
-
-                            for(var i = 0 ; i <= filePermit.length; i++){
-                              var file_data = $('#filePermit').prop('files')[i]; 
-                              var form_data = new FormData();                  
-                              form_data.append('file', file_data);
-                              $.ajax({
-                                url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
-                                type: "POST",
-                                data: form_data,
-                                contentType: false,
-                                cache: false,
-                                processData:false,
-                                success: function(data){
-                                  console.log(data);
-                                }
                               });
-                              console.log(i);
+
+
+
+                              $(document).ready(function() {     
+                                var filePermit = $('#filePermit')[0].files;
+                                var filePictures = $('#filePictures')[0].files;
+
+                                console.log(filePermit,filePictures);
+
+                                for(var i = 0 ; i < filePermit.length; i++){
+                                  var file_data = $('#filePermit').prop('files')[i]; 
+                                  var form_data = new FormData();                  
+                                  form_data.append('file', file_data);
+                                  $.ajax({
+                                    url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+                                    type: "POST",
+                                    data: form_data,
+                                    contentType: false,
+                                    cache: false,
+                                    processData:false,
+                                    success: function(data){
+                                      alert("Hi");
+                                    }
+                                  });
+
+                                }
+
+                                for(var i = 0 ; i < filePictures.length; i++){
+                                  var file_data = $('#filePictures').prop('files')[i]; 
+                                  var form_data = new FormData();                  
+                                  form_data.append('file', file_data);
+                                  $.ajax({
+                                    url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+                                    type: "POST",
+                                    data: form_data,
+                                    contentType: false,
+                                    cache: false,
+                                    processData:false,
+                                    success: function(data){
+                                      console.log(data);
+                                    }
+                                  });
+                                  console.log(i);
+                                }
+
+
+
+                              });
                             }
 
-                            for(var i = 0 ; i <= filePictures.length; i++){
-                              var file_data = $('#filePictures').prop('files')[i]; 
-                              var form_data = new FormData();                  
-                              form_data.append('file', file_data);
-                              $.ajax({
-                                url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
-                                type: "POST",
-                                data: form_data,
-                                contentType: false,
-                                cache: false,
-                                processData:false,
-                                success: function(data){
-                                  console.log(data);
-                                }
-                              });
-                              console.log(i);
-                            }
-
-
-                            
-                          });
-                        }
 
 
 
+                          </script>
+                          <script src="js/croppie.js"></script>
+                          <script src="js/jemcrop.js"></script>
+                          <script src="js/jjem.js"></script>
+                          <script type="text/javascript" src="js/maps.js"></script>
+                          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
+                          <script type="text/javascript" src="js/index.js"></script>
+                          <script type="text/javascript" src="js/custom-script.js"></script>
 
-                      </script>
-                      <script type="text/javascript" src="js/maps.js"></script>
-                      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
-                      <script type="text/javascript" src="js/index.js"></script>
-                      <script type="text/javascript" src="js/custom-script.js"></script>
 
-
-                    </body>
-                    </html>
+                        </body>
+                        </html>

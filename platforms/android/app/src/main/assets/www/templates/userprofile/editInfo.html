@@ -10,6 +10,14 @@
           .text-input.text-input--material{
             color: black !important;
           }
+                    .hiddenDiv{
+            display: none;
+          }
+
+          .showDiv{
+            display: block;
+          }
+
         </style>
         <ons-toolbar>
           <div class="left" >
@@ -27,11 +35,11 @@
         <div class="background" style="background-color: white"></div>
 
         <ons-row>
-          <ons-col width="100%">
-            <img src=""  style="height: auto;width: 100%;" id="profilepic1">
+          <ons-col width="100%" style="text-align: center; background-image: url('img/profile-bg.jpg'); padding-top: 3%">
+            <img src=""  style="height: 130px;width: 130px; border-radius: 100%; border: 3px solid black" id="profilepic1"  >
           </ons-col>
           <ons-col width="100%" style="margin-top: -5%; text-align: center;">
-            <ons-button>Change Profile Pic</ons-button>
+            <ons-button onclick="showModal()" id="showModal">Change Profile Pic</ons-button>
           </ons-col>
         </ons-row>
 
@@ -64,7 +72,120 @@
 
 
 
+
+
+        <ons-modal direction="up">
+          <ons-card style="text-align: center;">
+            <ons-row>
+              <ons-col width="100%">
+                <ons-button onclick="$('#upload_image').click();showButtons()" id="upload_jem">Upload Image</ons-button> 
+                <ons-button style="background-color:#DB4437" onclick="modal.hide();localStorage.setItem('profile_set', 0);" id="hideModal"><i class="fa fa-close"></i></ons-button>
+                <input type="file" name="upload_image" id="upload_image" style="display: none">
+              </ons-col>
+              <ons-col width="100%" class="hiddenDiv" id="image_div">
+                <div id="uploaded_image"></div>
+                <div id="image_demo" style="width: 100%;"></div>
+
+              </ons-col>
+
+              <ons-col width="100%">
+                <ons-button id="crop_image" class="hiddenDiv">Crop</ons-button>
+              </ons-col>
+            </ons-row>
+
+          </ons-card>
+        </ons-modal>
+
+
         <script type="text/javascript">
+        localStorage.setItem("profile_set", 0);
+
+        var profile_set = localStorage.getItem("profile_set");
+
+        function viewPic(){
+
+          var base64 = localStorage.getItem("pic64");
+          $("#profilepic1").attr("src",base64);
+        }
+
+
+        function showButtons(){
+          $('#image_div').removeClass('hiddenDiv');
+          $('#image_div').addClass('showDiv');
+          $('#crop_image').removeClass('hiddenDiv');
+          $('#crop_image').addClass('showDiv'); 
+          $('#upload_jem').addClass('hiddenDiv'); 
+          $('#hideModal').addClass('hiddenDiv');
+        }
+
+
+        function hideButtons(){
+          $('#showModal').attr('disabled', 'disabled');
+
+        }
+
+        var modal = document.querySelector('ons-modal');
+
+        function showModal(){
+
+          modal.show();
+        }
+
+
+        $image_crop = $('#image_demo').croppie({
+          enableExif: true,
+          viewport: {
+            width: 200,
+            height: 200,
+            type: 'circle'
+          },
+          boundary:{
+            width:300,
+            height: 300
+          }
+        });
+
+        $("#upload_image").on('change', function(){
+          var reader = new FileReader();
+          reader.onload = function (event){
+            $image_crop.croppie('bind', {
+              url:event.target.result
+            }).then(function(){
+              console.log("A");
+            });
+          }
+
+          reader['readAsDataURL'](this.files[0]);
+        });
+
+        $('#crop_image').click(function(event){
+          $image_crop.croppie("result", {
+            type:'base64',
+            size:'viewport',
+            quality: 1
+          }).then(function(response){
+            var name = Math.random().toString(36).substr(2, 5);
+
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/profile_upload.php",{base64: response, name: name},function(data){
+              console.log("uploaded_image");
+            });
+            $image_crop.croppie('destroy');
+            console.log(name);
+            modal.hide();
+            localStorage.setItem("picName", name);
+            localStorage.setItem("pic64", response);
+            hideButtons();
+            viewPic();
+          })
+        });
+
+
+
+
+
+
+
           function get(){
             var id = localStorage.getItem("userId");
 
@@ -77,7 +198,7 @@
               document.getElementById("addresses").value = data[0].U_Address;
               document.getElementById("emails").value = data[0].U_Email;
               var profile2 = "https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].U_ProfilePic;
-             $("#profilepic1").attr("src",profile2);
+              $("#profilepic1").attr("src",profile2);
               
               console.log(data);
 
@@ -92,9 +213,10 @@
             var address = document.getElementById("addresses").value;
             var email = document.getElementById("emails").value;
             var id = localStorage.getItem("userId");
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:email, id: id }, function(data){
+            var profile3 =localStorage.getItem("picName");
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:email, id: id, profile:profile3+".jpg"  }, function(data){
               localStorage.setItem("username",username);
-              ons.notification.toast('Profile Updated', { timeout: 2000 })
+              ons.notification.toast('Updating Profile', { timeout:5000 })
               get();
             });
           }

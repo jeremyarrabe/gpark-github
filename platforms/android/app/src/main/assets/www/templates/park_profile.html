@@ -95,7 +95,7 @@
 
           <ons-col width="100%" style="padding-left: 5%; padding-right: 5%; text-align: center;" >
             <p style="font-size: 18px; font-weight: 500" id="p_ParkingAddress">4-C Apitong Ext Old Cabalan Olongapo City</p>
-            <p style="font-size: 18px; font-weight: 700;" id="p_Price"><i class="fa fa-parking" style="color: #0F9D58"></i> &#8369;20 - &#8369;200</p>
+            <p style="font-size: 18px; font-weight: 700;" id="p_Price"></p>
           </ons-col>
           
 
@@ -147,7 +147,7 @@
 
         <ons-row style="background-color: #efefef;">
           <ons-col width="100%" style="text-align: center">
-            <button class="button button--material" style="width: 100%; border: solid 2px  #2979FF; border-radius: 0;" onclick="loadMore()">Load More</button>
+            <button id="loadMore"class="button button--material" style="width: 100%; border-radius: 0;" onclick="loadMore()">Load More</button>
           </ons-col>
         </ons-row>
         <script type="text/javascript">
@@ -335,10 +335,82 @@
             var localId = localStorage.getItem("getId");
             $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoSpecific.php",{D_Id : localId }, function(data){
               console.log(data);
-              document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #27ae60">Open</span>';
+              var d = new Date(); // current time
+              var sadhours = d.getHours();
+
+              var sad1 = (data[0].D_Opening).replace(/(^\d+)(.+$)/i,'$1');
+              var sad2 = (data[0].D_Closing).replace(/(^\d+)(.+$)/i,'$1');
+
+              var numsad1 = parseInt(sad1);
+              var numsad2 = parseInt(sad2);
+
+              console.log(numsad1, sadhours, numsad2)
+
+              if (sadhours <= numsad1 ) {
+                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #DB4437">Close</span>';
+              }
+
+              if (sadhours >= numsad1 && sadhours <= numsad2 ) {
+                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #27ae60">Open</span>';
+              }
+
+
+              if ( sadhours >=  numsad2) {
+                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #DB4437">Close</span>';
+              }
+
+              
               document.getElementById("p_ParkingAddress").innerHTML = data[0].D_Description;
-              document.getElementById("p_Total").innerHTML = data[0].D_Inuse+'/'+data[0].D_Total;
-              document.getElementById("p_Time").innerHTML = data[0].D_Opening+'-'+data[0].D_Closing;
+              var time1 = data[0].D_Opening; // your input
+              var time2 = data[0].D_Closing; 
+
+              time1 = time1.split(':'); // convert to array
+              time2= time2.split(':');
+              // fetch
+              var hours1 = Number(time1[0]);
+              var minutes1 = Number(time1[1]);
+
+
+              var hours2 = Number(time2[0]);
+              var minutes2 = Number(time2[1]);
+              // calculate
+              var timeValue1,timeValue2;
+
+              if (hours1 > 0 && hours1 <= 12) {
+                timeValue1= "" + hours1;
+              } else if (hours1 > 12) {
+                timeValue1= "" + (hours1 - 12);
+              } else if (hours1 == 0) {
+                timeValue1= "12";
+              }
+
+              if (hours2 > 0 && hours2 <= 12) {
+                timeValue2= "" + hours2;
+              } else if (hours2 > 12) {
+                timeValue2= "" + (hours2 - 12);
+              } else if (hours2 == 0) {
+                timeValue2= "12";
+              }
+
+              timeValue1 += (minutes1 < 10) ? ":0" + minutes1 : ":" + minutes1;  // get minutes
+              timeValue1 += (hours1 >= 12) ? " P.M" : " A.M";  // get AM/PM
+
+              timeValue2 += (minutes2 < 10) ? ":0" + minutes2 : ":" + minutes2;  // get minutes
+              timeValue2 += (hours2 >= 12) ? " P.M" : " A.M";  // get AM/PM
+
+              var totalspace = data[0].D_Total - data[0].D_Inuse;
+
+
+              if(data[0].D_Type == "Free"){
+                document.getElementById("p_Price").innerHTML = "This Parking Space is Free of Charge";
+              }
+
+              if(data[0].D_Type == "Paid"){
+                document.getElementById("p_Price").innerHTML = '<i class="fa fa-parking" style="color: #0F9D58"></i> Min:&#8369;'+data[0].D_Pricemin+' - Max: &#8369;'+data[0].D_Pricemax+'';
+              }
+              /*<i class="fa fa-parking" style="color: #0F9D58"></i> &#8369;20 - &#8369;200*/
+              document.getElementById("p_Total").innerHTML = totalspace+" Available";
+              document.getElementById("p_Time").innerHTML = timeValue1+' - '+timeValue2;
 
 
               
@@ -352,19 +424,26 @@
             console.log(limit)
             var localId = localStorage.getItem("getId");
             var comments = "";
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_getComments.php",{c_parkingId : localId, c_Limit: limit}, function(data){
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_getComments.php",{id : localId, limit: limit}, function(data){
+
               if (data == "") {
 
                 comments += "<p style='text-align:center'>No Comments Available</p>";
                 console.log("Error");
+                $("#loadMore").attr("disabled","disabled");
               }
               else{
+                console.log(data,"jem")
+
+                $("#loadMore").removeAttr("disabled");
+
+
                 for(var i =0 ;i < data.length; i++){ 
                   comments += '';
                   comments += '<ul class="list list--material">';
                   comments += '<li class="list-item list-item--material">';
                   comments += '<div class="list-item__left list-item--material__left">';
-                  comments += '<img class="list-item__thumbnail list-item--material__thumbnail" src="https://placekitten.com/g/42/41" alt="Cute kitten">';
+                  comments += '<img class="list-item__thumbnail list-item--material__thumbnail" src="https://www.gcccsbsit.xyz/_gpark/upload/'+data[i].U_ProfilePic+'" alt="Cute kitten">';
                   comments += '</div>';
                   comments += '<div class="list-item__center list-item--material__center">';
                   comments += '<div class="list-item__title list-item--material__title">'+data[i].c_User+'</div>';
@@ -384,10 +463,10 @@
             var lname = localStorage.getItem("Lname");
             var fullname = fname+" "+lname;
             var textC = document.getElementById("textComment").value;
+            var c_uId = localStorage.getItem("userId");
 
 
-
-            if (textC == "") {
+            if (textC === "") {
               ons.notification.alert('Invalid Blank Comment');
             }
 
@@ -395,7 +474,7 @@
             else{
 
 
-              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC},function(data){
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC, c_uId:c_uId},function(data){
 
                 setTimeout(function(){getComments(Limit); getRatings();getContent();document.getElementById("textComment").value = ""; }, 4000);
                 ons.notification.toast('Comment Added', { timeout: 4000,});
@@ -431,6 +510,8 @@
 
             
           }
+
+          
 
 
           function getRatings(){
@@ -677,7 +758,7 @@
           getRatings();
           getContent();
           getComments(Limit); 
-          
+
         </script>
 
       </ons-page>
