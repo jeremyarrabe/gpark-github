@@ -1,0 +1,114 @@
+      <ons-page id="ownerpage">
+
+
+        <ons-toolbar>
+          <div class="center">
+            Caller App
+          </div>
+          <div class="left">
+
+          </div>
+          <div class="right">
+            <ons-toolbar-button>
+              <ons-icon icon="fa-sign-out-alt" style="color: white;"></ons-icon>
+            </ons-toolbar-button>
+
+          </div>
+        </ons-toolbar>
+
+        <div class="background" style="background-color: #F3F3F3"></div>
+        <ons-row style="text-align: center;">
+          <ons-col width="100%" style="height: 200px; background-color: red;">
+
+          </ons-col>
+
+
+
+          <ons-col width="100%">
+            <p><i class="fa fa-crown" style="color: #2979FF; margin: 0 ;padding:0"></i></p>
+            <p style="font-size: 25px; font-weight: 700" id="pTitle">Loading</p>
+            <p style="font-size: 18px;" id="pAddress"></p>
+          </ons-col>
+          <ons-col width="100%">
+
+          </ons-col>
+
+
+          <ons-col width="50%" style="font-weight: 700; ">
+            <p>Space Available</p>
+            <p style="font-size: 22px" id="pAvailable" ></p>
+          </ons-col>
+
+          <input type="number" id="availableSpace" hidden>
+
+
+          <ons-col width="50%">
+            <ons-row style="padding: 0.8em">
+              <ons-row width="100%">
+                <ons-button style="width: 100%; background-color: #0F9D58" onclick="addSpace()">+</ons-button>
+              </ons-row>
+              <ons-row width="100%" style="margin-top: 4%">
+               <ons-button style="width: 100%; background-color: #DB4437" onclick="removeSpace()">-</ons-button>
+             </ons-row>
+
+
+           </ons-row>
+
+
+         </ons-col>
+
+
+       </ons-row>
+
+       <script type="text/javascript">
+        var owner = localStorage.getItem("o_username");
+        function get(){
+
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoLocation.php",{D_parkingOwner: owner},function(data){
+            document.getElementById("availableSpace").value = data[0].D_Inuse;
+            document.getElementById("pTitle").innerHTML = data[0].D_Title;
+            document.getElementById("pAddress").innerHTML = data[0].D_Description;
+            document.getElementById("pAvailable").innerHTML = data[0].D_Inuse+" / "+data[0].D_Total;
+          })
+        }
+
+
+
+        function addSpace(){
+          var count = document.getElementById("availableSpace").value;
+          var pCount = parseInt(count);
+          var update = (pCount+1);
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_addSpace.php",{owner: owner, updateAdd:update},function(data){
+            get();
+          });
+
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/pusher/update.php", function(data){
+            
+          });
+
+
+          
+
+        }
+
+        function removeSpace(){
+          var count = document.getElementById("availableSpace").value;
+          var pCount = parseInt(count);
+          var update =  (pCount-1);
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_removeSpace.php",{owner: owner, updateRemove:update},function(data){
+            get();
+          });
+
+          $.get("https://www.gcccsbsit.xyz/_gpark/_api/pusher/update.php", function(data){
+            
+          });
+        }
+
+        get();
+      </script>
+
+
+
+
+    </ons-page>
+

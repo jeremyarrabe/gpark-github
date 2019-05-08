@@ -41,19 +41,19 @@
         <!-- style="background-image: url('img/parking_1.jpg'); background-size: 100% 100%" -->
 
         <ons-carousel  swipeable auto-scroll auto-scroll itemCount id="carousel" style="height: 40%; width: 100%" >
-          <ons-carousel-item style="background-color: #3498db;">
+          <ons-carousel-item style="background-color: #3498db;  background-size: 100% 100%; " id="carousel-1">
             <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
-              BLUE
+              
             </div>
           </ons-carousel-item>
-          <ons-carousel-item style="background-color: #2ecc71;">
+          <ons-carousel-item style="background-color: #2ecc71; background-size: 100% 100%;" id="carousel-2">
             <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
-              GREEN
+              
             </div>
           </ons-carousel-item>
-          <ons-carousel-item style="background-color: #e74c3c;">
+          <ons-carousel-item style="background-color: #e74c3c; background-size: 100% 100%;" id="carousel-3">
             <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
-              RED
+              
             </div>
           </ons-carousel-item>
         </ons-carousel>
@@ -151,28 +151,32 @@
           </ons-col>
         </ons-row>
         <script type="text/javascript">
-
-
-
-
-
-
-
-          /*var pusher = new Pusher('c2e347e17b4b3a98f491', {
+          var pusher = new Pusher('c2e347e17b4b3a98f491', {
             cluster: 'ap1',
             forceTLS: true
           });
 
           var channel = pusher.subscribe('my-channel');
           channel.bind('my-event', function(data) {
-            console.log("Update Time");
+
+            loadPusher();
+            
           });
 
 
-          function sendPusher(){
-            $.post()
+          var Limit = 5;
+          var id = localStorage.getItem("getId");
 
-          }*/
+
+          function loadPusher(){
+            console.log("update pusher");
+            var id = localStorage.getItem("getId");
+           $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_updatePark.php",{D_Id: id},function(data){
+              var totalspace = data[0].D_Total - data[0].D_Inuse;
+              document.getElementById("p_Total").innerHTML = totalspace+" Available";
+           });
+
+          }
           document.getElementById('star_total').innerHTML = "0";
 
 
@@ -282,7 +286,7 @@
 
 
 
-          var Limit = 5;
+          
 
           function googleNavigate() {
             ons.notification.toast('Loading...', { timeout: 3000 });
@@ -328,12 +332,11 @@
             }
           } 
 
-          checking();
+          
 
 
           function getContent(){
-            var localId = localStorage.getItem("getId");
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoSpecific.php",{D_Id : localId }, function(data){
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoSpecific.php",{D_Id : id }, function(data){
               console.log(data);
               var d = new Date(); // current time
               var sadhours = d.getHours();
@@ -419,12 +422,22 @@
             });
           }
 
+          function loadImages(){
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectImages.php",{D_Id: id},function(data){
+              console.log(data);
+              $("#carousel-1").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
+              $("#carousel-2").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[1].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
+              $("#carousel-3").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[2].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
+            })
+          }
+
+           loadImages();
+
 
           function getComments(limit){
-            console.log(limit)
-            var localId = localStorage.getItem("getId");
             var comments = "";
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_getComments.php",{id : localId, limit: limit}, function(data){
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_getComments.php",{id : id, limit: limit}, function(data){
 
               if (data == "") {
 
@@ -458,7 +471,6 @@
 
 
           function insertComment(){
-            var localId = localStorage.getItem("getId");
             var fname = localStorage.getItem("Fname");
             var lname = localStorage.getItem("Lname");
             var fullname = fname+" "+lname;
@@ -474,7 +486,7 @@
             else{
 
 
-              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: localId, c_User: fullname, c_Comment: textC, c_uId:c_uId},function(data){
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_addComment.php",{c_pId: id, c_User: fullname, c_Comment: textC, c_uId:c_uId},function(data){
 
                 setTimeout(function(){getComments(Limit); getRatings();getContent();document.getElementById("textComment").value = ""; }, 4000);
                 ons.notification.toast('Comment Added', { timeout: 4000,});
@@ -482,10 +494,9 @@
 
               });
 
-              var pId = localStorage.getItem("getId");
               var userName = localStorage.getItem("username");
               var Rating = document.getElementById("star_total").innerHTML;
-              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:pId, r_Rating: Rating, r_Username: userName},function(data){
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:id, r_Rating: Rating, r_Username: userName},function(data){
 
               });
 
@@ -516,15 +527,15 @@
 
           function getRatings(){
             var userName = localStorage.getItem("username");
-            var pId = localStorage.getItem("getId");
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectUserRating.php",{r_Username:userName, d_Id: pId }, function(data){
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectUserRating.php",{r_Username:userName, d_Id: id }, function(data){
               console.log(data);
               if (data.length <= 0) {
                 $( "#hasRating" ).removeClass( "displayR" );
                 $( "#hasRating" ).addClass( "hiddenR" );
                 $( "#noRating" ).removeClass( "hiddenR" );
                 $( "#noRating" ).addClass( "displayR" );
-                console.log("0");
+                
               }
               else{
                 console.log("1");
@@ -578,7 +589,7 @@
             }
           });
 
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_countRating.php",{d_Id:pId }, function(data){
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_countRating.php",{d_Id:id }, function(data){
               console.log(data);
               if (data[0].reviews == '0') {
                 document.getElementById("p_Reviews").innerHTML = "No Ratings Yet";
@@ -633,10 +644,10 @@
 
           function updateRating(){
             var username = localStorage.getItem("username");
-            var pId = localStorage.getItem("getId");
+
             var rating = document.getElementById('con-total').innerHTML;
             console.log(rating);
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_userRating.php",{r_Rating: rating, r_Username: username, d_Id: pId},function(data){
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_userRating.php",{r_Rating: rating, r_Username: username, d_Id: id},function(data){
               console.log("updated");
               getRatings();
               getContent();
@@ -758,6 +769,7 @@
           getRatings();
           getContent();
           getComments(Limit); 
+          checking();
 
         </script>
 

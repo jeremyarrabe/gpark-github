@@ -43,15 +43,16 @@
           function login() {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
-           
+            console.log("login");
             $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser2.php",{username:username, password:password},function(data){
+              console.log(data);
               if (data.length == 0) {
                 alert("Error: Username and/or Password");
                 console.log(data);
               }
 
-              else{
-                
+              if(data[0].U_Type == 0){
+
                 localStorage.setItem("username", data[0].U_username);
                 localStorage.setItem("password", data[0].U_Password);
                 localStorage.setItem("Fname", data[0].U_fname);
@@ -60,7 +61,23 @@
                 location.href = "index.html";
 
               }
+
+              if(data[0].U_Type == 1){
+
+                localStorage.setItem("o_username", data[0].U_username);
+                localStorage.setItem("o_userId", data[0].U_Id);
+                ons.notification.toast('Logging In...', {
+                  timeout: 2500
+                });
+                setTimeout(pushowner, 3000);
+                
+              }
             });
+          }
+
+
+          function pushowner(){
+            myNavigator.pushPage('templates/owner-landing/owner_caller.html');
           }
         </script>
 

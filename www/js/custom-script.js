@@ -141,23 +141,62 @@ document.addEventListener('init', function (event) {
       policy += '<textarea id="policy'+i+'" class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%; margin-top:3%"></textarea>';
       policy += '</ons-list-item>';
       policy += '</ons-list>'; 
- }
+    }
 
     document.getElementById("policies").innerHTML += policy;
   }
   addMore();
 }
+
+
 Math.floor(Math.random() * 10)
 
-  if (event.target.id == "ownersignup") {
-    var id = Math.floor(Math.random() * 1000)
-    localStorage.setItem("parkingId", id);
+if (event.target.id == "ownersignup") {
+  var id = Math.floor(Math.random() * 1000)
+  localStorage.setItem("parkingId", id);
+  localStorage.setItem("parkingId2", id);
+}
+
+
+if (event.target.id  == "parkingPolicy") {
+  console.log("policy");
+  function policy(){
+    var pId = localStorage.getItem("getId");
+    
+    $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectPolicy.php",{p_Id: pId}, function(data){
+      var policies = " "; 
+      for(var i =0 ;i <data.length; i++){
+        var count = (i+1);
+        policies += ' <ons-list-header>Policy '+count+'</ons-list-header>';
+        policies += '<ons-list-item modifier="longdivider">'+data[i].po_Content+'</ons-list-item>';
+      }
+
+      document.getElementById('viewPolicies').innerHTML += policies;
+    });
+
   }
 
 
 
 
+  policy();
+}
+
+
+
+if(event.target.id == "ownerpage"){
+ons.disableDeviceBackButtonHandler();
+console.log('sad');
+
+}
+
+
+
+
+
 });
+
+
 
 
 

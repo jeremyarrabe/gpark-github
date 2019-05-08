@@ -71,19 +71,7 @@
               <p id="address">4C Apitong Ext Old Cabalan Olongapo City Zambales</p>
             </ons-col>  
 
-            <ons-col width="10%">
-              <p><i class="fa fa-paper-plane"></i></p>
-            </ons-col>
-            <ons-col width="85%">
-              <p id="email">jeremyxarrabe@gmail.com</p>
-            </ons-col>
-
-            <ons-col width="10%">
-              <p><i class="fa fa-file-signature"></i></p>
-            </ons-col>
-            <ons-col width="85%">
-              <p id="date">Joined: 12 March 2018</p>
-            </ons-col>
+            
 
 
 
@@ -95,7 +83,7 @@
 
 </ons-row>
 
-<ons-row style="padding-top:55%;">
+<ons-row style="padding-top:35%;">
 
   <ons-col width="100%">
     <div style=" padding: 0.5em;">
@@ -140,8 +128,6 @@
       document.getElementById("username").innerHTML = "@"+data[0].U_username;
       document.getElementById("contactNum").innerHTML = data[0].U_Contact;
       document.getElementById("address").innerHTML = data[0].U_Address;
-      document.getElementById("email").innerHTML = data[0].U_Email;
-      document.getElementById("date").innerHTML = "May 3, 2019";
       document.getElementById("lastChange").innerHTML = "Last Changed: "+data[0].U_passwordDate;
       document.getElementById("profilepic").innerHTML = "May 3, 2019";
       var profile = "https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].U_ProfilePic;

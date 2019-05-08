@@ -33,31 +33,6 @@
 
 
 
-  <script type="text/javascript">
-    function policy(){
-      var pId = localStorage.getItem("getId");
-    
-      $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectPolicy.php",{p_Id: pId}, function(data){
-          var policies = " "; 
-        for(var i =0 ;i <data.length; i++){
-          console.log(data);
-          var count = (i+1);
-          policies += ' <ons-list-header>Policy '+count+'</ons-list-header>';
-          policies += '<ons-list-item modifier="longdivider">'+data[i].po_Content+'</ons-list-item>';
-        }
-
-        document.getElementById('viewPolicies').innerHTML += policies;
-      });
-      
-    }
-
-   
-        
-
-    policy();
-
-  </script>
-
 </ons-page>
 
 
