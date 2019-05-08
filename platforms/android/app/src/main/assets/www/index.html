@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!-- <script src="https://js.pusher.com/4.4/pusher.min.js"></script> -->
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/index.css">
     
@@ -167,6 +167,18 @@
                             <ons-list-header style="background-color: #F3F3F3">Business Permit</ons-list-header>
                             <ons-list-item >
                               <input type="file" id="filePermit"  multiple="multiple" accept="image/*" style="width: 100%;"> 
+                            </ons-list-item>
+                          </ons-col>
+
+                          <ons-col width="100%"  style="padding: 3%">
+                            <ons-list-header style="background-color: #F3F3F3">Account Details</ons-list-header>
+                            <ons-list-item >
+                              <ons-input id="o_username" modifier="underbar" placeholder="Username" float style="width: 100%"></ons-input>
+                              <ons-input id="o_firstname" modifier="underbar" placeholder="First Name" float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="o_lastname" modifier="underbar" placeholder="Last Name" float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="o_address" modifier="underbar" placeholder="Address" float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="o_contact" modifier="underbar" placeholder="Contact Number" type="number"float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="o_password" modifier="underbar" placeholder="Password" type="password"float style="width: 100%; margin-top: 8%"></ons-input>
                             </ons-list-item>
                           </ons-col>
 
@@ -342,7 +354,7 @@
 
 
                               <ons-col width="100%">
-                                <ons-button style="width: 50%; border-radius: 20px;" disabled id="signup"><i class="fa fa-circle-notch" ></i> Sign Up</ons-button>
+                                <ons-button style="width: 50%; border-radius: 20px;" disabled id="signup" onclick="checkerValid()"><i class="fa fa-circle-notch" ></i> Sign Up</ons-button>
 
                               </ons-col>
 
@@ -378,7 +390,7 @@
                             Create Policy
                           </div>
                           <div class="right" style="color: black !important">
-                            <ons-toolbar-button onclick="registerOwner()">
+                            <ons-toolbar-button onclick="checkerValid()">
                               <i class="fa fa-check"></i>
                             </ons-toolbar-button>
                           </div>
@@ -420,7 +432,7 @@
                         }, false);
                       </script>
                       <script>
-
+                        localStorage.setItem("generateMax", 0);
                         function enableButton(){
                           $( "#signup" ).removeAttr("disabled");
                           $( "#noPolicy" ).attr("disabled", "true");
@@ -429,12 +441,20 @@
                         }
 
                         function generate(){
+
                           var max = document.getElementById("noPolicy").value;
                           localStorage.setItem("generateMax", max);
 
+          
+                          if ((max == '') || (max == 0)) {
+                            ons.notification.alert("Enter Number of Policy!");
+                          }else{
+                           myNavigator.pushPage('viewPolicyTemplate.html')
+                         }
 
-                          myNavigator.pushPage('viewPolicyTemplate.html')
-                        }
+
+                         
+                       }
                         /*<ons-col width="100%" >
                             <textarea class="textarea" rows="8" placeholder="Enter Policy" style="width: 100%;"></textarea>
                             </ons-col>*/
@@ -456,6 +476,35 @@
                             }
 
 
+                            function checkerValid(){
+                              var pName = document.getElementById("pName").value;
+                              var pAddress = document.getElementById("pAddress").value;
+                              var pContact = document.getElementById("pContact").value;
+                              var pOpen = document.getElementById("pOpen").value;
+                              var pClose = document.getElementById("pClose").value;
+                              var pSpaceMax = document.getElementById("pSpaceMax").value;
+                              var pSpaceMin = document.getElementById("pSpaceMin").value;
+
+                              var pType = pTypes;
+
+                              var o_username = document.getElementById("o_username").value;
+                              var o_firstname = document.getElementById("o_firstname").value;
+                              var o_lastname = document.getElementById("o_lastname").value;
+                              var o_address = document.getElementById("o_address").value;
+                              var o_contact = document.getElementById("o_contact").value;
+                              var o_password = document.getElementById("o_password").value;
+
+                              if ( (pName == "") || (pAddress == "") || (pContact == "") || (pOpen == "") || (pClose == "") || (pSpaceMax == "") || (pSpaceMin == "")  || (pType == "") || (o_username == "") || (o_firstname == "") || (o_lastname == "") || (o_address == "") || (o_contact == "") || (o_password == "")) {
+
+                                ons.notification.alert("All fields are required");
+                              }
+
+                              else{registerOwner()}
+
+
+                            }
+
+
 
 
                             function registerOwner(){
@@ -472,15 +521,16 @@
                               var pLat = localStorage.getItem("eventLat");
                               var pLng = localStorage.getItem("eventLng");
                               var pId = localStorage.getItem("parkingId");
+                              var o_username = document.getElementById("o_username").value;
 
 
 
-                                
-                               
- 
+
+
                               var checkPolicy =  parseInt(localStorage.getItem("generateMax"));
 
-                              console.log(filePermit)
+                              
+
 
 
                               for (var i = 1; i <= checkPolicy; i++) {
@@ -496,20 +546,25 @@
 
                               }
 
-                              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_insertOwner.php",{pName: pName, pAddress:pAddress, pContact:pContact, pOpen:pOpen, pClose:pClose, pSpaceMax:pSpaceMax , pSpaceMin:pSpaceMin, pRateMin:pRateMin, pRateMax:pRateMax, pLat: pLat, pLng: pLng, pLat:pLat, pLng:pLng, pType: pType, pId: pId },function(data){
+
+                              
+
+
+
+                              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_insertOwner.php",{pName: pName, pAddress:pAddress, pContact:2, pOpen:pOpen, pClose:pClose, pSpaceMax:pSpaceMax , pSpaceMin:pSpaceMin, pRateMin:pRateMin, pRateMax:pRateMax, pLat: pLat, pLng: pLng, pLat:pLat, pLng:pLng, pType: pType, pId: pId, owner: o_username },function(data){
                                 console.log("inserted");
 
                               });
 
-
-
+                              
+                              
                               $(document).ready(function() {     
                                 var filePermit = $('#filePermit')[0].files;
                                 var filePictures = $('#filePictures')[0].files;
 
                                 console.log(filePermit,filePictures);
 
-                                for(var i = 0 ; i < filePermit.length; i++){
+                                for(var i = 0; i < filePermit.length; i++){
                                   var file_data = $('#filePermit').prop('files')[i]; 
                                   var form_data = new FormData();                  
                                   form_data.append('file', file_data);
@@ -542,12 +597,83 @@
                                       console.log(data);
                                     }
                                   });
-                                  console.log(i);
+
                                 }
 
 
 
                               });
+
+                              saveImages();
+                            }
+
+
+
+                            function saveImages(){
+
+                              var o_username = document.getElementById("o_username").value;
+                              var o_firstname = document.getElementById("o_firstname").value;
+                              var o_lastname = document.getElementById("o_lastname").value;
+                              var o_address = document.getElementById("o_address").value;
+
+                              var o_contact = document.getElementById("o_contact").value;
+                              var o_password = document.getElementById("o_password").value;
+                              var jem = localStorage.getItem("parkingId2");
+
+                              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:o_username, password:o_password, fname:o_firstname, lname:o_lastname, address:o_address, email:"none", contact:o_contact, profile: "n/a", type: 1},function(data){
+
+
+
+                              });
+
+                              $(document).ready(function() {    
+                                var filePictures = $('#filePictures')[0].files;
+                                var filePermit = $('#filePermit')[0].files;
+                               
+
+                                for(var i = 0; i<filePictures.length; i++)
+                                {
+
+
+                                  $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_pImage1.php",{i_id: jem, i_img: filePictures[i].name, i_type: 0},function(data){
+
+                                  });
+                                }
+
+
+
+                                for(var i = 0; i<filePermit.length; i++)
+                                {
+                                   
+                                  $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_pImage1.php",{i_id: jem, i_img: filePermit[i].name, i_type: 1},function(data){
+
+                                  });
+                                }
+
+
+                              });
+
+                              localStorage.clear();
+                              ons.notification.toast('Creating Account Please Wait', {
+                                timeout: 2000
+                              });
+                              setTimeout(r, 3000);
+                              
+
+                              function r(){
+                                ons.notification.toast('Account Created!', {
+                                  timeout: 1500
+                                });
+                                setTimeout(b, 1500);
+                              }
+
+                              function b(){
+                                location.href = "index.html";
+                              }
+
+
+
+
                             }
 
 

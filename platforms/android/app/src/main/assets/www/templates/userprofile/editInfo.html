@@ -10,7 +10,7 @@
           .text-input.text-input--material{
             color: black !important;
           }
-                    .hiddenDiv{
+          .hiddenDiv{
             display: none;
           }
 
@@ -56,9 +56,7 @@
           <ons-col width="100%" style="padding: 5%">
             <ons-input id="addresses" modifier="underbar" placeholder="Address" float style="width: 100%"></ons-input>
           </ons-col>
-          <ons-col width="100%" style="padding: 5%">
-            <ons-input id="emails" modifier="underbar" placeholder="Email" float style="width: 100%"></ons-input>
-          </ons-col>
+
           <ons-col width="100%" style="padding: 5%">
             <ons-input id="contact" modifier="underbar" placeholder="Contact" type="number" float style="width: 100%"></ons-input>
           </ons-col>
@@ -89,7 +87,8 @@
               </ons-col>
 
               <ons-col width="100%">
-                <ons-button id="crop_image" class="hiddenDiv">Crop</ons-button>
+                <ons-button id="crop_image" class="hiddenDiv" onclick='localStorage.setItem("profile_set", 1);
+                '>Crop</ons-button>
               </ons-col>
             </ons-row>
 
@@ -98,87 +97,87 @@
 
 
         <script type="text/javascript">
-        localStorage.setItem("profile_set", 0);
+          localStorage.setItem("profile_set", 0);
 
-        var profile_set = localStorage.getItem("profile_set");
+          var profile_set = localStorage.getItem("profile_set");
 
-        function viewPic(){
+          function viewPic(){
 
-          var base64 = localStorage.getItem("pic64");
-          $("#profilepic1").attr("src",base64);
-        }
-
-
-        function showButtons(){
-          $('#image_div').removeClass('hiddenDiv');
-          $('#image_div').addClass('showDiv');
-          $('#crop_image').removeClass('hiddenDiv');
-          $('#crop_image').addClass('showDiv'); 
-          $('#upload_jem').addClass('hiddenDiv'); 
-          $('#hideModal').addClass('hiddenDiv');
-        }
-
-
-        function hideButtons(){
-          $('#showModal').attr('disabled', 'disabled');
-
-        }
-
-        var modal = document.querySelector('ons-modal');
-
-        function showModal(){
-
-          modal.show();
-        }
-
-
-        $image_crop = $('#image_demo').croppie({
-          enableExif: true,
-          viewport: {
-            width: 200,
-            height: 200,
-            type: 'circle'
-          },
-          boundary:{
-            width:300,
-            height: 300
-          }
-        });
-
-        $("#upload_image").on('change', function(){
-          var reader = new FileReader();
-          reader.onload = function (event){
-            $image_crop.croppie('bind', {
-              url:event.target.result
-            }).then(function(){
-              console.log("A");
-            });
+            var base64 = localStorage.getItem("pic64");
+            $("#profilepic1").attr("src",base64);
           }
 
-          reader['readAsDataURL'](this.files[0]);
-        });
 
-        $('#crop_image').click(function(event){
-          $image_crop.croppie("result", {
-            type:'base64',
-            size:'viewport',
-            quality: 1
-          }).then(function(response){
-            var name = Math.random().toString(36).substr(2, 5);
+          function showButtons(){
+            $('#image_div').removeClass('hiddenDiv');
+            $('#image_div').addClass('showDiv');
+            $('#crop_image').removeClass('hiddenDiv');
+            $('#crop_image').addClass('showDiv'); 
+            $('#upload_jem').addClass('hiddenDiv'); 
+            $('#hideModal').addClass('hiddenDiv');
+          }
 
 
-            $.post("https://www.gcccsbsit.xyz/_gpark/profile_upload.php",{base64: response, name: name},function(data){
-              console.log("uploaded_image");
-            });
-            $image_crop.croppie('destroy');
-            console.log(name);
-            modal.hide();
-            localStorage.setItem("picName", name);
-            localStorage.setItem("pic64", response);
-            hideButtons();
-            viewPic();
-          })
-        });
+          function hideButtons(){
+            $('#showModal').attr('disabled', 'disabled');
+
+          }
+
+          var modal = document.querySelector('ons-modal');
+
+          function showModal(){
+
+            modal.show();
+          }
+
+
+          $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+              width: 200,
+              height: 200,
+              type: 'circle'
+            },
+            boundary:{
+              width:300,
+              height: 300
+            }
+          });
+
+          $("#upload_image").on('change', function(){
+            var reader = new FileReader();
+            reader.onload = function (event){
+              $image_crop.croppie('bind', {
+                url:event.target.result
+              }).then(function(){
+                console.log("A");
+              });
+            }
+
+            reader['readAsDataURL'](this.files[0]);
+          });
+
+          $('#crop_image').click(function(event){
+            $image_crop.croppie("result", {
+              type:'base64',
+              size:'viewport',
+              quality: 1
+            }).then(function(response){
+              var name = Math.random().toString(36).substr(2, 5);
+
+
+              $.post("https://www.gcccsbsit.xyz/_gpark/profile_upload.php",{base64: response, name: name},function(data){
+                console.log("uploaded_image");
+              });
+              $image_crop.croppie('destroy');
+              console.log(name);
+              modal.hide();
+              localStorage.setItem("picName", name);
+              localStorage.setItem("pic64", response);
+              hideButtons();
+              viewPic();
+            })
+          });
 
 
 
@@ -196,7 +195,7 @@
               document.getElementById("usernames").value = username;
               document.getElementById("contact").value = data[0].U_Contact;
               document.getElementById("addresses").value = data[0].U_Address;
-              document.getElementById("emails").value = data[0].U_Email;
+
               var profile2 = "https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].U_ProfilePic;
               $("#profilepic1").attr("src",profile2);
               
@@ -211,14 +210,32 @@
             var username = document.getElementById("usernames").value;
             var contact =  document.getElementById("contact").value;
             var address = document.getElementById("addresses").value;
-            var email = document.getElementById("emails").value;
+
             var id = localStorage.getItem("userId");
             var profile3 =localStorage.getItem("picName");
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:email, id: id, profile:profile3+".jpg"  }, function(data){
-              localStorage.setItem("username",username);
-              ons.notification.toast('Updating Profile', { timeout:5000 })
-              get();
-            });
+
+            var check = localStorage.getItem("profile_set");
+            if (check == 0) {
+
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile0.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:" ", id: id }, function(data){
+                localStorage.setItem("username",username);
+                localStorage.setItem("Fname",firstname);
+                localStorage.setItem("Lname",lastname);
+                ons.notification.toast('Updating Profile', { timeout:5000 })
+                get();
+              });
+
+            }
+
+            if(check == 1){
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:" ", id: id, profile:profile3+".jpg"  }, function(data){
+                localStorage.setItem("username",username);
+                ons.notification.toast('Updating Profile', { timeout:5000 })
+                get();
+              });
+
+            }
+
           }
           get();
         </script>
