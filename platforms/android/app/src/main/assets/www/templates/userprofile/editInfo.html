@@ -222,7 +222,11 @@
                 localStorage.setItem("Fname",firstname);
                 localStorage.setItem("Lname",lastname);
                 ons.notification.toast('Updating Profile', { timeout:5000 })
-                get();
+                localStorage.removeItem("pic64");
+                localStorage.removeItem("picName");
+                localStorage.removeItem("profile_set");
+                 location.href = "index.html";
+                
               });
 
             }
@@ -231,7 +235,11 @@
               $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_updateProfile.php",{firstname: firstname, lastname:lastname,newusername:username,contact:contact, address:address,email:" ", id: id, profile:profile3+".jpg"  }, function(data){
                 localStorage.setItem("username",username);
                 ons.notification.toast('Updating Profile', { timeout:5000 })
-                get();
+                localStorage.removeItem("pic64");
+                localStorage.removeItem("picName");
+                localStorage.removeItem("profile_set");
+                 location.href = "index.html";
+                
               });
 
             }

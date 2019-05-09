@@ -1,7 +1,12 @@
       <ons-page id="ownerpage">
+        <style type="text/css">
 
+          .colo{
+            color: #76a9ff;
+          }
+        </style>
 
-        <ons-toolbar>
+        <ons-toolbar modifier="noshadow" style="background-color: #2979FF !important">
           <div class="center">
             Caller App
           </div>
@@ -9,72 +14,91 @@
 
           </div>
           <div class="right">
-            <ons-toolbar-button>
+            <ons-toolbar-button onclick="signOut()">
               <ons-icon icon="fa-sign-out-alt" style="color: white;"></ons-icon>
             </ons-toolbar-button>
 
           </div>
         </ons-toolbar>
 
-        <div class="background" style="background-color: #F3F3F3"></div>
-        <ons-row style="text-align: center;">
-          <ons-col width="100%" style="height: 200px; background-color: red;">
+        <div class="background" style="background-color:#f3f3f3"></div>
+        <ons-row style="text-align: center; color: white">
+          <ons-col id="image-1" width="100" >
+
 
           </ons-col>
-
-
-
-          <ons-col width="100%">
-            <p><i class="fa fa-crown" style="color: #2979FF; margin: 0 ;padding:0"></i></p>
-            <p style="font-size: 25px; font-weight: 700" id="pTitle">Loading</p>
-            <p style="font-size: 18px;" id="pAddress"></p>
-          </ons-col>
-          <ons-col width="100%">
-
+        </ons-row>
+        <ons-row style="text-align: center; color: white">
+          <ons-col width="100" style="height: 250px; width: 100%; background-image: url('img/circle-bg.png'); background-size: 100% 100%; background-position: center;">
+            <h1  id="pTitle">SPACE SPACE SPACE</h1>
+            <h3 id="pAddress">4C Apitong Ext Old Cabalan Olongapo City</h3>
           </ons-col>
 
+          <ons-col width="100%" style="padding: 0.8em; margin-top: -40%; color: black !important; text-align: center;">
+            <ons-card>
+              <ons-row>
+                <ons-col width="100%">
+                  <ons-list>
+                    <ons-list-header>Parking Overview</ons-list-header>
+                    <ons-list-item>
+                      <div class="center">
+                        <p><i class="fa fa-car" style="color: #2979FF"></i> Available Space:</p>
+                      </div>
+                      <div class="right" id="pAvailable" style="font-weight: 700">
+                        <span style="font-weight: 700">200 </span>&nbsp; out of 300
+                      </div>
+                    </ons-list-item>
 
-          <ons-col width="50%" style="font-weight: 700; ">
-            <p>Space Available</p>
-            <p style="font-size: 22px" id="pAvailable" ></p>
-          </ons-col>
+                  </ons-list>
 
-          <input type="number" id="availableSpace" hidden>
+                  <ons-list>
+                    <ons-list-header>Actions</ons-list-header>
+                    <ons-list-item>
+                      <ons-button style="width: 100%; background-color: #0F9D58" onclick="addSpace()">+</ons-button>
+                      <ons-button style="width: 100%; background-color: #DB4437; margin-top: 3%" onclick="removeSpace()">-</ons-button>
+                    </ons-list-item>
 
+                  </ons-list>
+                  <input type="number" id="availableSpace" hidden>
+                </ons-col>
 
-          <ons-col width="50%">
-            <ons-row style="padding: 0.8em">
-              <ons-row width="100%">
-                <ons-button style="width: 100%; background-color: #0F9D58" onclick="addSpace()">+</ons-button>
               </ons-row>
-              <ons-row width="100%" style="margin-top: 4%">
-               <ons-button style="width: 100%; background-color: #DB4437" onclick="removeSpace()">-</ons-button>
-             </ons-row>
+            </ons-card>
+          </ons-col>
+        </ons-row>
 
+        <script type="text/javascript">
+         var owner = localStorage.getItem("o_username");
+         var id = localStorage.getItem("o_userId");
+         ons.notification.toast('Welcome Back ' + owner, { timeout: 2000 });
 
-           </ons-row>
+         function selectImages(){
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectimgOwner.php",{id: id},function(data){
 
+            $("#image-1").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;height: 200px; width: 100%");
 
-         </ons-col>
+          })
 
+        }
 
-       </ons-row>
-
-       <script type="text/javascript">
-        var owner = localStorage.getItem("o_username");
         function get(){
 
-          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_geoLocation.php",{D_parkingOwner: owner},function(data){
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectownerinfo.php",{id: id},function(data){
+            console.log(data);
             document.getElementById("availableSpace").value = data[0].D_Inuse;
             document.getElementById("pTitle").innerHTML = data[0].D_Title;
             document.getElementById("pAddress").innerHTML = data[0].D_Description;
-            document.getElementById("pAvailable").innerHTML = data[0].D_Inuse+" / "+data[0].D_Total;
+            document.getElementById("pAvailable").innerHTML = data[0].D_Inuse+" out of "+data[0].D_Total;
           })
         }
 
 
 
         function addSpace(){
+          ons.notification.toast('Added!', {
+            timeout: 500,
+            animation: 'fall'
+          });
           var count = document.getElementById("availableSpace").value;
           var pCount = parseInt(count);
           var update = (pCount+1);
@@ -83,7 +107,7 @@
           });
 
           $.post("https://www.gcccsbsit.xyz/_gpark/_api/pusher/update.php", function(data){
-            
+
           });
 
 
@@ -92,6 +116,10 @@
         }
 
         function removeSpace(){
+          ons.notification.toast('Removed!', {
+            timeout: 500,
+            animation: 'fall'
+          });
           var count = document.getElementById("availableSpace").value;
           var pCount = parseInt(count);
           var update =  (pCount-1);
@@ -100,11 +128,32 @@
           });
 
           $.get("https://www.gcccsbsit.xyz/_gpark/_api/pusher/update.php", function(data){
-            
+
           });
         }
 
+        function signOut(){
+          ons
+          .notification.confirm({title:"", message: "Are you sure you want to logout?"})
+          .then(function(index){
+            if (index == 1) {
+
+              localStorage.clear();
+              window.location = "index.html"
+            }
+            else{
+              console.log("cancelled");
+            }
+
+          });
+
+
+
+
+        }
+
         get();
+        selectImages();
       </script>
 
 

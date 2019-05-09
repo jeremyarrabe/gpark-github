@@ -52,7 +52,7 @@
                   <p style="margin-top: -9%" id="userTag"></p>
                 </ons-col>
                 <ons-col width="25%" style="padding-top: 12%;padding-right: 7%; text-align: right; " >
-                  <i class="fa fa-ellipsis-v" style="font-size: 15px;"></i>
+                  <!-- <i class="fa fa-ellipsis-v" style="font-size: 15px;"></i> -->
                 </ons-col>
               </ons-row>
                            <!--  <div class="left">
@@ -86,7 +86,7 @@
                               <div class="center" style="font-weight: 700; opacity: 0.8">Favorites</div>
                             </ons-list-item> -->
 
-                            <ons-list-item onclick="" tappable  modifier="nodivider"  id="nav-help">
+                            <!-- <ons-list-item onclick="" tappable  modifier="nodivider"  id="nav-help">
                               <div class="left"><i class="fa fa-question" style="padding-right: 2px; opacity: 0.8"></i></div>
                               <div class="center" style="font-weight: 700; opacity: 0.8">Help</div>
                             </ons-list-item>
@@ -94,7 +94,7 @@
                             <ons-list-item onclick="" tappable  modifier="longdivider"  id="nav-settings">
                               <div class="left"><i class="fa fa-cog" style="padding-right: 2px; opacity: 0.8"></i></div>
                               <div class="center" style="font-weight: 700; opacity: 0.8">Settings</div>
-                            </ons-list-item>
+                            </ons-list-item> -->
 
                             <ons-list-item onclick="logOut();" tappable  modifier="longdivider" id="nav-logout">
                               <div class="left" id="left-log"></div>
@@ -123,9 +123,9 @@
                             </ons-toolbar-button>
                           </div>
                           <div class="right">
-                            <ons-toolbar-button  onclick="myNavigator.pushPage('templates/notification.html')">
+                            <!-- <ons-toolbar-button  onclick="myNavigator.pushPage('templates/notification.html')">
                               <ons-icon icon="fa-bell" style="color: white;"></ons-icon>
-                            </ons-toolbar-button>
+                            </ons-toolbar-button> -->
                           </div>
                         </ons-toolbar>
                         <div id="map" style="height: 100%; width: 100%; "></div>
@@ -150,7 +150,7 @@
 
                           </div>
                           <div class="right" style="color: black !important">
-                            <ons-toolbar-button onclick="myNavigator.pushPage('addPolicy.html')">
+                            <ons-toolbar-button onclick="checkerValid()">
                               <i class="fa fa-chevron-circle-right"></i>
                             </ons-toolbar-button>
                           </div>
@@ -177,7 +177,7 @@
                               <ons-input id="o_firstname" modifier="underbar" placeholder="First Name" float style="width: 100%; margin-top: 8%"></ons-input>
                               <ons-input id="o_lastname" modifier="underbar" placeholder="Last Name" float style="width: 100%; margin-top: 8%"></ons-input>
                               <ons-input id="o_address" modifier="underbar" placeholder="Address" float style="width: 100%; margin-top: 8%"></ons-input>
-                              <ons-input id="o_contact" modifier="underbar" placeholder="Contact Number" type="number"float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="o_contact" modifier="underbar" placeholder="Contact Number" type="tel"  maxlength="11" pattern="[0-9]*" float style="width: 100%; margin-top: 8%"></ons-input>
                               <ons-input id="o_password" modifier="underbar" placeholder="Password" type="password"float style="width: 100%; margin-top: 8%"></ons-input>
                             </ons-list-item>
                           </ons-col>
@@ -187,7 +187,7 @@
                             <ons-list-item >
                               <ons-input id="pName" modifier="underbar" placeholder="Parking Name" float style="width: 100%"></ons-input>
                               <ons-input id="pAddress" modifier="underbar" placeholder="Parking Address" float style="width: 100%; margin-top: 8%"></ons-input>
-                              <ons-input id="pContact" modifier="underbar" placeholder="Contact Number" type="number"float style="width: 100%; margin-top: 8%"></ons-input>
+                              <ons-input id="pContact" modifier="underbar" placeholder="Contact Number" type="tel"float style="width: 100%; margin-top: 8%; display: none;" ></ons-input>
 
                             </ons-list-item>
                           </ons-col>
@@ -334,7 +334,7 @@
                               </ons-list>
                             </ons-col>
 
-                            <ons-col width="100%">
+                            <ons-col width="100%"  style="display: none">
                               <ons-list style="background-color: #F3F3F3">
                                 <ons-list-item>
                                   OR
@@ -342,7 +342,7 @@
                               </ons-list>
                             </ons-col>
 
-                            <ons-col width="100%">
+                            <ons-col width="100%" style="display: none">
                               <ons-list-header style="background-color: #F3F3F3">Upload Policy (.txt .docx)</ons-list-header>
                               <ons-list style="background-color: #F3F3F3">
                                 <ons-list-item tappable >
@@ -353,7 +353,7 @@
 
 
 
-                              <ons-col width="100%">
+                              <ons-col width="100%"  style="display: none">
                                 <ons-button style="width: 50%; border-radius: 20px;" disabled id="signup" onclick="checkerValid()"><i class="fa fa-circle-notch" ></i> Sign Up</ons-button>
 
                               </ons-col>
@@ -390,7 +390,7 @@
                             Create Policy
                           </div>
                           <div class="right" style="color: black !important">
-                            <ons-toolbar-button onclick="checkerValid()">
+                            <ons-toolbar-button onclick="registerOwner()">
                               <i class="fa fa-check"></i>
                             </ons-toolbar-button>
                           </div>
@@ -445,7 +445,7 @@
                           var max = document.getElementById("noPolicy").value;
                           localStorage.setItem("generateMax", max);
 
-          
+
                           if ((max == '') || (max == 0)) {
                             ons.notification.alert("Enter Number of Policy!");
                           }else{
@@ -476,10 +476,10 @@
                             }
 
 
+
                             function checkerValid(){
                               var pName = document.getElementById("pName").value;
                               var pAddress = document.getElementById("pAddress").value;
-                              var pContact = document.getElementById("pContact").value;
                               var pOpen = document.getElementById("pOpen").value;
                               var pClose = document.getElementById("pClose").value;
                               var pSpaceMax = document.getElementById("pSpaceMax").value;
@@ -491,15 +491,32 @@
                               var o_firstname = document.getElementById("o_firstname").value;
                               var o_lastname = document.getElementById("o_lastname").value;
                               var o_address = document.getElementById("o_address").value;
-                              var o_contact = document.getElementById("o_contact").value;
+                              var o_contact = document.getElementById("o_contact").value
                               var o_password = document.getElementById("o_password").value;
 
-                              if ( (pName == "") || (pAddress == "") || (pContact == "") || (pOpen == "") || (pClose == "") || (pSpaceMax == "") || (pSpaceMin == "")  || (pType == "") || (o_username == "") || (o_firstname == "") || (o_lastname == "") || (o_address == "") || (o_contact == "") || (o_password == "")) {
+                              if ( (pName == "") || (pAddress == "") || (o_contact == "") || (pOpen == "") || (pClose == "") || (pSpaceMax == "") || (pSpaceMin == "")  || (pType == "") || (o_username == "") || (o_firstname == "") || (o_lastname == "") || (o_address == "") || (o_password == "")) {
 
                                 ons.notification.alert("All fields are required");
                               }
 
-                              else{registerOwner()}
+                              else{
+
+                                $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectuser.php",{username: o_username},function(data){
+                                  console.log(data)
+                                  if (data.length > 0) {
+                                    ons.notification.alert("Username Already Exist");
+                                    
+                                  }
+                                  else{
+                                    myNavigator.pushPage('addPolicy.html');
+                                  }
+                                  
+                                });
+
+
+
+                              }
+
 
 
                             }
@@ -529,7 +546,7 @@
 
                               var checkPolicy =  parseInt(localStorage.getItem("generateMax"));
 
-                              
+
 
 
 
@@ -547,7 +564,7 @@
                               }
 
 
-                              
+
 
 
 
@@ -556,8 +573,8 @@
 
                               });
 
-                              
-                              
+
+
                               $(document).ready(function() {     
                                 var filePermit = $('#filePermit')[0].files;
                                 var filePictures = $('#filePictures')[0].files;
@@ -629,7 +646,7 @@
                               $(document).ready(function() {    
                                 var filePictures = $('#filePictures')[0].files;
                                 var filePermit = $('#filePermit')[0].files;
-                               
+
 
                                 for(var i = 0; i<filePictures.length; i++)
                                 {
@@ -644,7 +661,7 @@
 
                                 for(var i = 0; i<filePermit.length; i++)
                                 {
-                                   
+
                                   $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_pImage1.php",{i_id: jem, i_img: filePermit[i].name, i_type: 1},function(data){
 
                                   });
@@ -658,7 +675,7 @@
                                 timeout: 2000
                               });
                               setTimeout(r, 3000);
-                              
+
 
                               function r(){
                                 ons.notification.toast('Account Created!', {
@@ -687,6 +704,8 @@
                           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
                           <script type="text/javascript" src="js/index.js"></script>
                           <script type="text/javascript" src="js/custom-script.js"></script>
+                          <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+
 
 
                         </body>

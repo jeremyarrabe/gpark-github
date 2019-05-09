@@ -10,6 +10,8 @@
           .text-input.text-input--material{
             color: white !important;
           }
+
+
         </style>
 
         <ons-toolbar modifier="noshadow" style="background-color: #454A58 !important">
@@ -25,54 +27,106 @@
         <ons-row style=" margin-top: 8%; color: white !important">
           <ons-col width="100%">
             <p style="color: white; font-size: 35px; font-weight: 700; padding-left: 5%;">Log In</p>
-          </ons-col>
-
-
-          
+          </ons-col>          
           <ons-col width="100%" style="text-align: center; margin-top: 20%; color: white !important;">
+
             <i class="fa fa-user" style="padding-right: 2%"></i> <ons-input placeholder="Username" float id="username"></ons-input><br><br><br>
             <i class="fa fa-lock" style="padding-right: 2%"></i> <ons-input placeholder="Password" float type="password" id="password"></ons-input><br><br>
-            <ons-button  style="width: 40%; border-radius: 20px;" onclick="login()">Log in</ons-button>
-            
+            <p style="color: #DB4437; font-weight: 700" id="text_error"></p>
+            <ons-button  style="width: 40%; border-radius: 20px;" onclick="login()" id="login_disable">Log in</ons-button>
+            <p style="text-decoration: underline; font-size: 15px; opacity: 0.8" onclick="myNavigator.pushPage('templates/forgotpassword/forgotpassword.html')">Forgot Password</p>
 
           </ons-col>
+
 
         </ons-row>
 
         <script type="text/javascript">
+
+
+          localStorage.setItem("loginCount", 0)
+
+
+
+
+
+
+
+
           function login() {
+
+
+            var loginCount = localStorage.getItem("loginCount");
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
             console.log("login");
             $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser2.php",{username:username, password:password},function(data){
               console.log(data);
+
               if (data.length == 0) {
-                alert("Error: Username and/or Password");
-                console.log(data);
+                localStorage.setItem("loginCount", parseInt(loginCount)+1);
+                ons.notification.alert({title: "Error", message: "Username and/or Password Does not exist"});
+              }
+              else{
+                var s_username = data[0].U_username;
+                var s_password = data[0].U_Password;
+                var s_fname = data[0].U_fname;
+                var s_Lname = data[0].U_Lname;
+                var s_Id = data[0].U_Id;
+                if (data[0].U_Activated == 0) {
+                  console.log("not U_Activated");
+                  $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_forgotPassword.php",{username: username}, function(data){
+                    var a = Math.floor((Math.random()*4000) + 1000); 
+                    var number = data[0].U_Contact;
+                    var message = "YOUR GPARK VERIFICATION CODE IS " +a;
+                    $.getJSON("https://www.gcccsbsit.xyz/_gpark/sms.php?cnum="+number+"&mes="+message+"",function(data){
+                      localStorage.setItem("verification_code", a);
+                      localStorage.setItem("usernumber", number);
+                      localStorage.setItem("username", s_username);
+                      localStorage.setItem("password", s_password);
+                      localStorage.setItem("Fname", s_fname);
+                      localStorage.setItem("Lname", s_Lname);
+                      localStorage.setItem("userId", s_Id);
+                      myNavigator.pushPage('templates/signup/login_verify.html');
+                    });  
+                  });
+
+                }
+                else{
+                  if (data[0].U_Activated == 1) {
+
+                   console.log("Activated")
+                   if(data[0].U_Type == 0){
+
+                    localStorage.setItem("username", s_username);
+                    localStorage.setItem("password", s_password);
+                    localStorage.setItem("Fname", s_fname);
+                    localStorage.setItem("Lname", s_Lname);
+                    localStorage.setItem("userId", s_Id);
+
+                    location.href = "index.html";
+
+                  }
+
+                  if(data[0].U_Type == 1){
+
+                    localStorage.setItem("o_username", s_username);
+                    localStorage.setItem("o_userId", s_Id);
+                    ons.notification.toast('Logging In...', {
+                      timeout: 2500
+                    });
+                    setTimeout(pushowner, 3000);
+
+                  }
+
+                }
               }
 
-              if(data[0].U_Type == 0){
 
-                localStorage.setItem("username", data[0].U_username);
-                localStorage.setItem("password", data[0].U_Password);
-                localStorage.setItem("Fname", data[0].U_fname);
-                localStorage.setItem("Lname", data[0].U_Lname);
-                localStorage.setItem("userId", data[0].U_Id);
-                location.href = "index.html";
+            }
 
-              }
 
-              if(data[0].U_Type == 1){
-
-                localStorage.setItem("o_username", data[0].U_username);
-                localStorage.setItem("o_userId", data[0].U_Id);
-                ons.notification.toast('Logging In...', {
-                  timeout: 2500
-                });
-                setTimeout(pushowner, 3000);
-                
-              }
-            });
+          });
           }
 
 
@@ -82,7 +136,7 @@
         </script>
 
 
-        
+
 
       </ons-page>
 

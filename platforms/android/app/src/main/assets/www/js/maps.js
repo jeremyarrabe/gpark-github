@@ -1,8 +1,8 @@
   
-  function initMap() {
-    var map;
+function initMap() {
+  var map;
 
-    var icon = {
+  var icon = {
           url: "img/my_location_icon.png", // url
           scaledSize: new google.maps.Size(15, 15), // scaled size
           origin: new google.maps.Point(0,0), // origin
@@ -230,34 +230,34 @@
 
         function logChecker(){
           if (localStorage.username) {
-                      var id = localStorage.getItem("userId");
-          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{id:id},function(data){
-            ons.notification.toast('Welcome '+data[0].U_username, {
-              timeout: 2000,
+            var id = localStorage.getItem("userId");
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser.php",{id:id},function(data){
+              ons.notification.toast('Welcome '+data[0].U_username, {
+                timeout: 2000,
 
+              });
+              document.getElementById("userFullname").innerHTML = data[0].U_fname+" "+data[0].U_Lname;
+              document.getElementById("userTag").innerHTML = "@"+data[0].U_username;
             });
-            document.getElementById("userFullname").innerHTML = data[0].U_fname+" "+data[0].U_Lname;
-            document.getElementById("userTag").innerHTML = "@"+data[0].U_username;
-          });
 
 
-          document.getElementById("left-log").innerHTML = '<i class="fa fa-sign-out-alt" style="padding-right: 2px; opacity: 0.8"></i>';
-          document.getElementById("center-log").innerHTML = 'Logout';
+            document.getElementById("left-log").innerHTML = '<i class="fa fa-sign-out-alt" style="padding-right: 2px; opacity: 0.8"></i>';
+            document.getElementById("center-log").innerHTML = 'Logout';
 
 
-         }
-         else{
-                    
+          }
+          else{
+            
 
            document.getElementById("userFullname").innerHTML = "Welcome to Gpark";
            document.getElementById("userTag").innerHTML = " ";
-                    
-          
-        }
-      }
+           
+           
+         }
+       }
 
 
-      function accountNav(){
+       function accountNav(){
         if (localStorage.username) {
          
           fn.load('templates/profile.html');
@@ -265,100 +265,113 @@
         }
         else{
           fn.load('templates/account.html');
-       }
-     }
-
-
-
-     function logOut(){
-      ons.notification.toast('Logging Out Please Wait...', { timeout: 3000,
-      });
-      localStorage.clear()
-
-      setTimeout(function(){ navigator.app.exitApp(); }, 3000);
-      
-      
-      
-    }
-
-    logChecker();
-
-
-
-    function locationSelector(){
-
-
-
-      
-      new Picker(document.querySelector('.openingTime'), {
-        format: 'HH:mm',
-
-        headers: true,
-        ampm: false,
-        text: {
-          title: 'Pick a time',
-        },
-      });
-
-      new Picker(document.querySelector('.closingTime'), {
-        format: 'HH:mm',
-
-        headers: true,
-        ampm: true,
-        text: {
-          title: 'Pick a time',
-        },
-      });
-
-
-      var maps;
-
-      maps = new google.maps.Map(document.getElementById('mapSelect'), {
-        center: {lat: 14.832665, lng: 120.282720},
-        zoom: 12,
-        disableDefaultUI: true,
-        styles: [
-        {
-          "featureType": "poi.business",
-          "stylers": [
-          {
-            "visibility": "off"
-          }
-          ]
-        },
-        {
-          "featureType": "poi.park",
-          "elementType": "labels.text",
-          "stylers": [
-          {
-            "visibility": "off"
-          }
-          ]
-        }
-        ]
-      });
-
-      var marker;
-
-      function placeMarker(location) {
-        if ( marker ) {
-          marker.setPosition(location);
-        } else {
-          marker = new google.maps.Marker({
-            position: location,
-            map: maps
-          });
         }
       }
 
-      google.maps.event.addListener(maps, 'click', function(event) {
-        placeMarker(event.latLng);
-        localStorage.setItem("eventLat", event.latLng.lat());
-        localStorage.setItem("eventLng", event.latLng.lng());
-
-      });
 
 
+      function logOut(){
+
+        ons
+        .notification.confirm({title:"", message: "Are you sure you want to logout?"})
+        .then(function(index){
+          if (index == 1) {
+
+            ons.notification.toast('Logging Out Please Wait...', { timeout: 3000,
+            });
+            localStorage.clear()
+
+            setTimeout(function(){ navigator.app.exitApp(); }, 3000);
+          }
+          else{
+            console.log("cancelled");
+          }
+
+        });
+
+        
+        
+        
+      }
+
+      logChecker();
 
 
-    }
+
+      function locationSelector(){
+
+
+
+        
+        new Picker(document.querySelector('.openingTime'), {
+          format: 'HH:mm',
+
+          headers: true,
+          ampm: false,
+          text: {
+            title: 'Pick a time',
+          },
+        });
+
+        new Picker(document.querySelector('.closingTime'), {
+          format: 'HH:mm',
+
+          headers: true,
+          ampm: true,
+          text: {
+            title: 'Pick a time',
+          },
+        });
+
+
+        var maps;
+
+        maps = new google.maps.Map(document.getElementById('mapSelect'), {
+          center: {lat: 14.832665, lng: 120.282720},
+          zoom: 12,
+          disableDefaultUI: true,
+          styles: [
+          {
+            "featureType": "poi.business",
+            "stylers": [
+            {
+              "visibility": "off"
+            }
+            ]
+          },
+          {
+            "featureType": "poi.park",
+            "elementType": "labels.text",
+            "stylers": [
+            {
+              "visibility": "off"
+            }
+            ]
+          }
+          ]
+        });
+
+        var marker;
+
+        function placeMarker(location) {
+          if ( marker ) {
+            marker.setPosition(location);
+          } else {
+            marker = new google.maps.Marker({
+              position: location,
+              map: maps
+            });
+          }
+        }
+
+        google.maps.event.addListener(maps, 'click', function(event) {
+          placeMarker(event.latLng);
+          localStorage.setItem("eventLat", event.latLng.lat());
+          localStorage.setItem("eventLng", event.latLng.lng());
+
+        });
+
+
+
+
+      }
