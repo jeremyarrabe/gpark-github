@@ -44,8 +44,8 @@
                       <div class="center">
                         <p><i class="fa fa-car" style="color: #2979FF"></i> Available Space:</p>
                       </div>
-                        <div class="right" id="pAvailable" style="font-weight: 700">
-                          <span style="font-weight: 700">200 </span>&nbsp; out of 300
+                      <div class="right" id="pAvailable" style="font-weight: 700">
+                        <span style="font-weight: 700">200 </span>&nbsp; out of 300
                       </div>
                     </ons-list-item>
 
@@ -95,6 +95,10 @@
 
 
         function addSpace(){
+          ons.notification.toast('Added!', {
+            timeout: 500,
+            animation: 'fall'
+          });
           var count = document.getElementById("availableSpace").value;
           var pCount = parseInt(count);
           var update = (pCount+1);
@@ -112,6 +116,10 @@
         }
 
         function removeSpace(){
+          ons.notification.toast('Removed!', {
+            timeout: 500,
+            animation: 'fall'
+          });
           var count = document.getElementById("availableSpace").value;
           var pCount = parseInt(count);
           var update =  (pCount-1);

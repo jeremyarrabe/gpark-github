@@ -1,11 +1,3 @@
-ons.ready(function() {
-  ons.enableDeviceBackButtonHandler();
-  
-  ons.setDefaultDeviceBackButtonListener(function(event) {
-
-  });
-});
-
 
 
 
@@ -185,8 +177,16 @@ if (event.target.id  == "parkingPolicy") {
 
 
 if(event.target.id == "ownerpage"){
-ons.disableDeviceBackButtonHandler();
-console.log('sad');
+  ons.disableDeviceBackButtonHandler();
+  console.log('sad');
+
+}
+
+
+if(event.target.id == "login"){
+/*  ons.ready(function() {
+    ons.disableDeviceBackButtonHandler();
+  });*/
 
 }
 

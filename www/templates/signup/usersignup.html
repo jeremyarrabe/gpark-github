@@ -102,9 +102,9 @@
              </ons-col>
            </ons-list-item>
 
-        </ons-col>
+         </ons-col>
 
-        <ons-col width="100%">
+         <ons-col width="100%">
           <ons-button  style="width: 40%; border-radius: 20px;"  onclick="signup()">Sign Up</ons-button>
           <p style="font-size: 13px; ">By Signing up you agree to our <a href="#" style="text-decoration: underline; color: black">Terms and Conditions</a></p>
         </ons-col>
@@ -246,23 +246,47 @@
           }
 
           else{
-            var profile = localStorage.getItem("picName");
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:"none", contact:contact, profile: profile+".jpg", type: 0},function(data){
-              console.log(data);
-              console.log("insert");
-              ons.notification.toast('Account Created!', {
-                timeout: 3000
-              });
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectuser.php",{username: username},function(data){
+              console.log(data)
+              if (data.length > 0) {
+                ons.notification.alert("Username Already Exist");
+
+              }
+              else{
+                var profile = localStorage.getItem("picName");
+                $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_newAccount.php",{username:username, password:password, fname:fname, lname:lname, address:address, email:"none", contact:contact, profile: profile+".jpg", type: 0},function(data){
+                  console.log(data);
+                  console.log("insert");
+                  ons.notification.toast('Account Created!', {
+                    timeout: 3000
+                  });
+
+                  $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_forgotPassword.php",{username: username}, function(data){
+                    var a = Math.floor((Math.random()*4000) + 1000); 
+                    var number = contact;
+                    var message = "YOUR GPARK VERIFICATION CODE IS " +a;
+                    $.getJSON("https://www.gcccsbsit.xyz/_gpark/sms.php?cnum="+number+"&mes="+message+"",function(data){
+                      localStorage.setItem("verification_code", a);
+                      localStorage.setItem("usernumber", contact);
+                    });  
+                  });
+
+                  myNavigator.pushPage('templates/signup/s_verify.html');
 
 
 
-              localStorage.clear();
-              myNavigator.pushPage('templates/login.html');
 
-
-
+                });
+              }
 
             });
+
+
+
+
+
+
+
 
           }
         }

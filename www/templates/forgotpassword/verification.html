@@ -1,0 +1,156 @@
+      <ons-page id="login">
+        <style type="text/css">
+          .text-input--material__label--active {
+            color: #2979FF;
+          }
+
+          .text-input--material:focus {
+            color: white;
+          }
+          .text-input.text-input--material{
+            color: white !important;
+          }
+
+          .number1{
+            height: 60px;
+            width: 100%;
+            background-color: #D4EEFF;
+            border-radius: 10px;
+            border-color: #D4EEFF;
+            border: 1px solid #D4EEFF;
+            text-align: center;
+            font-size: 25px;
+            font-weight: 700;
+          }
+
+
+        </style>
+
+        <ons-toolbar modifier="noshadow" style="background-color:  #2979FF !important">
+          <div class="left" >
+            <ons-back-button >Back</ons-back-button>
+          </div>
+          <div class="center">
+
+          </div>
+        </ons-toolbar>
+
+        <div class="background" style="background-color: #2979FF"></div>
+        <ons-row style=" margin-top: 8%; color: white !important; text-align: center; padding: 2em">
+          <ons-col width="100%">
+            <i class="fa fa-unlock" style="font-size: 20px; "></i>
+          </ons-col>
+          <ons-col width="100%">
+            <p style="font-size: 15px;">Verification Code</p>
+          </ons-col>
+          <ons-col width="100%">
+            <p>Enter the 4 number verification code we sent you via SMS</p>
+          </ons-col>
+
+          <ons-col width="25%" style="margin-top: 10%; padding: 3% ">
+            <div >
+              <input type="tel" maxlength="1" pattern="[0-9]*" class="number1" id="v1">
+            </div>
+          </ons-col>
+          <ons-col width="25%" style="margin-top: 10%; padding: 3%">
+            <div>
+              <input type="tel" maxlength="1" pattern="[0-9]*" class="number1" id="v2">
+            </div>
+          </ons-col>
+          <ons-col width="25%" style="margin-top: 10%; padding: 3%">
+            <div>
+              <input type="tel" maxlength="1" pattern="[0-9]*" class="number1" id="v3">
+            </div>
+          </ons-col>
+          <ons-col width="25%" style="margin-top: 10%; padding: 3%">
+            <div>
+              <input type="tel" maxlength="1" pattern="[0-9]*" class="number1" id="v4">
+            </div>
+          </ons-col>
+
+          <ons-col width="100%" style="margin-top: 10%; padding: 3%">
+            <p onclick="resend()">Resend Verifications code</p>
+          </ons-col>
+
+          <ons-col width="100%" style="margin-top: 10%;">
+            <p style="font-size: 20px; font-weight: 500; letter-spacing: 2px;" onclick="verify()"><i class="fa fa-paper-plane"></i> Verify</p>
+
+          </ons-col>
+
+        </ons-row>
+
+        <script type="text/javascript">
+
+          function resend(){
+            var username = localStorage.getItem("username_verify");
+            ons.notification.toast('Resending Code...', {
+              timeout: 2000
+            });
+
+            setTimeout(codeSent(), 2000);
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_forgotPassword.php",{username: username}, function(data){
+              var a = Math.floor((Math.random()*4000) + 1000); 
+              var number = data[0].U_Contact;
+              var message = "YOUR GPARK VERIFICATION CODE IS" +a;
+              $.getJSON("https://www.gcccsbsit.xyz/_gpark/sms.php?cnum="+number+"&mes="+message+"",function(data){
+                localStorage.setItem("verification_code", a);
+              });  
+            });
+
+
+
+          }
+
+          function codeSent(){
+            ons.notification.toast('Code Sent!', {
+              timeout: 2000
+            });
+          }
+
+
+
+
+
+
+          function verify() {
+            ons.notification.toast('Verifying Code...', {
+              timeout: 2000
+            });
+            var v1 = document.getElementById("v1").value;
+            var v2 = document.getElementById("v2").value;
+            var v3 = document.getElementById("v3").value;
+            var v4 = document.getElementById("v4").value;
+
+            var genVerify = localStorage.getItem("verification_code");
+            var verify = v1+v2+v3+v4;
+
+            if (verify == genVerify) {
+              setTimeout(push,3000);
+            }
+            else{
+              ons.notification.toast('Code incorrect', {
+                timeout: 2000
+              });
+
+              document.getElementById("v1").value = "";
+              document.getElementById("v2").value = "";
+              document.getElementById("v3").value = "";
+              document.getElementById("v4").value = "";
+            }
+
+          }
+
+          function push(){
+            myNavigator.pushPage('templates/forgotpassword/changepassword.html');
+          }
+
+
+
+        </script>
+
+
+
+
+      </ons-page>
+
