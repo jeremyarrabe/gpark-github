@@ -1,33 +1,42 @@
-      <ons-page id="ownerpage">
+      <ons-page id="main">
         <style type="text/css">
 
           .color{
             color: #76a9ff;
           }
 
-          #button-1{
-            background-color: white;
-            height: 100px;
+
+          #overlay{
+            background: url(img/ayala.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
             width: 100%;
-            margin-top: -30%;
-            border-radius: 3px;
-            box-shadow: 0px 8px 5px -2px rgba(0,0,0,0.25);
-            text-align: center;
+            overflow: hidden;
+            color: #FFFFFF;
+            height: 35vh;
           }
 
-          #button-2{
-            background-color: white;
-            height: 100px;
-            width: 100%;
-            margin-top: 0%;
-            border-radius: 3px;
-            box-shadow: 0px 8px 5px -2px rgba(0,0,0,0.25);
+          #header{
+            background: rgb(20,126,239,0.60);
+            overflow: hidden;
+            height: 100%;
+            z-index: 2;
             text-align: center;
           }
-
-
 
         </style>
+        <ons-toolbar>
+          <div class="left" >
+            <ons-back-button >Back</ons-back-button>
+          </div>
+          <div class="center">
+            Park Profile
+          </div>
+
+
+
+        </ons-toolbar>
 
         <!-- <ons-toolbar modifier="noshadow" style="background-color: #2979FF !important">
           <div class="center">
@@ -46,23 +55,36 @@
 
         <div class="background" style="background-color:#ECF2F4"></div>
 
-        <div style="height: 35vh; width: 100%; background-color:#147EEF; text-align: center; color: white; letter-spacing: 2px" >
-          <p style="font-size: 13px; font-weight: 700; margin-top: 0; padding-top: 2vh">DASHBOARD</p>
-          <p style="font-size: 23px; font-weight: 700; margin-top: 0; padding-top: 11vh" id="username_user"></p>
-          <p style="font-size: 16px; font-weight: 500; margin-top: -5%; opacity: 0.8">Caller Application</p>
-        </div>
+        <div  id="overlay">
+          <div id="header">
+            <p style="font-size: 23px; font-weight: 700; margin-top: 20%;" id="pSpace">Parking Parking Space</p>
+            <p style="font-size: 16px; font-weight: 500; opacity: 0.8" id="pAddress">4C Apitong Ext Old Cabalan Olongapo City</p>
+          </div>
+        </div>  
+        <ons-row>
+          <ons-col width="100%" style="height: 50px; background-color: white; text-align: center; font-weight: 700; font-size: 18px; ">
+           <p id="available"></p>
+          </ons-col>
+          <ons-col width="100%" style="height: 60px; background-color: #2ecc71; text-align: center;">
+            <ons-button style="width: 100%; height: 100%;background-color: #2ecc71" onclick="add()"><p><i class="fa fa-plus"></i> ADD</p></ons-button>
+          </ons-col>
+          <ons-col width="100%"  style="height: 60px; background-color: #e74c3c; text-align: center;">
+             <ons-button style="width: 100%; height: 100% ; background-color: #e74c3c;" onclick="remove()"><p><i class="fa fa-minus"></i> REMOVE</p></ons-button>
 
-        <ons-row style="padding: 1em; margin-top: -3%">
+          </ons-col>
+        </ons-row>
+
+<!--         <ons-row style="padding: 1em; margin-top: -3%">
 
           <ons-col width="50%" style="padding: 0.5em;">
-            <div id="button-1" onclick="myNavigator.pushPage('templates/owner-landing/manage.html')">
+            <div id="button-1" onclick="myNavigator.pushPage('templates/notification.html')">
               <img src="img/home.png" style="height: 50px; width: 50px;  padding-top: 5%;">
               <p style="letter-spacing: 1px; margin-top: 5px; font-size: 13px; font-weight: 700">MANAGE</p>
             </div>
           </ons-col>
 
           <ons-col width="50%"  style="padding: 0.5em;">
-            <div id="button-1" onclick="myNavigator.pushPage('templates/owner-landing/editprofile.html')">
+            <div id="button-1">
               <img src="img/edit.png" style="height: 50px; width: 50px;  padding-top: 5%;">
               <p style="letter-spacing: 1px; margin-top: 5px; font-size: 13px; font-weight: 700">EDIT</p>
             </div>
@@ -90,8 +112,8 @@
           </ons-col>
 
           <ons-col width="50%"  style="padding: 0.5em;">
-            <div id="button-2" onclick="logout()">
-              <img src="img/logout.png" style="height: 50px; width: 50px;  padding-top: 5%;" >
+            <div id="button-2">
+              <img src="img/logout.png" style="height: 50px; width: 50px;  padding-top: 5%;">
               <p style="letter-spacing: 1px; margin-top: 5px; font-size: 13px; font-weight: 700">LOGOUT</p>
             </div>
           </ons-col>
@@ -102,7 +124,7 @@
 
 
         </ons-row>
-
+      -->
 
         <!--
 
@@ -138,48 +160,57 @@
 
         <script type="text/javascript">
          var owner = localStorage.getItem("o_username");
-         document.getElementById("username_user").innerHTML = "@"+owner;
+         var id = localStorage.getItem("o_userid");
 
          function get(){
-
+          var available1;
           $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_parkingOwner1.php",{D_parkingOwner:owner},function(data){
-            console.log(data);
-           localStorage.setItem("name", data[0].D_Owner);
-
-           if (data[0].D_Verified == 0) { 
-            ons.notification.alert("Your parking space has not yet been validated. Try again later");
-            ons.notification.toast('Logging Out Please Wait...', { timeout: 2000,
-              });
-            localStorage.clear();
-            setTimeout(function(){ location.href = "index.html"; }, 2000);
-           }
-         });
-
-        }
-
-        function logout(){
-          ons
-          .notification.confirm({title:"", message: "Are you sure you want to logout?"})
-          .then(function(index){
-            if (index == 1) {
-
-              ons.notification.toast('Logging Out Please Wait...', { timeout: 3000,
-              });
-              localStorage.clear()
-
-              setTimeout(function(){ location.href = "index.html"; }, 3000);
-            }
-            else{
-              console.log("cancelled");
-            }
+             available1 = '<i class="fa fa-car"></i> '+data[0].D_Inuse+' OUT OF '+data[0].D_Total+'';
+              document.getElementById("available").innerHTML = available1;
+              document.getElementById("pSpace").innerHTML = data[0].D_Title;
+              document.getElementById("pAddress").innerHTML =  data[0].D_Description;
+              localStorage.setItem("inuse", data[0].D_Inuse);
+          });
+         
+         }
+/*<i class="fa fa-car"></i> 0 OUT OF 200*/
+         function add(){
+          var add = localStorage.getItem("inuse");
+          var total = (parseInt(add) + 1);
+          console.log(total);
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_addSpace.php",{owner:owner, updateAdd:total}, function(data){
+            ons.notification.toast('Added', {
+              timeout: 500
+            });
+          });
+          $.getJSON("https://www.gcccsbsit.xyz/_gpark/_api/pusher/pusher.php",function(data){
 
           });
-        }
-        get();
-      </script>
+          get();
+         }
+
+         function remove(){
+          var add = localStorage.getItem("inuse");
+          var total = (parseInt(add) - 1);
+          console.log(total);
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_removeSpace.php",{owner:owner, updateRemove:total}, function(data){
+            ons.notification.toast('Removed', {
+              timeout: 500
+            });
+          });
+
+          $.getJSON("https://www.gcccsbsit.xyz/_gpark/_api/pusher/pusher.php",function(data){
+
+          });
+          get();
+
+         }
+
+         get();
+       </script>
 
 
 
 
-    </ons-page>
+     </ons-page>
 

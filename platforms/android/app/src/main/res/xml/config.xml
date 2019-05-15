@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.jempark.turtlehack" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.arrabejem.gpark" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="ActionSheet">
         <param name="android-package" value="nl.xservices.plugins.actionsheet.ActionSheet" />
     </feature>
@@ -23,12 +23,12 @@
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
     </feature>
-    <name>sadPark</name>
+    <name>Gpark</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+       A Parking Lot Locator Application
     </description>
     <author email="jeremyxarrabe@gmail.com" href="http://cordova.io">
-        sadPark
+        Gpark
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -38,6 +38,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <icon src="res/gpark.png" />
     <allow-intent href="market:*" />
     <splash density="port-hdpi" src="res/screen/android/splash-port-hdpi.png" />
     <splash density="port-ldpi" src="res/screen/android/splash-port-ldpi.png" />

@@ -33,7 +33,7 @@
             <i class="fa fa-user" style="padding-right: 2%"></i> <ons-input placeholder="Username" float id="username"></ons-input><br><br><br>
             <i class="fa fa-lock" style="padding-right: 2%"></i> <ons-input placeholder="Password" float type="password" id="password"></ons-input><br><br>
             <p style="color: #DB4437; font-weight: 700" id="text_error"></p>
-            <ons-button  style="width: 40%; border-radius: 20px;" onclick="login()" id="login_disable">Log in</ons-button>
+            <ons-button  style="width: 40%; border-radius: 20px;" onclick="logChecker()" id="login_disable">Log in</ons-button>
             <p style="text-decoration: underline; font-size: 15px; opacity: 0.8" onclick="myNavigator.pushPage('templates/forgotpassword/forgotpassword.html')">Forgot Password</p>
 
           </ons-col>
@@ -42,9 +42,56 @@
         </ons-row>
 
         <script type="text/javascript">
+          var d = new Date();
+          var n = d.getMinutes();
+          var wait = (parseInt(n)+5)
+          localStorage.setItem("waitTime", wait);
 
 
-          localStorage.setItem("loginCount", 0)
+          function jem(){
+            var d = new Date();
+            var n = d.getMinutes();
+            localStorage.setItem("currentTime", n);
+            var wait = (parseInt(n)+5)
+            console.log('jem')
+          }
+          jem();
+
+          localStorage.setItem("loginCount", 0);
+          localStorage.setItem("minutes", 5);
+
+
+          function logChecker(){
+            var log = localStorage.getItem("loginCount");
+            var active = localStorage.getItem("active");
+            if (log >= 3) {
+              var minutes = localStorage.getItem("minutes");
+              var currentTime = localStorage.getItem("currentTime");
+              var waitTime = localStorage.getItem("waitTime");
+              console.log(parseInt(currentTime), parseInt(waitTime))
+              if( parseInt(currentTime) >  parseInt(waitTime) ){
+                login();
+                localStorage.setItem("loginCount", 0);
+              }
+              if (parseInt(currentTime) <  parseInt(waitTime)) {
+                jem();
+                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later"});
+              }
+
+              if (parseInt(currentTime) ==  parseInt(waitTime)) {
+                jem();
+                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later"});
+              }
+
+
+
+            }
+
+            if (log < 3) {
+              login();
+            }
+
+          }
 
 
 
@@ -54,8 +101,6 @@
 
 
           function login() {
-
-
             var loginCount = localStorage.getItem("loginCount");
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
@@ -109,6 +154,10 @@
                   }
 
                   if(data[0].U_Type == 1){
+                    $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_ParkingProfile.php",{D_parkingOwner:username},function(data){
+                      localStorage.setItem("pId", data[0].D_pId);
+
+                    });
 
                     localStorage.setItem("o_username", s_username);
                     localStorage.setItem("o_userId", s_Id);
@@ -133,6 +182,9 @@
           function pushowner(){
             myNavigator.pushPage('templates/owner-landing/owner_caller.html');
           }
+
+
+
         </script>
 
 

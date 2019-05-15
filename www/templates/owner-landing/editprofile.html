@@ -1,0 +1,243 @@
+      <ons-page id="main">
+        <style type="text/css">
+
+          .color{
+            color: #76a9ff;
+          }
+
+
+          #overlay{
+            background: url(img/ayala.jpg);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100%;
+            overflow: hidden;
+            color: #FFFFFF;
+            height: 35vh;
+          }
+
+          #header{
+            background: rgb(20,126,239,0.60);
+            overflow: hidden;
+            height: 100%;
+            z-index: 2;
+            text-align: center;
+          }
+
+          .text-input--material:focus {
+            color: black;
+          }
+          .text-input.text-input--material{
+            color: black !important;
+          }
+          .hide-rate{
+            display: none;
+          }
+
+          .show-rate{
+            display: block;
+          }
+
+        </style>
+        <ons-toolbar>
+          <div class="left" >
+            <ons-back-button >Back</ons-back-button>
+          </div>
+          <div class="center">
+            Edit Profile
+          </div>
+
+
+
+        </ons-toolbar>
+
+        <!-- <ons-toolbar modifier="noshadow" style="background-color: #2979FF !important">
+          <div class="center">
+            Caller App
+          </div>
+          <div class="left">
+
+          </div>
+          <div class="right">
+            <ons-toolbar-button onclick="signOut()">
+              <ons-icon icon="fa-sign-out-alt" style="color: white;"></ons-icon>
+            </ons-toolbar-button>
+
+          </div>
+        </ons-toolbar> -->
+
+        <div class="background" style="background-color:#ECF2F4"></div>
+
+        <ons-row>
+          <ons-col width="100%">
+            <ons-list  style="padding: 0.8em; text-align: center; background-color: #ECF2F4">
+              <ons-list-header style="background-color: #ECF2F4">Parking Profile</ons-list-header>
+              <ons-list-item modifier="nodivider">
+                <ons-input id="pName1" float placeholder="Parking Name" style="width: 100%" value=""></ons-input>
+              </ons-list-item>
+
+              <ons-list-item modifier="nodivider">
+                <ons-input id="pAddress1" float placeholder="Address"  style="width: 100%" value=""></ons-input>
+              </ons-list-item>
+
+
+
+              <ons-list-item>
+                <ons-col width="45%">
+                  <ons-input id="pRateMin1" modifier="underbar" placeholder="First 3 Hours" float style="width: 100%"  type="number" value=""></ons-input>
+                </ons-col>
+                <ons-col width="10%">
+                  <p>-</p>
+                </ons-col>
+                <ons-col width="45%">
+                  <ons-input id="pRateMax1" modifier="underbar" placeholder="Additional Hours" float style="width: 100%" type="number" value=""></ons-input>
+                </ons-col>
+              </ons-list-item>
+
+
+
+              <ons-list-item>
+                <ons-col width="45%">
+                  <ons-input id="pOpens" modifier="underbar" placeholder="Opening" float style="width: 100%"  type="text" value="" class="openingTime"></ons-input>
+                </ons-col>
+                <ons-col width="10%">
+                  <p>-</p>
+                </ons-col>
+                <ons-col width="45%">
+                  <ons-input id="pCloses" modifier="underbar" placeholder="Closing" float style="width: 100%" type="text" value="" class="closingTime"></ons-input>
+                </ons-col>
+              </ons-list-item>
+
+              <ons-list-item>
+                <ons-col width="100%">
+                  <ons-input id="pMax1" modifier="underbar" placeholder="Max Paking Space" float style="width: 100%"  type="number" value=""></ons-input>
+                </ons-col>
+
+              </ons-list-item>
+
+
+              <ons-list-item>
+                <input type="file" id="updateImage"  multiple="multiple" accept="image/*" tyle="width: 100%;"> 
+              </ons-list-item>
+
+
+            </ons-col>
+            <ons-col width="100%" style="text-align: center;">
+              <ons-button onclick="update()">UPDATE</ons-button>
+            </ons-col>
+          </ons-list>
+
+        </ons-col>
+
+      </ons-row>
+
+
+
+      <script type="text/javascript">
+       var owner = localStorage.getItem("o_username");
+       var id = localStorage.getItem("o_userid");
+       var jem = localStorage.getItem("pId");
+
+       new Picker(document.querySelector('.openingTime'), {
+        format: 'HH:mm',
+
+        headers: true,
+        ampm: false,
+        text: {
+          title: 'Pick a time',
+        },
+      });
+
+       new Picker(document.querySelector('.closingTime'), {
+        format: 'HH:mm',
+
+        headers: true,
+        ampm: true,
+        text: {
+          title: 'Pick a time',
+        },
+      });
+       function gets(){
+        $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_parkingOwner1.php",{D_parkingOwner:owner},function(data){
+          console.log(data)
+          document.getElementById("pName1").value = data[0].D_Title;
+          document.getElementById("pAddress1").value = data[0].D_Description;
+          document.getElementById("pRateMin1").value = data[0].D_Pricemin;
+          document.getElementById("pRateMax1").value = data[0].D_Pricemax;
+          document.getElementById("pMax1").value = data[0].D_Total;
+          document.getElementById("pOpens").value = data[0].D_Opening;
+          document.getElementById("pCloses").value = data[0].D_Closing;
+        });
+
+      }
+
+      function update(){
+
+        $(document).ready(function() {  
+          var filePictures = $('#updateImage')[0].files;
+          for(var i = 0; i < filePictures.length; i++){
+            var file_data = $('#updateImage').prop('files')[i]; 
+            var form_data = new FormData();                  
+            form_data.append('file', file_data);
+            $.ajax({
+              url: "https://www.gcccsbsit.xyz/_gpark/ajax_php_file.php",
+              type: "POST",
+              data: form_data,
+              contentType: false,
+              cache: false,
+              processData:false,
+              success: function(data){
+                alert("Hi");
+              }
+            });
+
+          }
+
+          for(var i = 0; i<filePictures.length; i++)
+          {
+
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_pImage1.php",{i_id: jem, i_img: filePictures[i].name, i_type: 0},function(data){
+
+            });
+          }
+
+
+        });
+
+
+
+
+        var pName1 = document.getElementById("pName1").value;
+        var pAddress1 = document.getElementById("pAddress1").value;
+        var pRateMin1 = document.getElementById("pRateMin1").value;
+        var pRateMax1 = document.getElementById("pRateMax1").value;
+        var pMax1 = document.getElementById("pMax1").value;
+        var open = document.getElementById("pOpens").value;
+        var close = document.getElementById("pCloses").value;
+
+
+        $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/U_updateOwner.php",{D_Title: pName1,D_Description:pAddress1, D_Pricemax:pRateMax1, D_Pricemin: pRateMin1,D_Total: pMax1, D_Owner: owner, pOpen: open, pClose:close },function(data){
+          gets();
+          console.log("nice")
+        });
+
+
+
+        ons.notification.alert("Updated!");
+      }
+
+
+
+      
+
+      gets();
+
+    </script>
+
+
+
+
+  </ons-page>
+

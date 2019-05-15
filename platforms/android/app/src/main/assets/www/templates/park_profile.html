@@ -40,7 +40,7 @@
 
         <!-- style="background-image: url('img/parking_1.jpg'); background-size: 100% 100%" -->
 
-        <ons-carousel  swipeable auto-scroll auto-scroll itemCount id="carousel" style="height: 40%; width: 100%" >
+        <ons-carousel  swipeable auto-scroll auto-scroll itemCount  style="height: 40%; width: 100%">
           <ons-carousel-item style="background-color: #3498db;  background-size: 100% 100%; " id="carousel-1">
             <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
               
@@ -52,6 +52,16 @@
             </div>
           </ons-carousel-item>
           <ons-carousel-item style="background-color: #e74c3c; background-size: 100% 100%;" id="carousel-3">
+            <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+              
+            </div>
+          </ons-carousel-item>
+          <ons-carousel-item style="background-color: #e74c3c; background-size: 100% 100%;" id="carousel-4">
+            <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
+              
+            </div>
+          </ons-carousel-item>
+          <ons-carousel-item style="background-color: #e74c3c; background-size: 100% 100%;" id="carousel-5">
             <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff;">
               
             </div>
@@ -350,7 +360,7 @@
               console.log(numsad1, sadhours, numsad2)
 
               if (sadhours <= numsad1 ) {
-                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #DB4437">Close</span>';
+                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #DB4437">Closed</span>';
               }
 
               if (sadhours >= numsad1 && sadhours <= numsad2 ) {
@@ -359,7 +369,7 @@
 
 
               if ( sadhours >=  numsad2) {
-                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #DB4437">Close</span>';
+                document.getElementById("p_ParkingName").innerHTML = data[0].D_Title+' <span class="notification notification--material" style="background-color: #DB4437">Closed</span>';
               }
 
               
@@ -409,7 +419,7 @@
               }
 
               if(data[0].D_Type == "Paid"){
-                document.getElementById("p_Price").innerHTML = '<i class="fa fa-parking" style="color: #0F9D58"></i> Min:&#8369;'+data[0].D_Pricemin+' - Max: &#8369;'+data[0].D_Pricemax+'';
+                document.getElementById("p_Price").innerHTML = 'First 3 Hours <span>₱'+data[0].D_Pricemin+'</span><br> Additional Hours ₱ '+data[0].D_Pricemax+'';
               }
               /*<i class="fa fa-parking" style="color: #0F9D58"></i> &#8369;20 - &#8369;200*/
               document.getElementById("p_Total").innerHTML = totalspace+" Available";
@@ -426,9 +436,12 @@
 
             $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectImages.php",{D_Id: id},function(data){
               console.log(data);
+
               $("#carousel-1").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[0].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
               $("#carousel-2").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[1].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
               $("#carousel-3").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[2].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
+              $("#carousel-4").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[3].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
+              $("#carousel-5").attr("style","background-image: url('https://www.gcccsbsit.xyz/_gpark/upload/"+data[4].i_img+"'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;");
             })
           }
 

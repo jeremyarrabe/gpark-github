@@ -25,11 +25,7 @@
             text-align: center;
           }
 
-          .overlay{
-            background: black;
-            overflow: hidden;
-            z-index: 2;
-          }
+
 
         </style>
 
@@ -50,23 +46,23 @@
 
         <div class="background" style="background-color:#ECF2F4"></div>
 
-        <div style="height: 35vh; width: 100%; background-color:#147EEF; text-align: center; color: white; letter-spacing: 2px" id="overlay">
+        <div style="height: 35vh; width: 100%; background-color:#147EEF; text-align: center; color: white; letter-spacing: 2px" >
           <p style="font-size: 13px; font-weight: 700; margin-top: 0; padding-top: 2vh">DASHBOARD</p>
-          <p style="font-size: 23px; font-weight: 700; margin-top: 0; padding-top: 11vh">Jeremy Arrabe</p>
-          <p style="font-size: 16px; font-weight: 500; margin-top: -5%; opacity: 0.8">Profit Today: 200php</p>
+          <p style="font-size: 23px; font-weight: 700; margin-top: 0; padding-top: 11vh" id="username_user"></p>
+          <p style="font-size: 16px; font-weight: 500; margin-top: -5%; opacity: 0.8">Caller Application</p>
         </div>
 
         <ons-row style="padding: 1em; margin-top: -3%">
 
           <ons-col width="50%" style="padding: 0.5em;">
-            <div id="button-1">
+            <div id="button-1" onclick="myNavigator.pushPage('templates/owner-landing/manage.html')">
               <img src="img/home.png" style="height: 50px; width: 50px;  padding-top: 5%;">
               <p style="letter-spacing: 1px; margin-top: 5px; font-size: 13px; font-weight: 700">MANAGE</p>
             </div>
           </ons-col>
 
           <ons-col width="50%"  style="padding: 0.5em;">
-            <div id="button-1">
+            <div id="button-1" onclick="myNavigator.pushPage('templates/owner-landing/editprofile.html')">
               <img src="img/edit.png" style="height: 50px; width: 50px;  padding-top: 5%;">
               <p style="letter-spacing: 1px; margin-top: 5px; font-size: 13px; font-weight: 700">EDIT</p>
             </div>
@@ -94,8 +90,8 @@
           </ons-col>
 
           <ons-col width="50%"  style="padding: 0.5em;">
-            <div id="button-2">
-              <img src="img/logout.png" style="height: 50px; width: 50px;  padding-top: 5%;">
+            <div id="button-2" onclick="logout()">
+              <img src="img/logout.png" style="height: 50px; width: 50px;  padding-top: 5%;" >
               <p style="letter-spacing: 1px; margin-top: 5px; font-size: 13px; font-weight: 700">LOGOUT</p>
             </div>
           </ons-col>
@@ -142,11 +138,48 @@
 
         <script type="text/javascript">
          var owner = localStorage.getItem("o_username");
+         document.getElementById("username_user").innerHTML = "@"+owner;
 
-       </script>
+         function get(){
+
+          $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_parkingOwner1.php",{D_parkingOwner:owner},function(data){
+            console.log(data);
+           localStorage.setItem("name", data[0].D_Owner);
+
+           if (data[0].D_Verified == 0) { 
+            ons.notification.alert("Your parking space has not yet been validated. Try again later");
+            ons.notification.toast('Logging Out Please Wait...', { timeout: 2000,
+              });
+            localStorage.clear();
+            setTimeout(function(){ location.href = "index.html"; }, 2000);
+           }
+         });
+
+        }
+
+        function logout(){
+          ons
+          .notification.confirm({title:"", message: "Are you sure you want to logout?"})
+          .then(function(index){
+            if (index == 1) {
+
+              ons.notification.toast('Logging Out Please Wait...', { timeout: 3000,
+              });
+              localStorage.clear()
+
+              setTimeout(function(){ location.href = "index.html"; }, 3000);
+            }
+            else{
+              console.log("cancelled");
+            }
+
+          });
+        }
+        get();
+      </script>
 
 
 
 
-     </ons-page>
+    </ons-page>
 

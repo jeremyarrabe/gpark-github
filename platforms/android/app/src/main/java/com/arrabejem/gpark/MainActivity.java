@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.jempark.turtlehack;
+package com.arrabejem.gpark;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

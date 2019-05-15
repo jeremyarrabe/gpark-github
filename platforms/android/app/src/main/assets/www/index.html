@@ -84,17 +84,17 @@
                             <ons-list-item onclick="" tappable  modifier="nodivider"  id="nav-favorites">
                               <div class="left"><i class="fa fa-bookmark"  style="padding-right: 2px; opacity: 0.8 "></i></div>
                               <div class="center" style="font-weight: 700; opacity: 0.8">Favorites</div>
-                            </ons-list-item> -->
+                            </ons-list-item>  -->
 
-                            <!-- <ons-list-item onclick="" tappable  modifier="nodivider"  id="nav-help">
+                           <ons-list-item onclick="fn.load('templates/help.html');" tappable  modifier="nodivider"  id="nav-help">
                               <div class="left"><i class="fa fa-question" style="padding-right: 2px; opacity: 0.8"></i></div>
                               <div class="center" style="font-weight: 700; opacity: 0.8">Help</div>
                             </ons-list-item>
 
-                            <ons-list-item onclick="" tappable  modifier="longdivider"  id="nav-settings">
+                            <ons-list-item onclick="fn.load('templates/about.html');" tappable  modifier="longdivider"  id="nav-settings">
                               <div class="left"><i class="fa fa-cog" style="padding-right: 2px; opacity: 0.8"></i></div>
-                              <div class="center" style="font-weight: 700; opacity: 0.8">Settings</div>
-                            </ons-list-item> -->
+                              <div class="center" style="font-weight: 700; opacity: 0.8">About App</div>
+                            </ons-list-item> 
 
                             <ons-list-item onclick="logOut();" tappable  modifier="longdivider" id="nav-logout">
                               <div class="left" id="left-log"></div>
@@ -215,7 +215,7 @@
 
 
                           <ons-col width="100%"  style="padding: 3%">
-                            <ons-list-header style="background-color: #F3F3F3">Parking Pictures (Max of 3 Pictures)</ons-list-header>
+                            <ons-list-header style="background-color: #F3F3F3">Parking Pictures (Max of 5 Pictures)</ons-list-header>
                             <ons-list-item >
                               <input type="file" id="filePictures" multiple="multiple" accept="image/*" style="width: 100%;"> 
                             </ons-list-item>
@@ -238,15 +238,12 @@
                           </ons-col>
 
                           <ons-col width="100%" style="padding: 3%">
-                            <ons-list-header style="background-color: #F3F3F3">Spaces</ons-list-header>
+                            <ons-list-header style="background-color: #F3F3F3">Max Parking Space</ons-list-header>
                             <ons-list-item>
-                              <ons-col width="45%">
-                                <ons-input id="pSpaceMin" modifier="underbar" placeholder="Min" float style="width: 100%"  type="number"></ons-input>
+                              <ons-col width="45%" style="display: none;">
+                                <ons-input id="pSpaceMin" modifier="underbar" placeholder="Min" float style="width: 100%" value="0" type="number"></ons-input>
                               </ons-col>
-                              <ons-col width="10%">
-                                <p>-</p>
-                              </ons-col>
-                              <ons-col width="45%">
+                              <ons-col width="100%">
                                 <ons-input id="pSpaceMax" modifier="underbar" placeholder="Max" float style="width: 100%" type="number"></ons-input>
                               </ons-col>
                             </ons-list-item>
@@ -258,13 +255,13 @@
                             <ons-list-header style="background-color: #F3F3F3">Rate in Peso</ons-list-header>
                             <ons-list-item>
                               <ons-col width="45%">
-                                <ons-input id="pRateMin" modifier="underbar" placeholder="Min" float style="width: 100%"  type="number"></ons-input>
+                                <ons-input id="pRateMin" modifier="underbar" placeholder="First 3 Hours" float style="width: 100%"  type="number"></ons-input>
                               </ons-col>
                               <ons-col width="10%">
                                 <p>-</p>
                               </ons-col>
                               <ons-col width="45%">
-                                <ons-input id="pRateMax" modifier="underbar" placeholder="Max" float style="width: 100%" type="number"></ons-input>
+                                <ons-input id="pRateMax" modifier="underbar" placeholder="Additional Hours" float style="width: 100%" type="number"></ons-input>
                               </ons-col>
                             </ons-list-item>
                           </ons-col>
@@ -426,7 +423,7 @@
                             console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
                           };
                           window.plugins.OneSignal
-                          .startInit("d1a63136-9931-4264-82a4-293c0521c0dd")
+                          .startInit("4627f54a-d147-44d8-88d6-17e986e8ae76")
                           .handleNotificationOpened(notificationOpenedCallback)
                           .endInit();
                         }, false);

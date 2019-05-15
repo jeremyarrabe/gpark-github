@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.jempark.turtlehack" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>sadPark</name>
+<widget id="com.arrabejem.gpark" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Gpark</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+       A Parking Lot Locator Application
     </description>
     <author email="jeremyxarrabe@gmail.com" href="http://cordova.io">
-        sadPark
+        Gpark
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -17,16 +17,18 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <platform name="android">
+        <icon src="res/gpark.png" />
+
         <allow-intent href="market:*" />
         <preference name="loadUrlTimeoutValue" value="700000" />
         <preference name="SplashMaintainAspectRatio" value="true" />
         <preference name="SplashShowOnlyFirstTime" value="true" />
         <preference name="SplashScreenSpinnerColor" value="black" />
 
-            <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/>
-            <splash src="res/screen/android/splash-port-ldpi.png" density="port-ldpi"/>
-            <splash src="res/screen/android/splash-port-mdpi.png" density="port-mdpi"/>
-            <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/>
+        <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/>
+        <splash src="res/screen/android/splash-port-ldpi.png" density="port-ldpi"/>
+        <splash src="res/screen/android/splash-port-mdpi.png" density="port-mdpi"/>
+        <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

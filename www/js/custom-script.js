@@ -78,6 +78,30 @@ document.addEventListener('init', function (event) {
     $("#nav-settings").removeClass("active-state");
   }
 
+  if (event.target.id === 'help') { 
+
+    $("#nav-help").addClass("active-state");
+    $("#nav-home").removeClass("active-state");
+
+    $("#nav-account").removeClass("active-state");
+    $("#nav-history").removeClass("active-state");
+    $("#nav-favorites").removeClass("active-state");
+
+    $("#nav-settings").removeClass("active-state");
+  }
+
+  if (event.target.id === 'about') { 
+
+    $("#nav-settings").addClass("active-state");
+    $("#nav-help").removeClass("active-state");
+    $("#nav-home").removeClass("active-state");
+
+    $("#nav-account").removeClass("active-state");
+    $("#nav-history").removeClass("active-state");
+    $("#nav-favorites").removeClass("active-state");
+
+  }
+
   if (event.target.id === 'park') {
     var title = event.target.data && event.target.data.title ? event.target.data.title : 'Park Profile';
     event.target.querySelector('ons-toolbar div.center').textContent = title;
