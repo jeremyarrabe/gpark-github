@@ -75,6 +75,12 @@
             
           }
           jem();
+
+          function newTime(){
+            var d = new Date();
+            var n = d.getMinutes();
+            localStorage.setItem("currentTime", n);
+          }
           
 
           
@@ -100,11 +106,13 @@
               else if (parseInt(currentTime) <  parseInt(waitTime)) {
 
                 ons.notification.alert({title: "Error", message: "Too many login attempts please try again later 2"});
+                newTime();
               }
 
               else if (parseInt(currentTime) ==  parseInt(waitTime)) {
 
                 ons.notification.alert({title: "Error", message: "Too many login attempts please try again later 3"});
+                newTime();
               }
 
 
