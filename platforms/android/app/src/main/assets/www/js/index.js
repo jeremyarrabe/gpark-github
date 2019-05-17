@@ -1,4 +1,14 @@
 
+ons.ready(function() {
+  ons.setDefaultDeviceBackButtonListener(function(event) {
+  ons.notification.confirm('Do you want to close the app?') // Ask for confirmation
+  .then(function(index) {
+      if (index === 1) { // OK button
+        navigator.app.exitApp(); // Close the app
+      }
+    });
+});
+});
 var app = {    
     // Application Constructor
     initialize: function() {
@@ -34,6 +44,6 @@ var app = {
 
 
 
-    app.initialize();
+  app.initialize();
 
 

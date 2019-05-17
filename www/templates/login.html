@@ -71,6 +71,7 @@
             localStorage.setItem("currentTime", n);
             var wait = (parseInt(n)+5);
             localStorage.setItem("waitTime", wait);
+            console.log(n,wait)
             
           }
           jem();
@@ -93,7 +94,7 @@
               
                 localStorage.setItem("loginCount", 0);
                 ons.notification.alert({title: "Error", message: "Too many login attempts please try again later 1"});
-
+                jem();
                 
               }
               else if (parseInt(currentTime) <  parseInt(waitTime)) {

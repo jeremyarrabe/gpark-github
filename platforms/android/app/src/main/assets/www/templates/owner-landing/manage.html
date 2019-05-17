@@ -64,15 +64,15 @@
         <ons-row>
           <ons-col width="100%" style="height: 50px; background-color: white; text-align: center; font-weight: 700; font-size: 18px; ">
            <p id="available"></p>
-          </ons-col>
-          <ons-col width="100%" style="height: 60px; background-color: #2ecc71; text-align: center;">
-            <ons-button style="width: 100%; height: 100%;background-color: #2ecc71" onclick="add()"><p><i class="fa fa-plus"></i> ADD</p></ons-button>
-          </ons-col>
-          <ons-col width="100%"  style="height: 60px; background-color: #e74c3c; text-align: center;">
-             <ons-button style="width: 100%; height: 100% ; background-color: #e74c3c;" onclick="remove()"><p><i class="fa fa-minus"></i> REMOVE</p></ons-button>
+         </ons-col>
+         <ons-col width="100%" style="height: 60px; background-color: #2ecc71; text-align: center;">
+          <ons-button style="width: 100%; height: 100%;background-color: #2ecc71" onclick="add()"><p><i class="fa fa-plus"></i> ADD</p></ons-button>
+        </ons-col>
+        <ons-col width="100%"  style="height: 60px; background-color: #e74c3c; text-align: center;">
+         <ons-button style="width: 100%; height: 100% ; background-color: #e74c3c;" onclick="remove()"><p><i class="fa fa-minus"></i> REMOVE</p></ons-button>
 
-          </ons-col>
-        </ons-row>
+       </ons-col>
+     </ons-row>
 
 <!--         <ons-row style="padding: 1em; margin-top: -3%">
 
@@ -165,31 +165,43 @@
          function get(){
           var available1;
           $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_parkingOwner1.php",{D_parkingOwner:owner},function(data){
-             available1 = '<i class="fa fa-car"></i> '+data[0].D_Inuse+' OUT OF '+data[0].D_Total+'';
-              document.getElementById("available").innerHTML = available1;
-              document.getElementById("pSpace").innerHTML = data[0].D_Title;
-              document.getElementById("pAddress").innerHTML =  data[0].D_Description;
-              localStorage.setItem("inuse", data[0].D_Inuse);
-          });
-         
-         }
-/*<i class="fa fa-car"></i> 0 OUT OF 200*/
-         function add(){
+           available1 = '<i class="fa fa-car"></i> '+data[0].D_Inuse+' OUT OF '+data[0].D_Total+'';
+           document.getElementById("available").innerHTML = available1;
+           document.getElementById("pSpace").innerHTML = data[0].D_Title;
+           document.getElementById("pAddress").innerHTML =  data[0].D_Description;
+           localStorage.setItem("inuse", data[0].D_Inuse);
+           localStorage.setItem("total", data[0].D_Total);
+         });
+
+        }
+        /*<i class="fa fa-car"></i> 0 OUT OF 200*/
+
+        function add(){
           var add = localStorage.getItem("inuse");
           var total = (parseInt(add) + 1);
-          console.log(total);
-          $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_addSpace.php",{owner:owner, updateAdd:total}, function(data){
-            ons.notification.toast('Added', {
-              timeout: 500
+
+          var pTotal = localStorage.getItem("total");
+          if (total > pTotal) {
+            ons.notification.alert("Parking Space Full");
+          }
+          else{
+
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_addSpace.php",{owner:owner, updateAdd:total}, function(data){
+              ons.notification.toast('Added', {
+                timeout: 500
+              });
             });
-          });
-          $.getJSON("https://www.gcccsbsit.xyz/_gpark/_api/pusher/pusher.php",function(data){
+            $.getJSON("https://www.gcccsbsit.xyz/_gpark/_api/pusher/pusher.php",function(data){
 
-          });
-          get();
-         }
+            });
+            get();
 
-         function remove(){
+          }
+     
+
+        }
+
+        function remove(){
           var add = localStorage.getItem("inuse");
           var total = (parseInt(add) - 1);
           console.log(total);
@@ -204,13 +216,13 @@
           });
           get();
 
-         }
+        }
 
-         get();
-       </script>
-
-
+        get();
+      </script>
 
 
-     </ons-page>
+
+
+    </ons-page>
 

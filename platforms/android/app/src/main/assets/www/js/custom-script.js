@@ -1,6 +1,4 @@
 
-
-
 window.fn = {};
 
 window.fn.open = function () {
