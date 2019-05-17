@@ -42,53 +42,77 @@
         </ons-row>
 
         <script type="text/javascript">
-          var d = new Date();
-          var n = d.getMinutes();
-          var wait = (parseInt(n)+5)
-          localStorage.setItem("waitTime", wait);
+          if (localStorage.loginCount) {
+
+          }
+          else{
+            localStorage.setItem("loginCount", 0);
+            localStorage.setItem("minutes", 5);
+          }
+
+          function runAgain()
+          {
+            localStorage.setItem("loginCount", 0);
+          }
+
+
+
+
+
+
+
+
+          
 
 
           function jem(){
             var d = new Date();
             var n = d.getMinutes();
             localStorage.setItem("currentTime", n);
-            var wait = (parseInt(n)+5)
-            console.log('jem')
+            var wait = (parseInt(n)+5);
+            localStorage.setItem("waitTime", wait);
+            
           }
           jem();
+          
 
-          localStorage.setItem("loginCount", 0);
-          localStorage.setItem("minutes", 5);
+          
 
 
           function logChecker(){
             var log = localStorage.getItem("loginCount");
+            console.log(log);
             var active = localStorage.getItem("active");
-            if (log >= 3) {
+            if (log > 3) {
+
               var minutes = localStorage.getItem("minutes");
               var currentTime = localStorage.getItem("currentTime");
               var waitTime = localStorage.getItem("waitTime");
               console.log(parseInt(currentTime), parseInt(waitTime))
               if( parseInt(currentTime) >  parseInt(waitTime) ){
-                login();
+              
                 localStorage.setItem("loginCount", 0);
+                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later 1"});
+
+                
               }
-              if (parseInt(currentTime) <  parseInt(waitTime)) {
-                jem();
-                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later"});
+              else if (parseInt(currentTime) <  parseInt(waitTime)) {
+
+                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later 2"});
               }
 
-              if (parseInt(currentTime) ==  parseInt(waitTime)) {
-                jem();
-                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later"});
+              else if (parseInt(currentTime) ==  parseInt(waitTime)) {
+
+                ons.notification.alert({title: "Error", message: "Too many login attempts please try again later 3"});
               }
 
 
 
             }
 
-            if (log < 3) {
-              login();
+            if (log <= 3) {
+              setTimeout(login(log),1500)
+              
             }
 
           }
@@ -100,17 +124,17 @@
 
 
 
-          function login() {
-            var loginCount = localStorage.getItem("loginCount");
+          function login(log) {
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
-            console.log("login");
+
             $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_loginUser2.php",{username:username, password:password},function(data){
-              console.log(data);
 
               if (data.length == 0) {
-                localStorage.setItem("loginCount", parseInt(loginCount)+1);
+                localStorage.setItem("loginCount", parseInt(log)+1);
                 ons.notification.alert({title: "Error", message: "Username and/or Password Does not exist"});
+
+                
               }
               else{
                 var s_username = data[0].U_username;
@@ -119,7 +143,7 @@
                 var s_Lname = data[0].U_Lname;
                 var s_Id = data[0].U_Id;
                 if (data[0].U_Activated == 0) {
-                  console.log("not U_Activated");
+
                   $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_forgotPassword.php",{username: username}, function(data){
                     var a = Math.floor((Math.random()*4000) + 1000); 
                     var number = data[0].U_Contact;
@@ -140,7 +164,6 @@
                 else{
                   if (data[0].U_Activated == 1) {
 
-                   console.log("Activated")
                    if(data[0].U_Type == 0){
 
                     localStorage.setItem("username", s_username);
