@@ -1,0 +1,179 @@
+      <ons-page id="arrived" style="color: white;">
+        <style type="text/css">
+          .hiddenR{
+            display: none;
+          }
+
+          .displayR{
+            display: block;
+          }
+        </style>
+        <ons-toolbar modifier="noshadow" style="background-color:  #454A58 !important">
+          <div class="left" >
+            <ons-back-button>Back</ons-back-button>
+          </div>
+          <div class="center">
+
+          </div>
+        </ons-toolbar>
+
+        <ons-row>
+
+          <ons-col width="100%" style="text-align: center; font-size: 20px; font-weight: 700; margin-top: 15%">
+            <p id="con-total" style="display: none;"></p>
+            <p>THANK YOU FOR USING GPARK!</p>
+
+          </ons-col>
+
+          <ons-col width="100%" style="text-align: center; font-size: 15px; padding: 2em">
+            <p>Please Confirm that youve arrived at the Parking Space!</p>
+
+          </ons-col>
+
+          <ons-col width="100%" style="text-align: center; font-size: 15px; padding: 2em">
+            <ons-button onclick="arrived()"><i class="fa fa-street-view"></i> Yes I have arrived!</ons-button>
+
+          </ons-col>
+        </ons-row> 
+
+
+        <div class="background" style="background-color: #454A58"></div>
+
+        <script>
+          function arrived() {
+            ons.notification.confirm({title: "Rate this Parking Space", message:'<div style="color:#FFA500"><i class="fa fa-star-o" onclick="star(1)" id="con-1"></i><i class="fa fa-star-o" onclick="star(2)" id="con-2"></i><i class="fa fa-star-o" id="con-3" onclick="star(3)"></i><i class="fa fa-star-o" id="con-4" onclick="star(4)"></i><i class="fa fa-star-o" id="con-5" onclick="star(5)"></i><span id="con-rating"></span></p></div>'}).then(function(index){
+              if (index == 1) {
+                addRating();
+              }
+              else{
+                console.log(0);
+              }
+
+            });
+          }
+
+
+          function star(index){
+            if (index == 1) {
+
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star");
+              $("#con-2").addClass("fa-star-o");
+
+              $("#con-3").removeClass("fa-star");
+              $("#con-3").addClass("fa-star-o");
+
+              $("#con-4").removeClass("fa-star");
+              $("#con-4").addClass("fa-star-o");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Poor";
+              document.getElementById('con-total').innerHTML = "1";
+
+            }
+
+            if (index == 2) {
+
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star");
+              $("#con-3").addClass("fa-star-o");
+
+              $("#con-4").removeClass("fa-star");
+              $("#con-4").addClass("fa-star-o");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Okay";
+              document.getElementById('con-total').innerHTML = "2";
+            }
+
+            if (index == 3) {
+
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star-o");
+              $("#con-3").addClass("fa-star");
+
+              $("#con-4").removeClass("fa-star");
+              $("#con-4").addClass("fa-star-o");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Average";
+              document.getElementById('con-total').innerHTML = "3";
+            }
+
+            if (index == 4) {
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star-o");
+              $("#con-3").addClass("fa-star");
+
+              $("#con-4").removeClass("fa-star-o");
+              $("#con-4").addClass("fa-star");
+
+              $("#con-5").removeClass("fa-star");
+              $("#con-5").addClass("fa-star-o");
+
+              document.getElementById('con-rating').innerHTML = " - Good";
+              document.getElementById('con-total').innerHTML = "4";
+            }
+
+            if (index == 5) {
+              $("#con-1").removeClass("fa-star-o");
+              $("#con-1").addClass("fa-star");
+
+              $("#con-2").removeClass("fa-star-o");
+              $("#con-2").addClass("fa-star");
+
+              $("#con-3").removeClass("fa-star-o");
+              $("#con-3").addClass("fa-star");
+
+              $("#con-4").removeClass("fa-star-o");
+              $("#con-4").addClass("fa-star");
+
+              $("#con-5").removeClass("fa-star-o");
+              $("#con-5").addClass("fa-star");
+
+              document.getElementById('con-rating').innerHTML = " - Excellent";
+              document.getElementById('con-total').innerHTML = "5";
+            }
+
+
+
+
+          }
+
+          function addRating(){
+            var username = localStorage.getItem("username");
+
+            var rating = document.getElementById('con-total').innerHTML;
+            console.log(rating);
+            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:id, r_Rating: rating, r_Username: username},function(data){
+
+            });
+          }
+
+        </script>
+
+      </ons-page>
+
