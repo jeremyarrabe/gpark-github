@@ -86,7 +86,7 @@
                               <div class="center" style="font-weight: 700; opacity: 0.8">Favorites</div>
                             </ons-list-item>  -->
 
-                           <ons-list-item onclick="fn.load('templates/help.html');" tappable  modifier="nodivider"  id="nav-help">
+                            <ons-list-item onclick="fn.load('templates/help.html');" tappable  modifier="nodivider"  id="nav-help">
                               <div class="left"><i class="fa fa-question" style="padding-right: 2px; opacity: 0.8"></i></div>
                               <div class="center" style="font-weight: 700; opacity: 0.8">Help</div>
                             </ons-list-item>
@@ -429,6 +429,28 @@
                         }, false);
                       </script>
                       <script>
+
+                        
+                        
+                       
+
+                        function getStarted(){
+                           console.log("awdawd");
+                          if (localStorage.getStarted) {
+                            console.log(1);
+                          }
+                          else{
+                            localStorage.setItem("getStarted", 1)
+                            window.location.href="getstarted.html";
+                          }
+
+                        }
+
+                        getStarted();
+
+
+
+
                         localStorage.setItem("generateMax", 0);
                         function enableButton(){
                           $( "#signup" ).removeAttr("disabled");

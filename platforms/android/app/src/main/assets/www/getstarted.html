@@ -1,0 +1,121 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="css/onsen/onsenui.css">
+    <link rel="stylesheet" type="text/css" href="css/onsen/onsen-css-components.min.css">
+
+    <link rel="stylesheet" href="css/croppie.css" />
+    <link rel="stylesheet" href="css/jemcrop.css" />
+
+    
+
+
+    <style type="text/css">
+      .hide-rate{
+        display: none;
+      }
+
+      .show-rate{
+        display: block;
+      }
+    </style>
+
+    <title>Gpark</title>
+  </head>
+  <body>
+    <div class="app" hidden>
+      <h1>Apache Cordova</h1>
+      <div id="deviceready" class="blink">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready</p>
+      </div>
+    </div>
+
+
+
+                      <ons-page id="getStarted">
+                        <ons-toolbar modifier="noshadow">
+                          <div class="center">
+                            
+                          </div>
+                          
+                          <div class="right">
+                            <!-- <ons-toolbar-button  onclick="myNavigator.pushPage('templates/notification.html')">
+                              <ons-icon icon="fa-bell" style="color: white;"></ons-icon>
+                            </ons-toolbar-button> -->
+                          </div>
+                        </ons-toolbar>
+                        <div class="background" style="background-color:  #2979FF"></div>
+
+
+      <div style="text-align: center; font-size: 30px; margin-top: 20px; color: #fff; text-align: center; margin: 0.8em">
+          <img src="img/gpark.png" style="height: 110px">
+          <p style="color: white; font-weight: 700">GPARK</p>
+
+          <p style="color: white; font-weight: 500; font-size: 15px">A Cross-Platform Parking Space Locator Application using Progressive Framework</p>
+
+          <p style="color: white; font-weight: 500; font-size: 18px; margin-top: 50px;">What is GPARK?</p>
+
+          <img src="img/gpark-g.png">
+
+          <p style="color: white; font-size:15px;">Gpark is simply a parking space locator that helps the users gain knowledge about the different parking space in our city.</p>
+
+          <p style="color: white; font-weight: 500; font-size: 18px; margin-top: 50px;">Main Feature</p>
+
+          <img src="img/traffic.png">
+          <p style="color: white; font-size:15px;">Avoid Traffic and Traffic Jams</p>
+          <p style="color: white; font-size:15px;">The application enusures that the user will see the the traffic flow via Google Maps Api</p>
+
+
+          <img src="img/navigate.png">
+          <p style="color: white; font-size:15px;">Turn by Turn Navigation</p>
+          <p style="color: white; font-size:15px;">GPark helps you maneuver around the city by using Turn by Turn navigation to help you reach your desired parking space!</p>
+
+          <ons-button style="background-color: green" onclick="location.href='index.html';localStorage.setItem('getStarted', 1);">GET STARTED!</ons-button>
+      </div>
+
+
+
+                        
+
+
+
+                      </ons-page>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+                    <script type="text/javascript" src="cordova.js"></script>
+                    <script type="text/javascript" src="js/onsen/onsenui.min.js"></script>
+
+                          <script src="js/croppie.js"></script>
+                          <script src="js/jemcrop.js"></script>
+                          <script src="js/jjem.js"></script>
+                          <script type="text/javascript" src="js/maps.js"></script>
+                          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh33n9_kf42Ltk1HBKF1MRaJG6LA6Y754&callback=initMap" async defer></script>
+                          <script type="text/javascript" src="js/index.js"></script>
+                          <script type="text/javascript" src="js/custom-script.js"></script>
+                          <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+
+
+
+                        </body>
+                        </html>
