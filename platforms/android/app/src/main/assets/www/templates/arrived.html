@@ -40,10 +40,12 @@
         <div class="background" style="background-color: #454A58"></div>
 
         <script>
+          var id = localStorage.getItem("getId");
           function arrived() {
             ons.notification.confirm({title: "Rate this Parking Space", message:'<div style="color:#FFA500"><i class="fa fa-star-o" onclick="star(1)" id="con-1"></i><i class="fa fa-star-o" onclick="star(2)" id="con-2"></i><i class="fa fa-star-o" id="con-3" onclick="star(3)"></i><i class="fa fa-star-o" id="con-4" onclick="star(4)"></i><i class="fa fa-star-o" id="con-5" onclick="star(5)"></i><span id="con-rating"></span></p></div>'}).then(function(index){
               if (index == 1) {
                 addRating();
+
               }
               else{
                 console.log(0);
@@ -165,12 +167,43 @@
 
           function addRating(){
             var username = localStorage.getItem("username");
+              var rating = document.getElementById('con-total').innerHTML;
+            if (localStorage.username) {
+              console.log("logged in");
+              
 
-            var rating = document.getElementById('con-total').innerHTML;
-            console.log(rating);
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:id, r_Rating: rating, r_Username: username},function(data){
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectUserRating.php",{r_Username:username, d_Id: id }, function(data){
+                if (data.length <= 0) {
+                  $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:id, r_Rating: rating, r_Username: username},function(data){
+                    location.href="index.html";
+                  });
+                }else{
+                 $.post("https://www.gcccsbsit.xyz/_gpark/_api/update/u_userRating.php",{r_Rating: rating, r_Username: username, d_Id: id},function(data){
+                    location.href="index.html";
+                 });
+               }
+             });
 
-            });
+              
+
+              
+            }
+            else{
+              var randUser = Math.floor((Math.random() * 5000) + 1);
+              $.post("https://www.gcccsbsit.xyz/_gpark/_api/insert/i_Rating.php",{d_Id:id, r_Rating: rating, r_Username:randUser},function(data){
+                location.href="index.html";
+              });
+            }
+
+
+
+
+
+
+            
+            
+
+
           }
 
         </script>

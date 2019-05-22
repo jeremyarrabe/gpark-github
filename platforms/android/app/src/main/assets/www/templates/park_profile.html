@@ -309,9 +309,7 @@
 
 
           function runNavigator(){
-            var userName = localStorage.getItem("username");
-            $.post("https://www.gcccsbsit.xyz/_gpark/_api/select/s_selectUserRating.php",{r_Username:userName, d_Id: id }, function(data){
-              if (data.length <= 0) {
+           
                 console.log("first time");
                myNavigator.pushPage('templates/arrived.html');
                launchnavigator.isAppAvailable(launchnavigator.APP.GOOGLE_MAPS, function(isAvailable){
@@ -329,26 +327,9 @@
                   app: app
                 });
               });
-             }
-             else{
-              console.log("second time");
-              launchnavigator.isAppAvailable(launchnavigator.APP.GOOGLE_MAPS, function(isAvailable){
-                var app;
-                var gLng = localStorage.getItem("getLng");
-                var gLat = localStorage.getItem("getLat");
+             
 
-                if(isAvailable){
-
-                  app = launchnavigator.APP.GOOGLE_MAPS;
-                }else{
-                  alert("Error 002 - Google Maps");
-                }
-                launchnavigator.navigate([gLat, gLng], {
-                  app: app
-                });
-              });
-            }
-          })
+             
 
 
 
